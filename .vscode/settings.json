@@ -1,0 +1,36 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "prettier.useTabs": false,
+  "prettier.printWidth": 100,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.semi": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.validate.enable": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.parameterHints.enabled": true,
+  "editor.wordWrap": "on",
+  "editor.folding": true,
+  "editor.foldingStrategy": "indentation",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.inputValidationLength": 50,
+  "path-intellisense.mappings": {
+    "@components": "${workspaceFolder}/src/components",
+    "@utils": "${workspaceFolder}/src/utils"
+  },
+  "testing.automaticallyOpenPeekView": "never",
+  "debug.openDebug": "openOnSessionStart"
+}
