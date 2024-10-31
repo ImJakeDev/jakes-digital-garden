@@ -1,27 +1,28 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { MDXRemote } from 'next-mdx-remote/rsc'; // Use RSC version for Server Components
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
-type BlogPostProps = {
+interface PageProps {
   params: {
     slug: string;
   };
-};
+}
 
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'content');
   const filenames = fs.readdirSync(postsDirectory);
 
   return filenames.map((filename) => ({
-    slug: filename.replace('.mdx', ''),
+    params: { slug: filename.replace('.mdx', '') },
   }));
 }
 
-export default async function BlogPost({ params }: BlogPostProps) {
-  console.log('Hello from BlogPost');
-
-  const { slug } = await params;
+// Change BlogPost to return a Promise
+export default async function BlogPost({
+  params,
+}: PageProps): Promise<JSX.Element> {
+  const { slug } = params;
   const postFilePath = path.join(process.cwd(), 'content', `${slug}.mdx`);
 
   // Check if the file exists

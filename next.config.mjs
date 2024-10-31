@@ -15,6 +15,16 @@ const bundleAnalyzerConfig = withBundleAnalyzer({
 });
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/200/300',
+      },
+    ],
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   webpack: (config, {}) => {
     config.module.rules.push({

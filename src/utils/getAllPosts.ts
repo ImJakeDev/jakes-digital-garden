@@ -22,7 +22,7 @@ export function getAllPosts(): PostMeta[] {
       const { data } = matter(fileContent);
 
       // Correct fallback image path (omit "public/")
-      const imageUrl = data.img || '/images/default-blog.webp';
+      const imageUrl = data.img || 'https://picsum.photos/200/300';
 
       console.log(`Image URL for ${filename}: ${imageUrl}`);
 
