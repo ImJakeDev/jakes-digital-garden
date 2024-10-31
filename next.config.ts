@@ -1,6 +1,8 @@
-import mdx from '@next/mdx';
-import withBundleAnalyzer from '@next/bundle-analyzer';
-import withPlugins from 'next-compose-plugins';
+import { NextConfig } from 'next';
+
+const mdx = require('@next/mdx');
+const withBundleAnalyzer = require('@next/bundle-analyzer');
+const withPlugins = require('next-compose-plugins');
 
 const mdxConfig = mdx({
   extension: /\.mdx?$/,
@@ -14,7 +16,7 @@ const bundleAnalyzerConfig = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -26,7 +28,7 @@ const nextConfig = {
     ],
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  webpack: (config, {}) => {
+  webpack: (config: any, {}) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
