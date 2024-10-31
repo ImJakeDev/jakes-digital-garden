@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 type CardProps = {
@@ -23,12 +23,14 @@ export default function Card({
         <Image
           src={image}
           alt={title}
-          layout="fill"
-          objectFit="cover"
           className="rounded-t-lg"
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'cover',
+          }}
         />
       </div>
-
       {/* Card content */}
       <div className="p-6">
         {/* Title */}

@@ -1,4 +1,3 @@
-import HomePage from '@/app/pages/Home';
 import { getAllPosts, PostMeta } from '@/utils/getAllPosts';
 import Card from '@/components/Card';
 
@@ -7,7 +6,13 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <HomePage />
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <h1 className="text-4xl font-bold text-center sm:text-left">
+            Jake Unplugged
+          </h1>
+        </div>
+      </main>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {posts.length > 0 ? (
