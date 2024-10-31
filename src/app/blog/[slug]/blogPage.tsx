@@ -9,8 +9,17 @@ type BlogPostProps = {
   };
 };
 
+export async function generateStaticParams() {
+  const postsDirectory = path.join(process.cwd(), 'content');
+  const filenames = fs.readdirSync(postsDirectory);
+
+  return filenames.map((filename) => ({
+    slug: filename.replace('.mdx', ''),
+  }));
+}
+
 export default async function BlogPost({ params }: BlogPostProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const postFilePath = path.join(process.cwd(), 'content', `${slug}.mdx`);
 
   // Check if the file exists
@@ -31,13 +40,4 @@ export default async function BlogPost({ params }: BlogPostProps) {
       </div>
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'content');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  return filenames.map((filename) => ({
-    slug: filename.replace('.mdx', ''),
-  }));
 }

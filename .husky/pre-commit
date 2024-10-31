@@ -1,1 +1,27 @@
-pnpm exec lint-staged
+echo '🏗️👷 Running pre-commit checks: styling, linting, type-checking, and building...'
+
+# Helper function for error messages
+error_message() {
+  echo "$1"
+  false
+}
+
+# Check Prettier standards
+pnpm check:format || error_message '🤢🤮🤢🤮 Its F**KING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+Prettier Check Failed. Run pnpm format, add changes, and try to commit again.'
+
+# Check ESLint standards
+pnpm check:lint || error_message '😤🏀👋😤 Get that weak s**t out of here! 😤🏀👋😤 
+ESLint Check Failed. Fix the issues, add changes, and try to commit again.'
+
+# Check TypeScript type standards
+pnpm check:types || error_message '🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
+Are you seriously trying to write that? Make the changes required above.'
+
+# Build the project if all checks pass
+echo '🤔🤔🤔🤔... Alright... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
+pnpm build || error_message '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
+Build failed: View the errors above to see why.'
+
+# Final success message
+echo '✅✅✅✅ You win this time... Committing now. ✅✅✅✅'
