@@ -14,7 +14,7 @@
     "clean": "rm -rf .next && rm -rf node_modules && pnpm i",
     "clean:modules": "rm -rf node_modules",
     "test:all": "pnpm run check:format && pnpm run check:lint && pnpm run check:types && pnpm run build",
-    "prepare": "husky install"
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
