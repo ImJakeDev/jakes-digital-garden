@@ -1,4 +1,4 @@
-import HomePage from '@/pages/Home';
+import HomePage from '@/app/pages/Home';
 import { getAllPosts, PostMeta } from '@/utils/getAllPosts';
 import Card from '@/components/Card';
 
@@ -6,7 +6,7 @@ export default function Home() {
   const posts: PostMeta[] = getAllPosts();
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <HomePage />
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
