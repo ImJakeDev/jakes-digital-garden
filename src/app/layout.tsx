@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable} antialiased`}
+      className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}
     >
       <body>{children}</body>
     </html>
