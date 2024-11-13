@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { STIX_Two_Text, Manrope, Fira_Code } from 'next/font/google';
-import './globals.css';
+import './style.linaria.global';
 
 const stixTwoText = STIX_Two_Text({
   subsets: ['latin'],

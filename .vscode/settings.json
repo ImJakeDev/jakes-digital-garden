@@ -32,5 +32,6 @@
     "@utils": "${workspaceFolder}/src/utils"
   },
   "testing.automaticallyOpenPeekView": "never",
-  "debug.openDebug": "openOnSessionStart"
+  "debug.openDebug": "openOnSessionStart",
+  "cSpell.words": ["Linaria"]
 }

@@ -3,6 +3,7 @@ import { NextConfig } from 'next';
 const mdx = require('@next/mdx');
 const withBundleAnalyzer = require('@next/bundle-analyzer');
 const withPlugins = require('next-compose-plugins');
+const withLinaria = require('next-with-linaria');
 
 const mdxConfig = mdx({
   extension: /\.mdx?$/,
@@ -51,4 +52,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPlugins([[bundleAnalyzerConfig], [mdxConfig]], nextConfig);
+export default withPlugins(
+  [[bundleAnalyzerConfig], [mdxConfig]],
+  withLinaria(nextConfig)
+);
