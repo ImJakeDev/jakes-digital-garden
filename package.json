@@ -6,14 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check:types": "tsc --pretty --noEmit",
     "check:format": "prettier --check .",
     "check:lint": "next lint",
-    "lint": "next lint --fix",
-    "format": "prettier --write .",
-    "clean": "rm -rf .next && rm -rf node_modules && pnpm i",
+    "check:types": "tsc --pretty --noEmit",
+    "check:styles": "stylelint 'src/**/*.tsx'",
     "clean:modules": "rm -rf node_modules",
-    "test:all": "pnpm run check:format && pnpm run check:lint && pnpm run check:types && pnpm run build",
+    "clean": "rm -rf .next && rm -rf node_modules && pnpm i",
+    "format": "prettier --write .",
+    "lint:fix": "next lint --fix",
+    "styles:fix": "stylelint 'src/**/*.tsx' --fix",
+    "test:all": "pnpm run check:format && pnpm run check:styles && pnpm run check:lint && pnpm run check:types && pnpm run build",
     "prepare": "husky || true"
   },
   "dependencies": {
@@ -36,6 +38,7 @@
     "remark-smartypants": "^3.0.2"
   },
   "devDependencies": {
+    "@linaria/stylelint-config-standard-linaria": "^6.2.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22.8.4",
     "@types/react": "^18.3.12",
@@ -46,6 +49,7 @@
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "prettier": "3.3.3",
+    "stylelint": "^14.16.1",
     "typescript": "^5.6.3"
   },
   "lint-staged": {

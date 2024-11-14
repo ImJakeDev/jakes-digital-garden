@@ -10,6 +10,10 @@ error_message() {
 pnpm check:format || error_message '🤢🤮🤢🤮 Its F**KING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
 Prettier Check Failed. Run pnpm format, add changes, and try to commit again.'
 
+# Check Stylelint standards
+pnpm check:styles || error_message '🚨💅🚨 Stylelint Check Failed 🚨💅🚨
+Your CSS/SCSS/TSX styling needs attention. Run pnpm check:stylelint, fix the issues, add changes, and try to commit again.'
+
 # Check ESLint standards
 pnpm check:lint || error_message '😤🏀👋😤 Get that weak s**t out of here! 😤🏀👋😤 
 ESLint Check Failed. Fix the issues, add changes, and try to commit again.'

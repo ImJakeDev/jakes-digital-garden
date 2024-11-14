@@ -3,7 +3,7 @@ import { css } from '@linaria/core';
 export const globals = css`
   :global() {
     :root {
-      --background: #ffffff;
+      --background: #fff;
       --foreground: #171717;
     }
 
