@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 type CardProps = {
@@ -6,29 +5,17 @@ type CardProps = {
   description: string;
   tags: string[];
   slug: string;
-  image: string;
 };
 
-export default function Card({
-  title,
-  description,
-  tags,
-  slug,
-  image,
-}: CardProps) {
+export default function Card({ title, description, tags, slug }: CardProps) {
   return (
     <div>
+      <Link href={`/blog/${slug}`}>{title}</Link>
+      <p>{description}</p>
       <div>
-        <Image src={image} alt={title} width={100} height={100} />
-      </div>
-      <div>
-        <Link href={`/blog/${slug}`}>{title}</Link>
-        <p>{description}</p>
-        <div>
-          {tags.map((tag, index) => (
-            <span key={index}>{tag}</span>
-          ))}
-        </div>
+        {tags.map((tag, index) => (
+          <span key={index}>{tag}</span>
+        ))}
       </div>
     </div>
   );

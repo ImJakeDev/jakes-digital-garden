@@ -21,7 +21,6 @@ export default function Home() {
               description={post.description}
               tags={post.tags}
               slug={post.slug}
-              image={post.img}
             />
           ))
         ) : (
