@@ -10,24 +10,23 @@ export default function Home() {
         <div>
           <h1>Jake Unplugged</h1>
         </div>
+        <div>
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <Card
+                key={post.slug}
+                title={post.title}
+                description={post.description}
+                tags={post.tags}
+                slug={post.slug}
+              />
+            ))
+          ) : (
+            <p>No blog posts found.</p>
+          )}
+        </div>
       </main>
-
-      <div>
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <Card
-              key={post.slug}
-              title={post.title}
-              description={post.description}
-              tags={post.tags}
-              slug={post.slug}
-            />
-          ))
-        ) : (
-          <p>No blog posts found.</p>
-        )}
-      </div>
-
+      {/* // Todo: Move Footer */}
       <footer>
         <span>Made with ✨ by Jake</span>
         <span>•</span>

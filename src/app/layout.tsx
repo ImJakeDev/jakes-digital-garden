@@ -35,7 +35,11 @@ export default function RootLayout({
       lang="en"
       className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {/* // Todo: Header */}
+        <>{children}</>
+        {/* // Todo: Footer */}
+      </body>
     </html>
   );
 }
