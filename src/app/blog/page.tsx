@@ -6,7 +6,7 @@ export default function BlogPage() {
 
   return (
     <div>
-      <h1>Explore Blogs</h1>
+      <h2>Explore My blog Posts</h2>
       <div>
         {posts.length > 0 ? (
           posts.map((post) => (
