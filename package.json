@@ -40,7 +40,9 @@
     "remark-smartypants": "^3.0.2"
   },
   "devDependencies": {
+    "@linaria/babel-preset": "^5.0.4",
     "@linaria/stylelint-config-standard-linaria": "^6.2.0",
+    "@linaria/webpack-loader": "^5.0.4",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22.9.1",
     "@types/react": "^18.3.12",
