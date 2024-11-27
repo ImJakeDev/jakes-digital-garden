@@ -3,6 +3,7 @@ import { STIX_Two_Text, Manrope, Fira_Code } from 'next/font/google';
 import './style.linaria.global';
 import Footer from '@/components/layouts/Footer';
 import Main from '@/components/layouts/Main';
+import Header from '@/components/layouts/Header';
 
 const stixTwoText = STIX_Two_Text({
   subsets: ['latin'],
@@ -35,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}>
       <body>
-        {/* // Todo: Header */}
+        <Header />
         <Main>{children}</Main>
         <Footer />
       </body>
