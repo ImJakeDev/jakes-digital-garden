@@ -15,8 +15,5 @@ declare module 'gray-matter' {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export default function matter<T = any>(
-    input: string | Buffer,
-    options?: GrayMatterOptions
-  ): GrayMatterFile<T>;
+  export default function matter<T = any>(input: string | Buffer, options?: GrayMatterOptions): GrayMatterFile<T>;
 }

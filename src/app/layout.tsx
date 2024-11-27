@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { STIX_Two_Text, Manrope, Fira_Code } from 'next/font/google';
 import './style.linaria.global';
+import Footer from '@/components/layouts/Footer';
+import Main from '@/components/layouts/Main';
 
 const stixTwoText = STIX_Two_Text({
   subsets: ['latin'],
@@ -31,14 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}
-    >
+    <html lang="en" className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}>
       <body>
         {/* // Todo: Header */}
-        <>{children}</>
-        {/* // Todo: Footer */}
+        <Main>{children}</Main>
+        <Footer />
       </body>
     </html>
   );

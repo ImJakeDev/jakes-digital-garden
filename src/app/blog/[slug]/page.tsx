@@ -19,9 +19,7 @@ export async function generateStaticParams() {
 }
 
 // Change BlogPost to return a Promise
-export default async function BlogPost({
-  params,
-}: PageProps): Promise<JSX.Element> {
+export default async function BlogPost({ params }: PageProps): Promise<JSX.Element> {
   const { slug } = await params;
   const postFilePath = path.join(process.cwd(), 'content', `${slug}.mdx`);
 

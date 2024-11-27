@@ -42,7 +42,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPlugins(
-  [[bundleAnalyzerConfig], [mdxConfig]],
-  withLinaria(nextConfig)
-);
+export default withPlugins([[bundleAnalyzerConfig], [mdxConfig]], withLinaria(nextConfig));

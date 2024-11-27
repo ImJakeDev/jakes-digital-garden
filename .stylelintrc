@@ -6,6 +6,8 @@
       {
         "ignorePseudoClasses": ["global"]
       }
-    ]
+    ],
+    "comment-empty-line-before": null,
+    "indentation": null
   }
 }
