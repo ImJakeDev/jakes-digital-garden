@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { getAllPosts, PostMeta } from '@/utils/getAllPosts';
+import PageContainer from '@/components/layouts/PageContainer';
 
 export default function BlogPage() {
   const posts: PostMeta[] = getAllPosts(); // Fetch all posts
 
   return (
-    <div>
+    <PageContainer>
       <h2>Explore My blog Posts</h2>
       <div>
         {posts.length > 0 ? (
@@ -25,6 +26,6 @@ export default function BlogPage() {
           <p>No blog posts found.</p>
         )}
       </div>
-    </div>
+    </PageContainer>
   );
 }
