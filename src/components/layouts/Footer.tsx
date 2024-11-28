@@ -21,4 +21,9 @@ const StyledFooterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: var(--space-s-m);
+
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-gutter);
+  margin-inline: auto;
 `;
