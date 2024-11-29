@@ -7,6 +7,8 @@ export default function Home() {
 
   return (
     <PageContainer>
+      {/* // Todo: Build Intro Message Section */}
+      {/* // Todo: Build The Digital Garden Section */}
       <div>{posts.length > 0 ? posts.map((post) => <Card key={post.slug} title={post.title} description={post.description} tags={post.tags} slug={post.slug} />) : <p>No blog posts found.</p>}</div>
     </PageContainer>
   );

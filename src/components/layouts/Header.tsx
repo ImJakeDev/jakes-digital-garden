@@ -8,7 +8,6 @@ export default function Header() {
         <h1>
           <Link href="/">Jake Unplugged</Link>
         </h1>
-        {/* // Todo: Build Pages */}
         <nav>
           <StyledNavigationOrderedList>
             <li>
@@ -39,6 +38,7 @@ const StyledHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 
   max-width: var(--grid-max-width);
   padding-inline: var(--grid-gutter);
