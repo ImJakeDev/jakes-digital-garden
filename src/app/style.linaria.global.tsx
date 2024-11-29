@@ -4,12 +4,59 @@ export const globals = css`
   :global() {
     :root {
       /* Colors */
-      --background: #fff;
-      --foreground: #171717;
-      --color-border: #e1e1e1;
+      /* // Todo: Work on brand colors!!! */
+      --color-blue: hsl(210, 100%, 76.08%);
+      --color-light-blue: hsl(188.57, 100%, 86.27%);
+      --color-dark-blue: hsl(208.06, 54.87%, 55.69%);
+      --color-green: hsl(90, 100%, 76.08%);
+      --color-light-green: hsl(66.67, 100%, 85.88%);
+      --color-dark-green: hsl(90.76, 53.85%, 56.67%);
+      --color-pink: hsl(330, 100%, 76.08%);
+      --color-light-pink: hsl(308.33, 100%, 85.88%);
+      --color-dark-pink: hsl(328.47, 52.68%, 56.08%);
 
-      /* Min Viewport Width -> 320px */
-      /* Max Viewport Width -> 1240px */
+      --color-cream: hsl(48, 21.74%, 95.49%);
+      --color-dark-cream: hsl(48, 4.42%, 77.84%);
+      --color-light-gray: hsl(48, 2.49%, 60.59%);
+      --color-gray: hsl(60, 1.77%, 44.31%);
+      --color-dark-gray: hsl(48, 3.36%, 29.22%);
+      --color-black: hsl(45, 5.13%, 15.29%);
+
+      /* Colors from https://github.com/MaggieAppleton/maggieappleton.com-V2/blob/main/components/GlobalStyle.js */
+      --color-light-cream: #fcfbf7;
+      /* --color-cream: #f6f5f1; */
+      --color-tinted-cream: #e6e3e1;
+      /* --color-black: #353534; */
+      --color-gray-800: #4a4a46;
+      --color-gray-600: #73706d;
+      --color-gray-500: #8e8f94;
+      --color-gray-400: #afb0b6;
+      --color-gray-300: #d3d3d1;
+      --color-gray-100: #e9e9e7;
+      --color-bright-crimson: #960462;
+      --color-crimson: #5f023e;
+      --color-sea-blue: #04a5bb;
+      --color-medium-sea-blue: #008ba3;
+      --color-dark-sea-blue: #00758f;
+      --color-purple: #7558b2;
+      --color-salmon: #fd8370;
+      --color-light-salmon: #ffd09c;
+
+      --background: var(--color-cream);
+      --foreground: var(--color-black);
+      --color-border: var(--color-gray-500);
+
+      /* Viewport Widths */
+      --viewport-min-width: 320px; /* Minimum viewport width */
+      --viewport-max-width: 1240px; /* Maximum viewport width */
+
+      /* Breakpoints */
+      --breakpoint-xs: 0px; /* Extra small devices (phones) */
+      --breakpoint-sm: 576px; /* Small devices (phones) */
+      --breakpoint-md: 768px; /* Medium devices (tablets) */
+      --breakpoint-lg: 992px; /* Large devices (desktops) */
+      --breakpoint-xl: 1200px; /* Extra large devices (large screens) */
+      --breakpoint-xxl: 1400px; /* Extra-extra large screens */
 
       /* Spacing */
       /* Space 3xs: 5px → 5px */
@@ -83,11 +130,18 @@ export const globals = css`
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --background: #22293d;
-        --foreground: #ededed;
+        --background: var(--color-black);
+        --foreground: var(--color-light-cream);
+        --color-border: var(--color-gray-500);
       }
     }
 
+    body {
+      color: var(--foreground);
+      background: var(--background);
+    }
+
+    /* Fonts */
     html {
       font-family: var(--manrope);
     }
@@ -99,11 +153,7 @@ export const globals = css`
     code {
       font-family: var(--fira-code);
     }
-
-    body {
-      color: var(--foreground);
-      background: var(--background);
-    }
+    /* ---------- ---------- ---------- ---------- ---------- */
 
     /* Josh's Custom CSS Reset https://www.joshwcomeau.com/css/custom-css-reset/ */
     *,

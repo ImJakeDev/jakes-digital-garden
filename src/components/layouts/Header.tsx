@@ -1,11 +1,12 @@
 import { styled } from '@linaria/react';
+import { css } from '@linaria/core';
 import Link from 'next/link';
 
 export default function Header() {
   return (
     <StyledHeader>
       <StyledHeaderContainer>
-        <h1>
+        <h1 className={headingStyles}>
           <Link href="/">Jake Unplugged</Link>
         </h1>
         <nav>
@@ -28,6 +29,11 @@ export default function Header() {
     </StyledHeader>
   );
 }
+
+// Todo: Make better use of styles for global components and styles
+const headingStyles = css`
+  color: var(--color-dark-green);
+`;
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid var(--color-border);
