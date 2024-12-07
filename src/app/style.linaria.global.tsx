@@ -4,16 +4,23 @@ export const globals = css`
   :global() {
     :root {
       /* Colors */
+
       /* // Todo: Work on brand colors!!! */
+
+      /* Primary Colors for https://www.fffuel.co/pppalette/ */
+      /* hsl(10, 100%, 75%) */
+      /* hsl(48, 20%, 95%) */
+      /* hsl(48, 21.74%, 95.49%) */
+
       --color-blue: hsl(210, 100%, 76.08%);
-      --color-light-blue: hsl(188.57, 100%, 86.27%);
-      --color-dark-blue: hsl(208.06, 54.87%, 55.69%);
+      --color-light-blue: hsl(189, 100%, 86.27%);
+      --color-dark-blue: hsl(208, 54.87%, 55.69%);
       --color-green: hsl(90, 100%, 76.08%);
-      --color-light-green: hsl(66.67, 100%, 85.88%);
-      --color-dark-green: hsl(90.76, 53.85%, 56.67%);
+      --color-light-green: hsl(67, 100%, 85.88%);
+      --color-dark-green: hsl(91, 53.85%, 56.67%);
       --color-pink: hsl(330, 100%, 76.08%);
-      --color-light-pink: hsl(308.33, 100%, 85.88%);
-      --color-dark-pink: hsl(328.47, 52.68%, 56.08%);
+      --color-light-pink: hsl(308, 100%, 85.88%);
+      --color-dark-pink: hsl(328, 52.68%, 56.08%);
 
       --color-cream: hsl(48, 21.74%, 95.49%);
       --color-dark-cream: hsl(48, 4.42%, 77.84%);
@@ -22,11 +29,34 @@ export const globals = css`
       --color-dark-gray: hsl(48, 3.36%, 29.22%);
       --color-black: hsl(45, 5.13%, 15.29%);
 
+      /* --asdf: #bcaca9;
+      --asdf: #c5b7b4;
+      --asdf: #cec2c0;
+      --asdf: #d7cdcb;
+      --asdf: #e0d8d7;
+      --asdf: #e9e3e2; */
+      /* ---------- ---------- ---------- ---------- ---------- */
+
+      /* Grays: 99 ÷ 12 = 8.25 */
+      --colors-gray1: hsl(0, 0%, 99%);
+      --colors-gray2: hsl(0, 0%, 90.75%);
+      --colors-gray3: hsl(0, 0%, 82.5%);
+      --colors-gray4: hsl(0, 0%, 74.25%);
+      --colors-gray5: hsl(0, 0%, 66%);
+      --colors-gray6: hsl(0, 0%, 57.75%);
+      --colors-gray7: hsl(0, 0%, 49.5%);
+      --colors-gray8: hsl(0, 0%, 41.25%);
+      --colors-gray9: hsl(0, 0%, 33%);
+      --colors-gray10: hsl(0, 0%, 24.75%);
+      --colors-gray11: hsl(0, 0%, 16.5%);
+      --colors-gray12: hsl(0, 0%, 8.25%);
+      /* ---------- ---------- ---------- ---------- ---------- */
+
       /* Colors from https://github.com/MaggieAppleton/maggieappleton.com-V2/blob/main/components/GlobalStyle.js */
-      --color-light-cream: #fcfbf7;
-      /* --color-cream: #f6f5f1; */
+      /* --color-light-cream: #fcfbf7;
+      --color-cream: #f6f5f1;
       --color-tinted-cream: #e6e3e1;
-      /* --color-black: #353534; */
+      --color-black: #353534;
       --color-gray-800: #4a4a46;
       --color-gray-600: #73706d;
       --color-gray-500: #8e8f94;
@@ -40,15 +70,13 @@ export const globals = css`
       --color-dark-sea-blue: #00758f;
       --color-purple: #7558b2;
       --color-salmon: #fd8370;
-      --color-light-salmon: #ffd09c;
-
-      --background: var(--color-cream);
-      --foreground: var(--color-black);
-      --color-border: var(--color-gray-500);
+      --color-light-salmon: #ffd09c; */
+      /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Viewport Widths */
       --viewport-min-width: 320px; /* Minimum viewport width */
       --viewport-max-width: 1240px; /* Maximum viewport width */
+      /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Breakpoints */
       --breakpoint-xs: 0px; /* Extra small devices (phones) */
@@ -57,8 +85,11 @@ export const globals = css`
       --breakpoint-lg: 992px; /* Large devices (desktops) */
       --breakpoint-xl: 1200px; /* Extra large devices (large screens) */
       --breakpoint-xxl: 1400px; /* Extra-extra large screens */
+      /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Spacing */
+      /* Spacing is made with and from https://utopia.fyi/space/calculator/ */
+
       /* Space 3xs: 5px → 5px */
       --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
       /* Space 2xs: 9px → 10px */
@@ -99,10 +130,11 @@ export const globals = css`
       /* Custom pairs */
       /* Space s-l: 18px → 40px */
       --space-s-l: clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem);
-
-      /* Spacing is made with and from https://utopia.fyi/space/calculator/ */
+      /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Font Sizes */
+      /* Font Sizes are made with and from https://utopia.fyi/type/calculator */
+
       /* Step -2: 12.5px → 12.8px */
       --step-neg-2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
       /* Step -1: 15px → 16px */
@@ -119,27 +151,47 @@ export const globals = css`
       --step-4: clamp(2.3328rem, 2.0827rem + 1.2504vw, 3.0518rem);
       /* Step 5: 44.7898px → 61.0352px */
       --step-5: clamp(2.7994rem, 2.4462rem + 1.7658vw, 3.8147rem);
-
-      /* Font Sizes are made with and from https://utopia.fyi/type/calculator */
+      /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Grid Layout */
       --grid-max-width: 77.5rem;
       --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
       --grid-columns: 12;
-    }
+      /* ---------- ---------- ---------- ---------- ---------- */
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --background: var(--color-black);
-        --foreground: var(--color-light-cream);
-        --color-border: var(--color-gray-500);
-      }
-    }
+      /* General Variable Names */
+      /* ColorNames */
+      --background: var(--colors-gray2);
+      --foreground: var(--colors-gray12);
+      --color-border: var(--colors-gray8);
+      /* FontSizes */
+      --fontSizes-xs: var(--step-neg-2);
+      --fontSizes-sm: var(--step-neg-1);
+      --fontSizes-base: var(--step-0);
+      --fontSizes-lg: var(--step-1);
+      --fontSizes-xl: var(--step-2);
+      --fontSizes-2xl: var(--step-3);
+      --fontSizes-3xl: var(--step-4);
+      --fontSizes-4xl: var(--step-5);
+      /* ---------- ---------- ---------- ---------- ---------- */
+    } // end of :root
 
+    /* Global Settings */
     body {
       color: var(--foreground);
       background: var(--background);
     }
+
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme */
+    /* Preferred Dark Mode Variables  */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: var(--colors-gray12);
+        --foreground: var(--colors-gray2);
+        --color-border: var(--colors-gray6);
+      }
+    }
+    /* ---------- ---------- ---------- ---------- ---------- */
 
     /* Fonts */
     html {
@@ -219,7 +271,6 @@ export const globals = css`
     /* ---------- ---------- ---------- ---------- ---------- */
 
     /* Piccalilli's Custom CSS Reset https://piccalil.li/blog/a-more-modern-css-reset/ */
-
     /* Box sizing rules */
     *,
     *::before,

@@ -32,7 +32,7 @@ export default function Header() {
 
 // Todo: Make better use of styles for global components and styles
 const headingStyles = css`
-  color: var(--color-dark-green);
+  /* color: var(--color-dark-green); */
 `;
 
 const StyledHeader = styled.header`
