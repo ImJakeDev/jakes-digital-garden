@@ -18,6 +18,14 @@ const bundleAnalyzerConfig = withBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+      },
+    ],
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   webpack: (config: any, {}) => {
     config.module.rules.push({
