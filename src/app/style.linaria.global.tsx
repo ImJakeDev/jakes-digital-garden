@@ -362,5 +362,7 @@ export const globals = css`
       scroll-margin-block: 5ex;
     }
     /* ---------- ---------- ---------- ---------- ---------- */
+
+    /* // Todo: Implement -> Typography and Opentype Default Stylesheet (TODS) https://github.com/clagnut/TODS */
   }
 `;
