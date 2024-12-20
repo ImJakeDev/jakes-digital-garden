@@ -1,10 +1,19 @@
+import useRandomEmoji from '@/hooks/useRandomEmoji';
+import useEmojiData from '@/services/hooks/useEmojisData';
 import { styled } from '@linaria/react';
 
 export default function Footer() {
+  const { data, isLoading } = useEmojiData();
+
+  console.log('data', data);
+  console.log('isLoading', isLoading);
+
+  const randomEmojiHexCode = useRandomEmoji();
+
   return (
     <StyledFooter>
       <StyledFooterContainer>
-        <span>Made with ✨ by Jake</span>
+        <span>Made with {randomEmojiHexCode} by Jake</span>
         <span>•</span>
         <em>© 2024 Jake Unplugged</em>
       </StyledFooterContainer>

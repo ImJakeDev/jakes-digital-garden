@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { STIX_Two_Text, Manrope, Fira_Code } from 'next/font/google';
 import './style.linaria.global';
-import Footer from '@/components/layouts/Footer';
-import Main from '@/components/layouts/Main';
-import Header from '@/components/layouts/Header';
-import { styled } from '@linaria/react';
+import Providers from './providers';
+import Layout from '@/components/layouts/Layout';
 
 const stixTwoText = STIX_Two_Text({
   subsets: ['latin'],
@@ -37,21 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${stixTwoText.variable} ${manrope.variable} ${firaCode.variable}`}>
       <body>
-        <StyledNoise />
-        <Header />
-        <Main>{children}</Main>
-        <Footer />
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );
 }
-
-const StyledNoise = styled.div`
-  /* prettier-ignore */
-  background-image: url("/noise.png");
-  position: fixed;
-  inset: 0;
-  mix-blend-mode: hard-light;
-  pointer-events: none;
-  z-index: -1;
-`;
