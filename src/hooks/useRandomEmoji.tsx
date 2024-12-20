@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import EmojiMeta from 'emojibase-data/meta/groups.json';
-import EmojiUnicode from 'emojibase-data/versions/unicode.json';
-import EmojiUnicodeNames from 'emojibase-data/meta/unicode-names.json';
 import EmojiHexCodes from 'emojibase-data/meta/hexcodes.json';
 
 // WIP
@@ -46,12 +43,12 @@ const useRandomEmoji = () => {
    #       minimally-qualified — a minimally-qualified emoji (see ED-18a in UTS #51)
    #       unqualified         — a unqualified emoji (See ED-19 in UTS #51)
    */
-  console.log('groups', EmojiMeta.groups);
-  console.log('subgroups', EmojiMeta.subgroups);
-  console.log('hierarchy', EmojiMeta.hierarchy);
-  console.log('EmojiUnicode', EmojiUnicode);
-  console.log('EmojiUnicodeNames', EmojiUnicodeNames);
-  console.log('EmojiHexCodes', EmojiHexCodes);
+  // console.log('groups', EmojiMeta.groups);
+  // console.log('subgroups', EmojiMeta.subgroups);
+  // console.log('hierarchy', EmojiMeta.hierarchy);
+  // console.log('EmojiUnicode', EmojiUnicode);
+  // console.log('EmojiUnicodeNames', EmojiUnicodeNames);
+  // console.log('EmojiHexCodes', EmojiHexCodes);
 
   const [emoji, setEmoji] = useState<JSX.Element>(<></>);
 
