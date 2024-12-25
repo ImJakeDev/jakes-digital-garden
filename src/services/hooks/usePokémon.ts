@@ -8,6 +8,7 @@ const fetchPokémon = async (pokémon: string) => {
 };
 
 const usePokémon = (pokémon: string) => {
+  // Todo: Add a select method that cleans up the data and gives it a type A.K.A. "a data massage" 💆
   return useQuery({
     queryKey: ['pokémon', pokémon],
     queryFn: () => fetchPokémon(pokémon),
