@@ -18,6 +18,12 @@ export default function Footer() {
   console.log('randomEmoji', randomEmoji);
   console.log('isLoadingRandomEmoji', isLoadingRandomEmoji);
 
+  const startsWithVowel = (word: string) => {
+    return ['a', 'e', 'i', 'o', 'u'].some((vowel) => word.startsWith(vowel));
+  };
+
+  const startsWithVowelLabel = startsWithVowel(randomEmoji?.label || '');
+
   return (
     <StyledFooter>
       <StyledFooterContainer>
@@ -31,7 +37,9 @@ export default function Footer() {
               by Jake
             </span>
             <div id="emoji-tooltip" popover="manual">
-              <span>a {randomEmoji.label}</span>
+              <span>
+                {startsWithVowelLabel ? 'an' : 'a'} {randomEmoji.label}
+              </span>
             </div>
           </div>
         )}
