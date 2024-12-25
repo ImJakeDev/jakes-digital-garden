@@ -3,12 +3,6 @@ import { fetchEmojis, Emoji } from 'emojibase';
 import EmojiMeta from 'emojibase-data/meta/groups.json';
 import filter from 'lodash.filter';
 
-const fetchRandomEmoji = () => {
-  const emojiData = fetchEmojis('en');
-
-  return emojiData;
-};
-
 type SubGroup =
   | 'alphanum'
   | 'animal-amphibian'
@@ -118,7 +112,14 @@ type Exclude = {
   subGroups?: SubGroup[];
 };
 
-const useRandomEmoji = ({ groups = ['flags', 'symbols', 'smileys-emotion', 'people-body', 'travel-places'], subGroups = ['arrow', 'body-parts', 'clothing', 'event', 'family', 'skin-tone', 'sport'] }: Exclude) => {
+const fetchRandomEmoji = () => {
+  // https://github.com/milesj/emojibase
+  const emojiData = fetchEmojis('en');
+
+  return emojiData;
+};
+
+const useRandomEmoji = ({ groups = ['people-body', 'smileys-emotion', 'symbols', 'travel-places', 'flags'], subGroups = ['body-parts', 'clothing', 'event', 'family', 'skin-tone', 'sport', 'arrow'] }: Exclude) => {
   return useQuery({
     queryKey: ['RandomEmoji', groups, subGroups],
     queryFn: () => fetchRandomEmoji(),

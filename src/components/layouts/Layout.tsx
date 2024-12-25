@@ -22,7 +22,7 @@ export default function Layout({
 
 const StyledNoise = styled.div`
   /* prettier-ignore */
-  background-image: url("/noise.png");
+  background-image: url('/noise.png');
   position: fixed;
   inset: 0;
   mix-blend-mode: hard-light;
