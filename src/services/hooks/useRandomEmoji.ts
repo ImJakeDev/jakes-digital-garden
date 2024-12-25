@@ -125,7 +125,8 @@ const useRandomEmoji = ({ groups = ['people-body', 'smileys-emotion', 'symbols',
     queryFn: () => fetchRandomEmoji(),
     staleTime: Infinity,
     select: (emojiData): Emoji => {
-      // Todo: label: "root vegetable" Has a bug rendering the emoji
+      // Todo: label: "root vegetable" Has a bug rendering the emoji on my device (MacOS: 14.6.1 (23G93))
+      // Todo: Check for OS, Browser, and Device rendering compatibility
 
       const groupExclusions = groups;
       const subgroupExclusions = subGroups;
