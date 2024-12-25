@@ -22,6 +22,8 @@ export default function Footer() {
     return ['a', 'e', 'i', 'o', 'u'].some((vowel) => word.startsWith(vowel));
   };
 
+  // Todo: Make the strings accessible and easier to copy n' paste and translatable and add aria-labels, they are very hacky right now
+
   return (
     <StyledFooter>
       <StyledFooterContainer>
