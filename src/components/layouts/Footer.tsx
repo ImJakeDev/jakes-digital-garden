@@ -22,8 +22,6 @@ export default function Footer() {
     return ['a', 'e', 'i', 'o', 'u'].some((vowel) => word.startsWith(vowel));
   };
 
-  const startsWithVowelLabel = startsWithVowel(randomEmoji?.label || '');
-
   return (
     <StyledFooter>
       <StyledFooterContainer>
@@ -38,7 +36,7 @@ export default function Footer() {
             </span>
             <div id="emoji-tooltip" popover="manual">
               <span>
-                {startsWithVowelLabel ? 'an' : 'a'} {randomEmoji.label}
+                {startsWithVowel(randomEmoji.label) ? 'an' : 'a'} {randomEmoji.label}
               </span>
             </div>
           </div>
