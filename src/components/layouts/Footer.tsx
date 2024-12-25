@@ -4,10 +4,21 @@ import { styled } from '@linaria/react';
 import Image from 'next/image';
 import { css } from '@linaria/core';
 import { format } from 'date-fns';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { pokémonsOptions } from '@/services/hooks/usePokémons';
 
 export default function Footer() {
+  const {
+    data: { results: Pokémons },
+  } = useSuspenseQuery(pokémonsOptions);
+
+  console.log('Pokémons', Pokémons);
+
+  const randomPokémonsIndex = Math.floor(Math.random() * Pokémons.length);
+  const randomPokémon = Pokémons[randomPokémonsIndex];
+
   // Todo: Enhance this feature to display a random Pokémon image or build an input to search for a specific Pokémon
-  const { data: Quagsire, isLoading: isLoadingQuagsire } = usePokémon('quagsire');
+  const { data: Quagsire, isLoading: isLoadingQuagsire } = usePokémon(randomPokémon.name);
   const { data: randomEmoji, isLoading: isLoadingRandomEmoji } = useRandomEmoji({});
 
   const now = new Date();
