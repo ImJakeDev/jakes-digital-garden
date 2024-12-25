@@ -19,6 +19,7 @@ export default function Footer() {
   console.log('isLoadingRandomEmoji', isLoadingRandomEmoji);
 
   const startsWithVowel = (word: string) => {
+    // Todo: Refactor this to make it more linguistically accurate
     return ['a', 'e', 'i', 'o', 'u'].some((vowel) => word.startsWith(vowel));
   };
 
