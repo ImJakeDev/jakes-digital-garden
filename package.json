@@ -43,6 +43,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-mdx-remote": "^5.0.0",
     "next-with-linaria": "^0.7.0",
+    "pokenode-ts": "^1.20.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "rehype-prism-plus": "^2.0.0",

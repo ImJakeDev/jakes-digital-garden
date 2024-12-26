@@ -79,6 +79,9 @@ importers:
       next-with-linaria:
         specifier: ^0.7.0
         version: 0.7.0(@babel/runtime@7.26.0)(@wyw-in-js/babel-preset@0.5.5(typescript@5.7.2))(@wyw-in-js/transform@0.5.5(typescript@5.7.2))
+      pokenode-ts:
+        specifier: ^1.20.0
+        version: 1.20.0(axios-cache-interceptor@1.6.2(axios@1.7.9))(axios@1.7.9)
       react:
         specifier: 19.0.0-rc-02c0e824-20241028
         version: 19.0.0-rc-02c0e824-20241028
@@ -1331,6 +1334,12 @@ packages:
     resolution: { integrity: sha512-RE3mdQ7P3FRSe7eqCWoeQ/Z9QXrtniSjp1wUjt5nRC3WIpz5rSCve6o3fsZ2aCpJtrZjSZgjwXAoTO5k4tEI0w== }
     engines: { node: '>=4' }
 
+  axios-cache-interceptor@1.6.2:
+    resolution: { integrity: sha512-YLbAODIHZZIcD4b3WYFVQOa5W2TY/WnJ6sBHqAg6Z+hx+RVj8/OcjQyRopO6awn7/kOkGL5X9TP16AucnlJ/lw== }
+    engines: { node: '>=12' }
+    peerDependencies:
+      axios: ^1
+
   axios@1.7.9:
     resolution: { integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw== }
 
@@ -1392,6 +1401,9 @@ packages:
   busboy@1.6.0:
     resolution: { integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA== }
     engines: { node: '>=10.16.0' }
+
+  cache-parser@1.2.5:
+    resolution: { integrity: sha512-Md/4VhAHByQ9frQ15WD6LrMNiVw9AEl/J7vWIXw+sxT6fSOpbtt6LHTp76vy8+bOESPBO94117Hm2bIjlI7XjA== }
 
   call-bind-apply-helpers@1.0.1:
     resolution: { integrity: sha512-BhYE+WDaywFg2TBWYNXAE+8B1ATnThNBqXHP5nQu0jWJdVvY2hvkpyB3qOmtmDePiS5/BDQ8wASEWGMWRG148g== }
@@ -1894,6 +1906,9 @@ packages:
 
   fast-deep-equal@3.1.3:
     resolution: { integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q== }
+
+  fast-defer@1.1.8:
+    resolution: { integrity: sha512-lEJeOH5VL5R09j6AA0D4Uvq7AgsHw0dAImQQ+F3iSyHZuAxyQfWobsagGpTcOPvJr3urmKRHrs+Gs9hV+/Qm/Q== }
 
   fast-glob@3.3.1:
     resolution: { integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg== }
@@ -2818,6 +2833,9 @@ packages:
     resolution: { integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg== }
     engines: { node: '>=0.10.0' }
 
+  object-code@1.3.3:
+    resolution: { integrity: sha512-/Ds4Xd5xzrtUOJ+xJQ57iAy0BZsZltOHssnDgcZ8DOhgh41q1YJCnTPnWdWSLkNGNnxYzhYChjc5dgC9mEERCA== }
+
   object-inspect@1.13.3:
     resolution: { integrity: sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA== }
     engines: { node: '>= 0.4' }
@@ -2943,6 +2961,13 @@ packages:
     resolution: { integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g== }
     engines: { node: '>=0.10' }
     hasBin: true
+
+  pokenode-ts@1.20.0:
+    resolution: { integrity: sha512-6MekrbiQc9nmaZJ5xpyhRSEMFo4xEsMuB7RR3EqfPvuXo/3StnH1p4brfIiIWDCcZvu7t9a0vjodiR4TnRdLEw== }
+    engines: { node: '>=14' }
+    peerDependencies:
+      axios: ^1.4.0
+      axios-cache-interceptor: ^1.2.0
 
   possible-typed-array-names@1.0.0:
     resolution: { integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q== }
@@ -5186,6 +5211,13 @@ snapshots:
 
   axe-core@4.10.2: {}
 
+  axios-cache-interceptor@1.6.2(axios@1.7.9):
+    dependencies:
+      axios: 1.7.9
+      cache-parser: 1.2.5
+      fast-defer: 1.1.8
+      object-code: 1.3.3
+
   axios@1.7.9:
     dependencies:
       follow-redirects: 1.15.9
@@ -5259,6 +5291,8 @@ snapshots:
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
+
+  cache-parser@1.2.5: {}
 
   call-bind-apply-helpers@1.0.1:
     dependencies:
@@ -5890,6 +5924,8 @@ snapshots:
   extend@3.0.2: {}
 
   fast-deep-equal@3.1.3: {}
+
+  fast-defer@1.1.8: {}
 
   fast-glob@3.3.1:
     dependencies:
@@ -7059,6 +7095,8 @@ snapshots:
 
   object-assign@4.1.1: {}
 
+  object-code@1.3.3: {}
+
   object-inspect@1.13.3: {}
 
   object-keys@1.1.1: {}
@@ -7196,6 +7234,11 @@ snapshots:
   picomatch@2.3.1: {}
 
   pidtree@0.6.0: {}
+
+  pokenode-ts@1.20.0(axios-cache-interceptor@1.6.2(axios@1.7.9))(axios@1.7.9):
+    dependencies:
+      axios: 1.7.9
+      axios-cache-interceptor: 1.6.2(axios@1.7.9)
 
   possible-typed-array-names@1.0.0: {}
 
