@@ -2,13 +2,13 @@ import { getAllPosts, PostMeta } from '@/utils/getAllPosts';
 import Card from '@/components/Card';
 import PageContainer from '@/components/layouts/PageContainer';
 import { getQueryClient } from './get-query-client';
-import { pokémonsOptions } from '@/services/hooks/usePokémons';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 
 export default async function Home() {
   const queryClient = getQueryClient();
 
-  void queryClient.prefetchQuery(pokémonsOptions);
+  void queryClient.prefetchQuery(randomPokémonOptions);
 
   const posts: PostMeta[] = getAllPosts();
 

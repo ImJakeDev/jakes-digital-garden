@@ -1,5 +1,6 @@
 import type CaughtPokémons from '@/types/CaughtPokémons';
 import { CaughtPokémonsSchema } from '@/types/CaughtPokémons';
+import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import ms from 'milliseconds';
@@ -12,7 +13,7 @@ const api = axios.create({
   },
 });
 
-const fetchAllPokémons = async (): Promise<CaughtPokémons> => {
+const fetchAllPokémon = async (): Promise<CaughtPokémons> => {
   const fetchRecursive = async (url: string, aggregatedResults: CaughtPokémons['results'] = []): Promise<CaughtPokémons> => {
     const { data } = await api.get<CaughtPokémons>(url);
 
@@ -34,18 +35,19 @@ const fetchAllPokémons = async (): Promise<CaughtPokémons> => {
   return fetchRecursive(initialUrl);
 };
 
-const pokémonsOptions = queryOptions({
-  queryKey: ['pokémons'],
-  queryFn: () => fetchAllPokémons(),
+const randomPokémonOptions = queryOptions({
+  queryKey: ['randomPokémon'],
+  queryFn: () => fetchAllPokémon(),
   staleTime: Infinity,
+  select: (randomPokémon) => getRandomArrayIndex(randomPokémon.results.map((pokémon) => pokémon.name)),
 });
 
-const usePokémons = () => {
+const useRandomPokémon = () => {
   return useQuery({
-    ...pokémonsOptions,
+    ...randomPokémonOptions,
   });
 };
 
-export { pokémonsOptions };
+export { randomPokémonOptions };
 
-export default usePokémons;
+export default useRandomPokémon;
