@@ -1,3 +1,4 @@
+import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
 import { useQuery } from '@tanstack/react-query';
 import { fetchEmojis, Emoji } from 'emojibase';
 import EmojiMeta from 'emojibase-data/meta/groups.json';
@@ -159,8 +160,7 @@ const useRandomEmoji = ({ groups = ['people-body', 'smileys-emotion', 'symbols',
         });
       });
 
-      const randomModifiedIndex = Math.floor(Math.random() * filteredEmojiDataForSubGroups.length);
-      const randomModifiedEmoji = filteredEmojiDataForSubGroups[randomModifiedIndex];
+      const randomModifiedEmoji = getRandomArrayIndex(filteredEmojiDataForSubGroups);
 
       return randomModifiedEmoji;
     },

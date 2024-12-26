@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { pokémonsOptions } from './usePokémons';
+import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
 
 const fetchPokémon = async (pokémon: string) => {
   // https://pokeapi.co/
@@ -7,11 +9,14 @@ const fetchPokémon = async (pokémon: string) => {
   return (await response).data;
 };
 
-const usePokémon = (pokémon: string) => {
-  // Todo: Add a select method that cleans up the data and gives it a type A.K.A. "a data massage" 💆
+const usePokémon = (pokémon?: string) => {
+  const { data: pokémons } = useSuspenseQuery(pokémonsOptions);
+
+  const randomPokémon = getRandomArrayIndex(pokémons.results);
+
   return useQuery({
-    queryKey: ['pokémon', pokémon],
-    queryFn: () => fetchPokémon(pokémon),
+    queryKey: ['pokémon', pokémon, randomPokémon.name],
+    queryFn: () => fetchPokémon(!!pokémon ? pokémon : randomPokémon.name),
     staleTime: Infinity,
   });
 };
