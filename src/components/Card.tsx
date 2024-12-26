@@ -1,16 +1,13 @@
-import Link from 'next/link';
-
 type CardProps = {
   title: string;
   description: string;
   tags: string[];
-  slug: string;
 };
 
-export default function Card({ title, description, tags, slug }: CardProps) {
+export default function Card({ title, description, tags }: CardProps) {
   return (
     <div>
-      <Link href={`/blog/${slug}`}>{title}</Link>
+      <h3>{title}</h3>
       <p>{description}</p>
       <div>
         {tags.map((tag, index) => (

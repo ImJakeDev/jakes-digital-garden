@@ -2,7 +2,7 @@ import useRandomEmoji from '@/services/hooks/useRandomEmoji';
 import { styled } from '@linaria/react';
 import { css } from '@linaria/core';
 import { format } from 'date-fns';
-import Pokémon from './Pokémon';
+import Pokémon from '@/components/Pokémon';
 
 export default function Footer() {
   const { data: randomEmoji, isLoading: isLoadingRandomEmoji } = useRandomEmoji({});
