@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const CaughtPokémonsSchema = z.object({
+const AllCaughtPokémonSchema = z.object({
   count: z.number(),
   next: z.string().nullable(), // Todo: Will this ever be null?
   previous: z.string().nullable(),
@@ -12,8 +12,8 @@ const CaughtPokémonsSchema = z.object({
   ),
 });
 
-type CaughtPokémons = z.infer<typeof CaughtPokémonsSchema>;
+type AllCaughtPokémon = z.infer<typeof AllCaughtPokémonSchema>;
 
-export { CaughtPokémonsSchema };
+export { AllCaughtPokémonSchema };
 
-export default CaughtPokémons;
+export default AllCaughtPokémon;

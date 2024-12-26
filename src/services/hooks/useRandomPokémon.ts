@@ -1,5 +1,4 @@
-import type CaughtPokémons from '@/types/CaughtPokémons';
-import { CaughtPokémonsSchema } from '@/types/CaughtPokémons';
+import AllCaughtPokémon, { AllCaughtPokémonSchema } from '@/types/AllCaughtPokémon';
 import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -13,9 +12,9 @@ const api = axios.create({
   },
 });
 
-const fetchAllPokémon = async (): Promise<CaughtPokémons> => {
-  const fetchRecursive = async (url: string, aggregatedResults: CaughtPokémons['results'] = []): Promise<CaughtPokémons> => {
-    const { data } = await api.get<CaughtPokémons>(url);
+const fetchAllPokémon = async (): Promise<AllCaughtPokémon> => {
+  const fetchRecursive = async (url: string, aggregatedResults: AllCaughtPokémon['results'] = []): Promise<AllCaughtPokémon> => {
+    const { data } = await api.get<AllCaughtPokémon>(url);
 
     // Combine the current page results with aggregated results
     const updatedResults = aggregatedResults.concat(data.results);
@@ -26,7 +25,7 @@ const fetchAllPokémon = async (): Promise<CaughtPokémons> => {
     }
 
     const combinedData = { ...data, results: updatedResults, next: null, previous: null };
-    const parsedData = CaughtPokémonsSchema.parse(combinedData);
+    const parsedData = AllCaughtPokémonSchema.parse(combinedData);
 
     return parsedData;
   };
