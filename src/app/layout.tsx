@@ -23,8 +23,8 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: 'Jake Unplugged',
-  description: 'This is Jake but unplugged!',
+  title: "Jake's Digital Garden",
+  description: 'A place where digital seeds are planted of thoughts, notes, and ideas.',
 };
 
 export default function RootLayout({
