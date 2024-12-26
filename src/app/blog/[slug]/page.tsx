@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import PageContainer from '@/components/layouts/PageContainer';
 
 interface PageProps {
   params: {
@@ -34,11 +35,13 @@ export default async function BlogPost({ params }: PageProps): Promise<JSX.Eleme
 
   // Render MDX content
   return (
-    <div>
-      <h1>{data.title}</h1>
-      <div>
-        <MDXRemote source={content} />
-      </div>
-    </div>
+    <PageContainer>
+      <article>
+        <h1>{data.title}</h1>
+        <div>
+          <MDXRemote source={content} />
+        </div>
+      </article>
+    </PageContainer>
   );
 }
