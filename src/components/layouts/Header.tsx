@@ -7,7 +7,7 @@ export default function Header() {
     <StyledHeader>
       <StyledHeaderContainer>
         <h1 className={headingStyles}>
-          <Link href="/">Jake&apos;s Digital Garden</Link>
+          <Link href="/">Jake Schaffer</Link>
         </h1>
         <nav>
           <StyledNavigationOrderedList>

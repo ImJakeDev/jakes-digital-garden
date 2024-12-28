@@ -17,30 +17,42 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PageContainer>
-        {/* // Todo: Build Intro Message Section */}
+        <div>
+          <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore the intersections of technology, thoughts, and ideas.</p>
+        </div>
         {/* // Todo: Build The Digital Garden Section */}
-        <h2>Blog Posts:</h2>
-        <ul className={BlogPostsStyles}>
-          {posts.length > 0 ? (
-            posts.map((post, index) => (
-              <Link key={index} href={`/blog/${post.slug}`}>
-                <li>
-                  <Card title={post.title} description={post.description} tags={post.tags} />
-                </li>
-              </Link>
-            ))
-          ) : (
-            <li>
-              <p>No blog posts found.</p>
-            </li>
-          )}
-        </ul>
+        <div className={SectionStyles}>
+          <h2>Blog Posts:</h2>
+          <ul className={BlogPostsStyles}>
+            {posts.length > 0 ? (
+              posts.map((post, index) => (
+                <Link key={index} href={`/blog/${post.slug}`}>
+                  <li>
+                    <Card title={post.title} description={post.description} tags={post.tags} />
+                  </li>
+                </Link>
+              ))
+            ) : (
+              <li>
+                <p>No blog posts found.</p>
+              </li>
+            )}
+          </ul>
+        </div>
       </PageContainer>
     </HydrationBoundary>
   );
 }
 
 const BlogPostsStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--space-m-l);
+`;
+
+const SectionStyles = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
