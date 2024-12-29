@@ -1,4 +1,4 @@
-import { getAllPosts, PostMeta } from '@/utils/getAllPosts';
+import { getAllPosts } from '@/utils/getAllPosts';
 import Card from '@/components/Card';
 import PageContainer from '@/components/layouts/PageContainer';
 import { getQueryClient } from './get-query-client';
@@ -12,7 +12,7 @@ export default async function Home() {
 
   void queryClient.prefetchQuery(randomPokémonOptions);
 
-  const posts: PostMeta[] = getAllPosts();
+  const posts = getAllPosts();
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -24,7 +24,7 @@ export default async function Home() {
         <div className={SectionStyles}>
           <h2>Blog Posts:</h2>
           <ul className={BlogPostsStyles}>
-            {posts.length > 0 ? (
+            {!!posts.length ? (
               posts.map((post, index) => (
                 <Link key={index} href={`/blog/${post.slug}`}>
                   <li>

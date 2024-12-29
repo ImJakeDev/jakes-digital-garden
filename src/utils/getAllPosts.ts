@@ -11,7 +11,7 @@ export type PostMeta = {
 };
 
 export function getAllPosts(): PostMeta[] {
-  const postsDirectory = path.join(process.cwd(), 'content');
+  const postsDirectory = path.join(process.cwd(), 'content/blog');
   const filenames = fs.readdirSync(postsDirectory);
 
   return filenames.map((filename) => {
@@ -21,6 +21,7 @@ export function getAllPosts(): PostMeta[] {
     try {
       const { data } = matter(fileContent);
 
+      // Todo: Update image feature
       // Correct fallback image path (omit "public/")
       const imageUrl = data.img || 'https://picsum.photos/200/300';
 

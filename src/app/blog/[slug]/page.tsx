@@ -22,11 +22,15 @@ export async function generateStaticParams() {
 // Change BlogPost to return a Promise
 export default async function BlogPost({ params }: PageProps): Promise<JSX.Element> {
   const { slug } = await params;
-  const postFilePath = path.join(process.cwd(), 'content', `${slug}.mdx`);
+  const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
 
   // Check if the file exists
   if (!fs.existsSync(postFilePath)) {
-    return <div>Post not found</div>;
+    return (
+      <PageContainer>
+        <h3>Post not found</h3>
+      </PageContainer>
+    );
   }
 
   // Read the content
