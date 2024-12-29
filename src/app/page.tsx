@@ -18,7 +18,7 @@ export default async function Home() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PageContainer>
         <div>
-          <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore the intersections of technology, thoughts, and ideas.</p>
+          <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore technology, creativity, and ideas.</p>
         </div>
         {/* // Todo: Build The Digital Garden Section */}
         <div className={SectionStyles}>
