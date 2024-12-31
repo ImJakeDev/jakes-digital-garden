@@ -16,7 +16,7 @@ export default function BlogPage() {
             return (
               <Link key={index} href={`/blog/${post.slug}`}>
                 <li>
-                  <Card title={post.title} description={post.description} tags={post.tags} />
+                  <Card title={post.title} description={post.description} />
                 </li>
               </Link>
             );

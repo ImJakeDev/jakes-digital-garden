@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
+import { css } from '@linaria/core';
 
 interface PageProps {
   params: {
@@ -33,19 +34,22 @@ export default async function BlogPost({ params }: PageProps): Promise<JSX.Eleme
     );
   }
 
-  // Read the content
   const postContent = fs.readFileSync(postFilePath, 'utf-8');
   const { data, content } = matter(postContent);
 
-  // Render MDX content
   return (
     <PageContainer>
-      <article>
+      <article className={articleStyles}>
         <h1>{data.title}</h1>
-        <div>
-          <MDXRemote source={content} />
-        </div>
+        <span>Planted on: {data.plantedOn}</span>
+        <MDXRemote source={content} />
       </article>
     </PageContainer>
   );
 }
+
+const articleStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+`;

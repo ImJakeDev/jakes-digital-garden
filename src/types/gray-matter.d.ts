@@ -1,6 +1,15 @@
 declare module 'gray-matter' {
-  interface GrayMatterFile<T> {
-    data: T;
+  type metaData = {
+    title: string;
+    description: string;
+    tags: string[];
+    category: string;
+    img: string;
+    plantedOn: string;
+    tendedTo: string;
+  };
+  interface GrayMatterFile<metaData> {
+    data: metaData;
     content: string;
     excerpt?: string;
     orig?: string;

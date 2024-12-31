@@ -28,7 +28,7 @@ export default async function Home() {
               posts.map((post, index) => (
                 <Link key={index} href={`/blog/${post.slug}`}>
                   <li>
-                    <Card title={post.title} description={post.description} tags={post.tags} />
+                    <Card title={post.title} description={post.description} />
                   </li>
                 </Link>
               ))
