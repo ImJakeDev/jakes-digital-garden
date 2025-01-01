@@ -2,20 +2,20 @@
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import Book from './Book';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { css } from '@linaria/core';
 
 export default function BookList() {
   const { data, isLoading, isError } = useSuspenseQuery(openLibraryOptions);
 
   return (
-    <div>
-      <h2>Book List:</h2>
+    <>
       {isLoading ? (
         <p>Loading...</p>
       ) : isError ? (
         <p>Error</p>
       ) : (
         !!data && (
-          <ul>
+          <ul className={BooksStyles}>
             {data.reading_log_entries.map((book, index) => {
               return (
                 <li key={index}>
@@ -26,6 +26,14 @@ export default function BookList() {
           </ul>
         )
       )}
-    </div>
+    </>
   );
 }
+
+const BooksStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--space-m-l);
+`;

@@ -17,7 +17,7 @@ type BookProps = {
 
 export default function Book(book: BookProps) {
   const key = 'ID';
-  const size = 'M';
+  const size = 'L';
 
   return (
     <div>

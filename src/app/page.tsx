@@ -43,6 +43,7 @@ export default async function Home() {
           </ul>
         </div>
         <div className={SectionStyles}>
+          <h2>Library:</h2>
           <BookList />
         </div>
       </PageContainer>
