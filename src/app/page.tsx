@@ -6,11 +6,14 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import { css } from '@linaria/core';
 import Link from 'next/link';
+import BookList from '@/components/BookList';
+import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 
 export default async function Home() {
   const queryClient = getQueryClient();
 
   void queryClient.prefetchQuery(randomPokémonOptions);
+  void queryClient.prefetchQuery(openLibraryOptions);
 
   const posts = getAllPosts();
 
@@ -38,6 +41,9 @@ export default async function Home() {
               </li>
             )}
           </ul>
+        </div>
+        <div className={SectionStyles}>
+          <BookList />
         </div>
       </PageContainer>
     </HydrationBoundary>
