@@ -13,6 +13,7 @@ export default async function Home() {
   const queryClient = getQueryClient();
 
   void queryClient.prefetchQuery(randomPokémonOptions);
+  // Todo: Should I be prefetching the openLibraryOptions here? 🤔
   void queryClient.prefetchQuery(openLibraryOptions);
 
   const posts = getAllPosts();
