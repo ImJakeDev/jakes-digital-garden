@@ -3,6 +3,7 @@ import { styled } from '@linaria/react';
 import { css } from '@linaria/core';
 import { format } from 'date-fns';
 import Pokémon from '@/components/Pokémon';
+import SocialList from '@/components/SocialList';
 
 export default function Footer() {
   const { data: randomEmoji, isLoading: isLoadingRandomEmoji } = useRandomEmoji({});
@@ -39,6 +40,7 @@ export default function Footer() {
         <span>•</span>
         <em>© {format(now, 'yyyy')} Jake&apos;s Digital Garden</em>
       </StyledFooterContainer>
+      <SocialList />
       <Pokémon />
     </StyledFooter>
   );
