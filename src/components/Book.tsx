@@ -21,7 +21,7 @@ export default function Book(book: BookProps) {
   const size = 'L';
 
   return (
-    <div style={{ maxWidth: 'min-content' }}>
+    <div className={BookWorkStyles}>
       <h2>{book.work.title}</h2>
       <p>Author: {book.work.author_names[0]}</p>
       <div className={CoverImageStyles}>
@@ -30,6 +30,10 @@ export default function Book(book: BookProps) {
     </div>
   );
 }
+
+const BookWorkStyles = css`
+  max-width: 'min-content';
+`;
 
 const CoverImageStyles = css`
   position: relative;
