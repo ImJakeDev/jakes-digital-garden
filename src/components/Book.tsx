@@ -1,4 +1,5 @@
 'use client';
+import { css } from '@linaria/core';
 import Image from 'next/image';
 
 type BookProps = {
@@ -23,7 +24,18 @@ export default function Book(book: BookProps) {
     <div>
       <h2>{book.work.title}</h2>
       <p>{book.work.author_names}</p>
-      <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
+      <div className={CoverImageStyles}>
+        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} fill={true} />
+      </div>
     </div>
   );
 }
+
+const CoverImageStyles = css`
+  position: relative;
+  aspect-ratio: 2/3;
+  min-width: 20ch;
+  max-width: 30ch;
+  min-height: 20ch;
+  max-height: 30ch;
+`;

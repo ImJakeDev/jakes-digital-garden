@@ -32,8 +32,8 @@ export default function BookList() {
 
 const BooksStyles = css`
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-flow: row wrap;
   gap: var(--space-m-l);
 `;
