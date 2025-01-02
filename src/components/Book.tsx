@@ -21,9 +21,9 @@ export default function Book(book: BookProps) {
   const size = 'L';
 
   return (
-    <div>
+    <div style={{ maxWidth: 'min-content' }}>
       <h2>{book.work.title}</h2>
-      <p>{book.work.author_names}</p>
+      <p>Author: {book.work.author_names[0]}</p>
       <div className={CoverImageStyles}>
         <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} fill={true} />
       </div>
