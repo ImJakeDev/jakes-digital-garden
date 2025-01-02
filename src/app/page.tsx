@@ -6,11 +6,15 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import { css } from '@linaria/core';
 import Link from 'next/link';
+import BookList from '@/components/BookList';
+import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 
 export default async function Home() {
   const queryClient = getQueryClient();
 
   void queryClient.prefetchQuery(randomPokémonOptions);
+  // Todo: Should I be prefetching the openLibraryOptions here? 🤔
+  void queryClient.prefetchQuery(openLibraryOptions);
 
   const posts = getAllPosts();
 
@@ -21,28 +25,36 @@ export default async function Home() {
           <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore technology, creativity, and ideas.</p>
         </div>
         {/* // Todo: Build The Digital Garden Section */}
-        <div className={SectionStyles}>
-          <h2>Blog Posts:</h2>
-          <ul className={BlogPostsStyles}>
-            {!!posts.length ? (
-              posts.map((post, index) => (
-                <Link key={index} href={`/blog/${post.slug}`}>
-                  <li>
-                    <Card title={post.title} description={post.description} />
-                  </li>
-                </Link>
-              ))
-            ) : (
-              <li>
-                <p>No blog posts found.</p>
-              </li>
-            )}
-          </ul>
+        <div className={GardenFenceStyles}>
+          <div className={SectionStyles}>
+            <h2>Blog Posts:</h2>
+            <ul className={BlogPostsStyles}>
+              {!!posts.length ? (
+                posts.map((post, index) => (
+                  <Link key={index} href={`/blog/${post.slug}`}>
+                    <li>
+                      <Card title={post.title} description={post.description} />
+                    </li>
+                  </Link>
+                ))
+              ) : (
+                <li>
+                  <p>No blog posts found.</p>
+                </li>
+              )}
+            </ul>
+          </div>
+          <div className={SectionStyles}>
+            <h2>The Library:</h2>
+            <BookList />
+          </div>
         </div>
       </PageContainer>
     </HydrationBoundary>
   );
 }
+
+// Todo: Update the styles for the Home page layout!
 
 const BlogPostsStyles = css`
   display: flex;
@@ -57,5 +69,13 @@ const SectionStyles = css`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: var(--space-m-l);
+`;
+
+const GardenFenceStyles = css`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-flow: row wrap;
   gap: var(--space-m-l);
 `;
