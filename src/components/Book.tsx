@@ -22,24 +22,23 @@ export default function Book(book: BookProps) {
 
   return (
     <div className={BookWorkStyles}>
-      <h2>{book.work.title}</h2>
+      <h3>{book.work.title}</h3>
       <p>Author: {book.work.author_names[0]}</p>
       <div className={CoverImageStyles}>
-        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} fill={true} />
+        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
       </div>
     </div>
   );
 }
 
 const BookWorkStyles = css`
-  max-width: 'min-content';
+  text-wrap: 'balance';
+  max-width: 20ch;
 `;
 
 const CoverImageStyles = css`
   position: relative;
   aspect-ratio: 2/3;
+  max-width: 20ch;
   min-width: 20ch;
-  max-width: 30ch;
-  min-height: 20ch;
-  max-height: 30ch;
 `;
