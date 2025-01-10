@@ -3,6 +3,8 @@ import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import Book from './Book';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';
+import Link from 'next/link';
+import { createUrlTitle } from '@/utils/createUrlTitle';
 
 export default function BookList() {
   const { data, isLoading, isError } = useSuspenseQuery(openLibraryOptions);
@@ -17,9 +19,12 @@ export default function BookList() {
         !!data && (
           <ul className={BooksStyles}>
             {data.reading_log_entries.map((book, index) => {
+              const urlTitle = createUrlTitle(book.work.title);
               return (
                 <li key={index}>
-                  <Book work={book.work} />
+                  <Link href={`/books/${urlTitle}`}>
+                    <Book work={book.work} />
+                  </Link>
                 </li>
               );
             })}
