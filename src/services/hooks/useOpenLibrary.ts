@@ -1,6 +1,7 @@
 import { OpenLibraryAlreadyReadResponseSchema } from '@/types/OpenLibraryAlreadyReadResponse';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import ms from 'milliseconds';
 
 const fetchOpenLibrary = async () => {
   const response = axios.get(`https://openlibrary.org/people/jakeschaffer/books/already-read.json`);
@@ -12,7 +13,7 @@ const fetchOpenLibrary = async () => {
 const openLibraryOptions = {
   queryKey: ['open-book'],
   queryFn: () => fetchOpenLibrary(),
-  staleTime: Infinity,
+  staleTime: ms.hours(12),
 };
 
 const useOpenLibrary = () => {
