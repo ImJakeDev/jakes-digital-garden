@@ -8,7 +8,8 @@
   "prettier.trailingComma": "es5",
   "prettier.semi": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "typescript.tsdk": "node_modules/typescript/lib",
@@ -28,5 +29,9 @@
   },
   "testing.automaticallyOpenPeekView": "never",
   "debug.openDebug": "openOnSessionStart",
-  "cSpell.words": ["Bluesky", "Linaria", "Schaffer", "stix", "stylelint"]
+  "cSpell.words": ["Bluesky", "Linaria", "Schaffer", "stix", "stylelint"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "prettier.configPath": ".prettierrc",
+  "stylelint.validate": ["css", "typescript", "typescriptreact"]
 }
