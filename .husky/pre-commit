@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 echo '🏗️👷 Running pre-commit checks: styling, linting, type-checking, and building...'
 
 # Helper function for error messages
@@ -9,28 +6,26 @@ error_message() {
   false
 }
 
-# Run all checks in parallel and store their exit codes
-pnpm check:format & PID1=$!
-pnpm check:styles & PID2=$!
-pnpm check:lint & PID3=$!
-pnpm check:types & PID4=$!
-
-# Wait for all processes to complete
-wait $PID1 || error_message '🤢🤮🤢🤮 Its F**KING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+# Check Prettier standards
+pnpm check:format || error_message '🤢🤮🤢🤮 Its F**KING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
 Prettier Check Failed. Run pnpm format, add changes, and try to commit again.'
 
-wait $PID2 || error_message '🚨💅🚨 Stylelint Check Failed 🚨💅🚨
+# Check Stylelint standards
+pnpm check:styles || error_message '🚨💅🚨 Stylelint Check Failed 🚨💅🚨
 Your CSS/SCSS/TSX styling needs attention. Run pnpm check:stylelint, fix the issues, add changes, and try to commit again.'
 
-wait $PID3 || error_message '😤🏀👋😤 Get that weak s**t out of here! 😤🏀👋😤 
+# Check ESLint standards
+pnpm check:lint || error_message '😤🏀👋😤 Get that weak s**t out of here! 😤🏀👋😤 
 ESLint Check Failed. Fix the issues, add changes, and try to commit again.'
 
-wait $PID4 || error_message '🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
+# Check TypeScript type standards
+pnpm check:types || error_message '🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
 Are you seriously trying to write that? Make the changes required above.'
 
-echo '✅ All checks passed. Building...'
+# Build the project if all checks pass
+echo '🤔🤔🤔🤔... Alright... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
+pnpm build || error_message '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
+Build failed: View the errors above to see why.'
 
-# Run build
-pnpm build || error_message '❌ Build failed. Please fix the issues and try again.'
-
-echo '✅ All checks passed. Committing...'
+# Final success message
+echo '✅✅✅✅ You win this time... Committing now. ✅✅✅✅'
