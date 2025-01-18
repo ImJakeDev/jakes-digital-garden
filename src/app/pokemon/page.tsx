@@ -4,6 +4,7 @@ import PageContainer from '@/components/layouts/PageContainer';
 import usePokémon from '@/services/hooks/usePokémon';
 import toTitleCase from '@/utils/toTitleCase';
 import { Suspense } from 'react';
+import Image from 'next/image';
 
 function SearchForPokémon() {
   // Example url: http://localhost:3000/pokemon?name=pikachu
@@ -18,7 +19,8 @@ function SearchForPokémon() {
 
   return (
     <>
-      <h1>Results for: {toTitleCase(pokémon.name)}</h1>
+      <h1>{toTitleCase(pokémon.name)}</h1>
+      <Image src={pokémon.sprites.front_default ?? ''} alt={pokémon.name} width={96} height={96} />
       {/* // Todo: Render data here */}
     </>
   );
