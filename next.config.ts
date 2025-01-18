@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'covers.openlibrary.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.tcgdex.net',
+      },
     ],
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],

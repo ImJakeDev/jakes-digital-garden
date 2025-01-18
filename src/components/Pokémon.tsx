@@ -19,7 +19,7 @@ export default function Pokémon() {
       <div className={pokémonContainer}>
         <span className="pokémon-wrapper">
           <button popoverTarget="pokémon-tooltip" className="pokémon" popoverTargetAction="toggle">
-            <Image src={pokémon.sprites.front_default ?? ''} alt={pokémon.name} width={96} height={96} />
+            <Image src={pokémon.sprites.front_default ?? ''} alt={pokémon.name} width={96} height={96} priority={false} />
           </button>
         </span>
         <div id="pokémon-tooltip" popover="manual">
