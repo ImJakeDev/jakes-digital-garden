@@ -1,10 +1,11 @@
 import { QueryClient, defaultShouldDehydrateQuery, isServer } from '@tanstack/react-query';
+import ms from 'milliseconds';
 
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: ms.minutes(1),
       },
       dehydrate: {
         // include pending queries in dehydration

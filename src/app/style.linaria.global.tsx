@@ -154,7 +154,7 @@ export const globals = css`
       /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Grid Layout */
-      --grid-max-width: 77.5rem;
+      --grid-max-width: 88.75rem;
       --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
       --grid-columns: 12;
       /* ---------- ---------- ---------- ---------- ---------- */
