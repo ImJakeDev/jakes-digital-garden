@@ -62,6 +62,23 @@ const BlogPostsStyles = css`
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--space-m-l);
+
+  background-color: var(--surface-3);
+  box-shadow: var(--shadow-1);
+  border-radius: var(--radius-drawn-3);
+  border: var(--border-size-2) solid var(--gray-6);
+  padding: var(--size-fluid-2);
+
+  list-style: none;
+
+  li {
+    padding: 0;
+  }
+
+  &:hover {
+    box-shadow: var(--shadow-3);
+    background-color: var(--surface-4);
+  }
 `;
 
 const SectionStyles = css`

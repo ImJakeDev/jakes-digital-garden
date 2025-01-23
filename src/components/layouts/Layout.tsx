@@ -20,12 +20,13 @@ export default function Layout({
   );
 }
 
+// Todo: fix render bug
 const StyledNoise = styled.div`
-  /* prettier-ignore */
   background-image: url('/noise.png');
   position: fixed;
   inset: 0;
   mix-blend-mode: hard-light;
   pointer-events: none;
+  height: 100vh;
   z-index: -1;
 `;

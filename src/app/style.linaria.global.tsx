@@ -3,74 +3,11 @@ import { css } from '@linaria/core';
 export const globals = css`
   :global() {
     :root {
-      /* Colors */
+      /* Core Open Props with all essential custom properties */
+      @import 'open-props/open-props.min.css';
+      @import 'open-props/normalize.min.css';
+      @import 'open-props/buttons.min.css';
 
-      /* // Todo: Work on brand colors!!! */
-
-      /* Primary Colors for https://www.fffuel.co/pppalette/ */
-      /* hsl(10, 100%, 75%) */
-      /* hsl(48, 20%, 95%) */
-      /* hsl(48, 21.74%, 95.49%) */
-
-      --color-blue: hsl(210, 100%, 76.08%);
-      --color-light-blue: hsl(189, 100%, 86.27%);
-      --color-dark-blue: hsl(208, 54.87%, 55.69%);
-      --color-green: hsl(90, 100%, 76.08%);
-      --color-light-green: hsl(67, 100%, 85.88%);
-      --color-dark-green: hsl(91, 53.85%, 56.67%);
-      --color-pink: hsl(330, 100%, 76.08%);
-      --color-light-pink: hsl(308, 100%, 85.88%);
-      --color-dark-pink: hsl(328, 52.68%, 56.08%);
-
-      --color-cream: hsl(48, 21.74%, 95.49%);
-      --color-dark-cream: hsl(48, 4.42%, 77.84%);
-      --color-light-gray: hsl(48, 2.49%, 60.59%);
-      --color-gray: hsl(60, 1.77%, 44.31%);
-      --color-dark-gray: hsl(48, 3.36%, 29.22%);
-      --color-black: hsl(45, 5.13%, 15.29%);
-
-      /* --asdf: #bcaca9;
-      --asdf: #c5b7b4;
-      --asdf: #cec2c0;
-      --asdf: #d7cdcb;
-      --asdf: #e0d8d7;
-      --asdf: #e9e3e2; */
-      /* ---------- ---------- ---------- ---------- ---------- */
-
-      /* Grays: 99 ÷ 12 = 8.25 */
-      --colors-gray1: hsl(0, 0%, 99%);
-      --colors-gray2: hsl(0, 0%, 90.75%);
-      --colors-gray3: hsl(0, 0%, 82.5%);
-      --colors-gray4: hsl(0, 0%, 74.25%);
-      --colors-gray5: hsl(0, 0%, 66%);
-      --colors-gray6: hsl(0, 0%, 57.75%);
-      --colors-gray7: hsl(0, 0%, 49.5%);
-      --colors-gray8: hsl(0, 0%, 41.25%);
-      --colors-gray9: hsl(0, 0%, 33%);
-      --colors-gray10: hsl(0, 0%, 24.75%);
-      --colors-gray11: hsl(0, 0%, 16.5%);
-      --colors-gray12: hsl(0, 0%, 8.25%);
-      /* ---------- ---------- ---------- ---------- ---------- */
-
-      /* Colors from https://github.com/MaggieAppleton/maggieappleton.com-V2/blob/main/components/GlobalStyle.js */
-      /* --color-light-cream: #fcfbf7;
-      --color-cream: #f6f5f1;
-      --color-tinted-cream: #e6e3e1;
-      --color-black: #353534;
-      --color-gray-800: #4a4a46;
-      --color-gray-600: #73706d;
-      --color-gray-500: #8e8f94;
-      --color-gray-400: #afb0b6;
-      --color-gray-300: #d3d3d1;
-      --color-gray-100: #e9e9e7;
-      --color-bright-crimson: #960462;
-      --color-crimson: #5f023e;
-      --color-sea-blue: #04a5bb;
-      --color-medium-sea-blue: #008ba3;
-      --color-dark-sea-blue: #00758f;
-      --color-purple: #7558b2;
-      --color-salmon: #fd8370;
-      --color-light-salmon: #ffd09c; */
       /* ---------- ---------- ---------- ---------- ---------- */
 
       /* Viewport Widths */
@@ -161,9 +98,9 @@ export const globals = css`
 
       /* General Variable Names */
       /* ColorNames */
-      --background: var(--colors-gray2);
-      --foreground: var(--colors-gray12);
-      --color-border: var(--colors-gray8);
+      --background: var(--gray-2);
+      --foreground: var(--gray-12);
+      --color-border: var(--gray-8);
       /* FontSizes */
       --fontSizes-xs: var(--step-neg-2);
       --fontSizes-sm: var(--step-neg-1);
@@ -174,23 +111,27 @@ export const globals = css`
       --fontSizes-3xl: var(--step-4);
       --fontSizes-4xl: var(--step-5);
       /* ---------- ---------- ---------- ---------- ---------- */
-    } // end of :root
 
-    /* Global Settings */
-    body {
-      color: var(--foreground);
-      background: var(--background);
-    }
+      /* Your custom properties can start here */
+      --link: var(--lime-3);
+      --link-visited: var(--jungle-3);
+
+      /* ---------- ---------- ---------- ---------- ---------- */
+    } // end of :root
 
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme */
     /* Preferred Dark Mode Variables  */
     @media (prefers-color-scheme: dark) {
       :root {
-        --background: var(--colors-gray12);
-        --foreground: var(--colors-gray2);
-        --color-border: var(--colors-gray6);
+        @import 'open-props/normalize/dark.min.css';
+        @import 'open-props/buttons/dark.min.css';
+
+        --background: var(--gray-12);
+        --foreground: var(--gray-2);
+        --color-border: var(--gray-6);
       }
     }
+
     /* ---------- ---------- ---------- ---------- ---------- */
 
     /* Fonts */
@@ -364,5 +305,30 @@ export const globals = css`
     /* ---------- ---------- ---------- ---------- ---------- */
 
     /* // Todo: Implement -> Typography and Opentype Default Stylesheet (TODS) https://github.com/clagnut/TODS */
+
+    /* Custom Theming */
+    a:not([class]):where([href]):where(:visited) {
+      text-decoration-color: var(--link-visited);
+    }
+
+    a:not([class]):where([href]) {
+      text-decoration-color: var(--link);
+    }
+
+    /* // Todo: Make better color option */
+    button {
+      color: var(--text-6);
+      background-color: var(--jungle-0);
+      border: 1px solid var(--jungle-1);
+      text-shadow: 0 1px 0 var(--jungle-2);
+
+      &:hover {
+        background-color: var(--jungle-1);
+      }
+    }
+
+    /* Add More Here: */
+
+    /* ---------- ---------- ---------- ---------- ---------- */
   }
 `;
