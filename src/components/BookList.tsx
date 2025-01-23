@@ -41,4 +41,11 @@ const BooksStyles = css`
   justify-content: flex-start;
   flex-flow: row wrap;
   gap: var(--space-m-l);
+
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0;
+  }
 `;

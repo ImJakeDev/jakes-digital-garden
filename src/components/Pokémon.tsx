@@ -42,17 +42,6 @@ const pokémonContainer = css`
 
   .pokémon {
     anchor-name: --pokémon-anchor-btn;
-
-    /* font-size: 1rem; */
-    /* border-radius: 2rem; */
-    height: fit-content;
-    width: fit-content;
-    display: grid;
-    border: none;
-    place-content: center;
-    background-color: transparent;
-
-    cursor: pointer;
   }
 
   [popover] {
@@ -72,8 +61,8 @@ const pokémonContainer = css`
 
     max-width: 300px;
 
-    background: black;
-    color: white;
+    background: var(--gray-7);
+    color: var(--text-2);
     border: none;
     padding: 1rem;
     border-radius: 1rem;
