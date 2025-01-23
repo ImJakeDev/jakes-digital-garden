@@ -104,7 +104,7 @@ const emojiContainer = css`
     max-width: 300px;
 
     background: var(--gray-7);
-    color: var(--text-2);
+    color: var(--gray-2);
     border: none;
     padding: 1rem;
     border-radius: 1rem;
