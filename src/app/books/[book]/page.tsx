@@ -3,6 +3,7 @@ import PageContainer from '@/components/layouts/PageContainer';
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import OpenLibraryAlreadyReadResponse from '@/types/OpenLibraryAlreadyReadResponse';
 import { createUrlTitle } from '@/utils/createUrlTitle';
+import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import Image from 'next/image';
 
@@ -35,10 +36,12 @@ export default async function BookPage({ params }: PageProps) {
 
   await queryClient.prefetchQuery(openLibraryOptions);
 
+  const awaitedParams = await params;
+
   const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
 
   // Find the book by matching the URL-safe title
-  const book = data.reading_log_entries.find((entry) => matchesUrlTitle(entry.work.title, params.book));
+  const book = data.reading_log_entries.find((entry) => matchesUrlTitle(entry.work.title, awaitedParams.book));
 
   if (!book) {
     return (
@@ -53,7 +56,7 @@ export default async function BookPage({ params }: PageProps) {
 
   return (
     <PageContainer>
-      <h1>{book.work.title}</h1>
+      <h1>{toTitleCase(book.work.title)}</h1>
       <span>
         <b>Author:</b> {book.work.author_names[0]}
       </span>

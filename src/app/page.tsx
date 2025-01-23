@@ -31,11 +31,11 @@ export default async function Home() {
             <ul className={BlogPostsStyles}>
               {!!posts.length ? (
                 posts.map((post, index) => (
-                  <Link key={index} href={`/blog/${post.slug}`}>
-                    <li>
+                  <li key={index}>
+                    <Link href={`/blog/${post.slug}`}>
                       <Card title={post.title} description={post.description} />
-                    </li>
-                  </Link>
+                    </Link>
+                  </li>
                 ))
               ) : (
                 <li>
@@ -58,26 +58,15 @@ export default async function Home() {
 
 const BlogPostsStyles = css`
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-flow: row wrap;
   gap: var(--space-m-l);
-
-  background-color: var(--surface-3);
-  box-shadow: var(--shadow-1);
-  border-radius: var(--radius-drawn-3);
-  border: var(--border-size-2) solid var(--gray-6);
-  padding: var(--size-fluid-2);
-
   list-style: none;
+  padding: 0;
 
   li {
     padding: 0;
-  }
-
-  &:hover {
-    box-shadow: var(--shadow-3);
-    background-color: var(--surface-4);
   }
 `;
 
