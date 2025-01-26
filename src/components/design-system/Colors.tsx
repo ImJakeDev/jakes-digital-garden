@@ -13,14 +13,16 @@ type ColorSwatchProps = {
 };
 
 export default function Colors() {
+  // Todo: On click copies color variable to clip board
   const colorValueRanges = [...Array(COLORS_COUNT).keys()];
 
   return (
-    <>
+    <section>
+      <h3>Colors:</h3>
       {COLORS.map((color, index) => {
         return (
           <ul key={index} className={colorSwatchList}>
-            <h3>{color}</h3>
+            <h4>{color}</h4>
             {colorValueRanges.map((number, index) => {
               return (
                 <li key={index}>
@@ -33,7 +35,7 @@ export default function Colors() {
           </ul>
         );
       })}
-    </>
+    </section>
   );
 }
 
