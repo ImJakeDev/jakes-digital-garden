@@ -315,18 +315,6 @@ export const globals = css`
       text-decoration-color: var(--link);
     }
 
-    /* // Todo: Make better color option */
-    button {
-      color: var(--text-6);
-      background-color: var(--jungle-0);
-      border: 1px solid var(--jungle-1);
-      text-shadow: 0 1px 0 var(--jungle-2);
-
-      &:hover {
-        background-color: var(--jungle-1);
-      }
-    }
-
     /* Add More Here: */
 
     /* ---------- ---------- ---------- ---------- ---------- */
