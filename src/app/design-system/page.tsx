@@ -14,5 +14,6 @@ export default function DesignSystemPage() {
 }
 
 const justStretch = css`
-  justify-self: stretch;
+  display: grid;
+  min-width: 100%;
 `;

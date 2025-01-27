@@ -1,5 +1,4 @@
-'use client';
-
+import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
 
@@ -22,7 +21,7 @@ export default function Colors() {
       {COLORS.map((color, index) => {
         return (
           <ul key={index} className={colorSwatchList}>
-            <h4>{color}</h4>
+            <h4>{toTitleCase(color)}:</h4>
             {colorValueRanges.map((number, index) => {
               return (
                 <li key={index}>
@@ -40,30 +39,41 @@ export default function Colors() {
 }
 
 const colorSwatchList = css`
-  display: flex;
-  flex-flow: row wrap;
-  padding-inline-start: 0;
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-template-columns: repeat(auto-fit, minmax(8ch, 1fr));
+  padding: 0;
+
+  h4 {
+    overflow-wrap: unset;
+    align-self: center;
+  }
 
   li {
+    display: flex;
+    flex: auto;
+    padding: 0;
     list-style: none;
   }
 `;
 
 const ColorSwatch = styled.button<ColorSwatchProps>`
   background-color: ${(props) => `var(--${props.color}-${props.number})`};
-  border-radius: var(--radius-round);
-  box-shadow: var(--inner-shadow-0);
-  inline-size: 100%;
-  block-size: var(--size);
-  display: grid;
-  place-content: center;
+  display: flex;
+  flex: auto;
   color: ${(props) => {
     const invertedNumber = COLORS_COUNT - 1 - props.number;
-    return `var(--gray-${invertedNumber})`;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
   }};
-  text-shadow: var(--stone-4);
+  text-shadow: ${(props) => {
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${props.number})`;
+  }};
+  border-color: ${(props) => {
+    const invertedNumber = COLORS_COUNT - 1 - props.number;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
+  }};
   transform: scale(1);
-  transition: transform 800ms var(--ease-elastic-4);
+  transition: transform 1000ms var(--ease-elastic-4);
 
   &:hover {
     transform: scale(1.4);
