@@ -73,10 +73,10 @@ const ColorSwatch = styled.button<ColorSwatchProps>`
     return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
   }};
   transform: scale(1);
-  transition: transform 1000ms var(--ease-elastic-4);
+  transition: transform 2000ms var(--ease-elastic-4);
 
   &:hover {
     transform: scale(1.4);
-    transition: transform 800ms var(--ease-elastic-4) var(--animation-delay-2);
+    transition: transform 1000ms var(--ease-elastic-4) var(--animation-delay-2);
   }
 `;
