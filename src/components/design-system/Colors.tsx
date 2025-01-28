@@ -1,3 +1,5 @@
+'use client';
+
 import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
@@ -12,8 +14,20 @@ type ColorSwatchProps = {
 };
 
 export default function Colors() {
-  // Todo: On click copies color variable to clip board
   const colorValueRanges = [...Array(COLORS_COUNT).keys()];
+
+  const handleCopyColorVar = (color: string, number: number) => {
+    const colorVariable = `var(--${color}-${number})`;
+    navigator.clipboard
+      .writeText(colorVariable)
+      .then(() => {
+        // Todo: Add some feedback like a toast notification
+        console.log(`Copied ${colorVariable} to clipboard`);
+      })
+      .catch((err) => {
+        console.error('Failed to copy:', err);
+      });
+  };
 
   return (
     <section>
@@ -25,7 +39,7 @@ export default function Colors() {
             {colorValueRanges.map((number, index) => {
               return (
                 <li key={index}>
-                  <ColorSwatch number={number} color={color} aria-label={`${color} ${number}`}>
+                  <ColorSwatch number={number} color={color} aria-label={`${color} ${number}`} onClick={() => handleCopyColorVar(color, number)}>
                     {number}
                   </ColorSwatch>
                 </li>
