@@ -1,4 +1,5 @@
 import { getAllPosts } from '@/utils/getAllPosts';
+import { getAllArticles } from '@/utils/getAllArticles';
 import Card from '@/components/Card';
 import PageContainer from '@/components/layouts/PageContainer';
 import { getQueryClient } from './get-query-client';
@@ -17,6 +18,7 @@ export default async function Home() {
   void queryClient.prefetchQuery(openLibraryOptions);
 
   const posts = getAllPosts();
+  const articles = getAllArticles();
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -26,6 +28,24 @@ export default async function Home() {
         </div>
         {/* // Todo: Build The Digital Garden Section */}
         <div className={GardenFenceStyles}>
+          <div className={SectionStyles}>
+            <h2>Articles:</h2>
+            <ul className={BlogPostsStyles}>
+              {!!articles.length ? (
+                articles.map((article, index) => (
+                  <li key={index}>
+                    <Link href={`/articles/${article.slug}`}>
+                      <Card title={article.title} description={article.description} />
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li>
+                  <p>No articles found.</p>
+                </li>
+              )}
+            </ul>
+          </div>
           <div className={SectionStyles}>
             <h2>Blog Posts:</h2>
             <ul className={BlogPostsStyles}>
@@ -82,6 +102,6 @@ const GardenFenceStyles = css`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   gap: var(--space-m-l);
 `;

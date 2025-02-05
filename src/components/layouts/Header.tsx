@@ -14,6 +14,9 @@ export default function Header() {
               <Link href="/blog">Blog</Link>
             </li>
             <li>
+              <Link href="/articles">Articles</Link>
+            </li>
+            <li>
               <Link href="/books">Books</Link>
             </li>
             <li>

@@ -12,30 +12,28 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'content');
-  const filenames = fs.readdirSync(postsDirectory);
+  const articlesDirectory = path.join(process.cwd(), 'content/articles');
+  const filenames = fs.readdirSync(articlesDirectory);
 
   return filenames.map((filename) => ({
     params: { slug: filename.replace('.mdx', '') },
   }));
 }
 
-// Change BlogPost to return a Promise
-export default async function BlogPost({ params }: PageProps): Promise<JSX.Element> {
+export default async function ArticlePage({ params }: PageProps): Promise<JSX.Element> {
   const { slug } = await params;
-  const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
+  const articleFilePath = path.join(process.cwd(), 'content/articles', `${slug}.mdx`);
 
-  // Check if the file exists
-  if (!fs.existsSync(postFilePath)) {
+  if (!fs.existsSync(articleFilePath)) {
     return (
       <PageContainer>
-        <h3>Post not found</h3>
+        <h3>Article not found</h3>
       </PageContainer>
     );
   }
 
-  const postContent = fs.readFileSync(postFilePath, 'utf-8');
-  const { data, content } = matter(postContent);
+  const articleContent = fs.readFileSync(articleFilePath, 'utf-8');
+  const { data, content } = matter(articleContent);
 
   return (
     <PageContainer>
@@ -52,5 +50,5 @@ const articleStyles = css`
   display: flex;
   align-self: center;
   flex-direction: column;
-  gap: var(--space-s);
+  gap: var(--space-s-m);
 `;

@@ -80,7 +80,8 @@ const ColorSwatch = styled.button<ColorSwatchProps>`
     return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
   }};
   text-shadow: ${(props) => {
-    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${props.number})`;
+    const invertedNumber = COLORS_COUNT - 1 - props.number;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
   }};
   border-color: ${(props) => {
     const invertedNumber = COLORS_COUNT - 1 - props.number;
