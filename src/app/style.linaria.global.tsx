@@ -98,7 +98,7 @@ export const globals = css`
 
       /* General Variable Names */
       /* ColorNames */
-      --background: var(--gray-2);
+      --background: var(--gray-1);
       --foreground: var(--gray-12);
       --color-border: var(--gray-8);
       /* FontSizes */
@@ -163,7 +163,28 @@ export const globals = css`
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       color: var(--foreground);
-      background: var(--background);
+      min-height: 100vh;
+      position: relative;
+
+      &::before {
+        --size: 30px;
+        --line: color-mix(in lch, var(--gray-9) 15%, transparent);
+
+        @media (prefers-color-scheme: dark) {
+          --line: color-mix(in lch, var(--gray-5) 15%, transparent);
+        }
+
+        content: '';
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(4px 4px at 50% 50%, var(--line) 2px, transparent 2px var(--size)) 50% 50% / var(--size) var(--size);
+        mask: linear-gradient(-25deg, transparent 30%, var(--background));
+        transform-style: flat;
+        pointer-events: none;
+        z-index: -1;
+      }
     }
 
     img,
