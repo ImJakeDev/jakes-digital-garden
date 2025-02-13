@@ -3,7 +3,7 @@ import z from 'zod';
 
 const OpenLibraryWorkSchema = z.object({
   logged_date: z.string(),
-  logged_edition: z.string(),
+  logged_edition: z.string().nullable(),
   work: z.object({
     author_keys: z.array(z.string()),
     author_names: z.array(z.string()),
@@ -20,7 +20,7 @@ const OpenLibraryWorkSchema = z.object({
 const OpenLibraryAlreadyReadResponseSchema = z.object({
   numFound: z.number(),
   page: z.number(),
-  reading_log_entries: z.array(OpenLibraryWorkSchema),
+  reading_log_entries: z.array(OpenLibraryWorkSchema).optional(),
 });
 
 type OpenLibraryAlreadyReadResponse = z.infer<typeof OpenLibraryAlreadyReadResponseSchema>;

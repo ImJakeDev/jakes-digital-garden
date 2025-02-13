@@ -167,6 +167,7 @@ export const globals = css`
       position: relative;
 
       &::before {
+        /* Inspired by https://codepen.io/jh3y/pen/GRaWZrw */
         --size: 30px;
         --line: color-mix(in lch, var(--gray-9) 15%, transparent);
 

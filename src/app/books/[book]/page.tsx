@@ -24,7 +24,11 @@ export async function generateStaticParams() {
 
   await queryClient.prefetchQuery(openLibraryOptions);
 
-  const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
+  const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse | undefined;
+
+  if (!data?.reading_log_entries) {
+    return [];
+  }
 
   return data.reading_log_entries.map((book) => ({
     book: createUrlTitle(book.work.title),
@@ -41,7 +45,7 @@ export default async function BookPage({ params }: PageProps) {
   const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
 
   // Find the book by matching the URL-safe title
-  const book = data.reading_log_entries.find((entry) => matchesUrlTitle(entry.work.title, awaitedParams.book));
+  const book = data.reading_log_entries?.find((entry) => matchesUrlTitle(entry.work.title, awaitedParams.book));
 
   if (!book) {
     return (

@@ -18,7 +18,7 @@ export default function BookList() {
       ) : (
         !!data && (
           <ul className={BooksStyles}>
-            {data.reading_log_entries.map((book, index) => {
+            {data.reading_log_entries?.map((book, index) => {
               const urlTitle = createUrlTitle(book.work.title);
               return (
                 <li key={index}>
