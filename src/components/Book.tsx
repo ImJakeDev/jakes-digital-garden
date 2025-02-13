@@ -1,4 +1,5 @@
 'use client';
+import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import Image from 'next/image';
 
@@ -22,7 +23,7 @@ export default function Book(book: BookProps) {
 
   return (
     <div className={BookWorkStyles}>
-      <h3>{book.work.title}</h3>
+      <h3>{toTitleCase(book.work.title)}</h3>
       <p>Author: {book.work.author_names[0]}</p>
       <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
     </div>
