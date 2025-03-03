@@ -9,6 +9,7 @@ import { css } from '@linaria/core';
 import Link from 'next/link';
 import BookList from '@/components/BookList';
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
+import PostItNote from '@/components/Post-itNote';
 
 export default async function Home() {
   const queryClient = getQueryClient();
@@ -47,13 +48,13 @@ export default async function Home() {
             </ul>
           </div>
           <div className={SectionStyles}>
-            <h2>Blog Posts:</h2>
+            <h2>Blog Post-its:</h2>
             <ul className={BlogPostsStyles}>
               {!!posts.length ? (
                 posts.map((post, index) => (
                   <li key={index}>
                     <Link href={`/blog/${post.slug}`}>
-                      <Card title={post.title} description={post.description} />
+                      <PostItNote title={post.title} description={post.description} />
                     </Link>
                   </li>
                 ))
