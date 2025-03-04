@@ -86,6 +86,9 @@ importers:
       open-props:
         specifier: ^1.7.12
         version: 1.7.12
+      openmeteo:
+        specifier: ^1.1.5
+        version: 1.1.5
       pokenode-ts:
         specifier: ^1.20.0
         version: 1.20.0(axios-cache-interceptor@1.6.2(axios@1.7.9))(axios@1.7.9)
@@ -1057,6 +1060,10 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
+  '@openmeteo/sdk@1.19.0':
+    resolution: {integrity: sha512-R9iYVRBs/0vq+iLRA0/quvcnuCsLp8DLsaMF2i6dhkc/C6jJ5RbV3al0bt4gfhwi1R76crDd9nnw6b9x2V1yeg==}
+    engines: {node: '>=12.0'}
+
   '@polka/url@1.0.0-next.28':
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
 
@@ -2009,6 +2016,9 @@ packages:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
 
+  flatbuffers@25.2.10:
+    resolution: {integrity: sha512-7JlN9ZvLDG1McO3kbX0k4v+SUAg48L1rIwEvN6ZQl/eCtgJz9UylTMzE9wrmYrcorgxm3CX/3T/w5VAub99UUw==}
+
   flatted@3.3.2:
     resolution: {integrity: sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==}
 
@@ -2939,6 +2949,10 @@ packages:
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
+
+  openmeteo@1.1.5:
+    resolution: {integrity: sha512-4VTt8TGW5KlczvSJd7IiRjKkRygmCq3O4T89Qc5c6PAnj0CeH/MGlqb4m9Z/yBtHpZTnaUac/9/t/p4obpFC1A==}
+    engines: {node: '>=12.0'}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4941,6 +4955,10 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
+  '@openmeteo/sdk@1.19.0':
+    dependencies:
+      flatbuffers: 25.2.10
+
   '@polka/url@1.0.0-next.28': {}
 
   '@rtsao/scc@1.1.0': {}
@@ -6124,6 +6142,8 @@ snapshots:
       flatted: 3.3.2
       keyv: 4.5.4
 
+  flatbuffers@25.2.10: {}
+
   flatted@3.3.2: {}
 
   follow-redirects@1.15.9: {}
@@ -7305,6 +7325,11 @@ snapshots:
   open-props@1.7.12: {}
 
   opener@1.5.2: {}
+
+  openmeteo@1.1.5:
+    dependencies:
+      '@openmeteo/sdk': 1.19.0
+      flatbuffers: 25.2.10
 
   optionator@0.9.4:
     dependencies:

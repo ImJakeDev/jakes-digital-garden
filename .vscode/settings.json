@@ -28,5 +28,5 @@
   },
   "testing.automaticallyOpenPeekView": "never",
   "debug.openDebug": "openOnSessionStart",
-  "cSpell.words": ["Bluesky", "Linaria", "Schaffer", "stix", "stylelint"]
+  "cSpell.words": ["Bluesky", "Linaria", "Meteo", "Schaffer", "stix", "stylelint"]
 }
