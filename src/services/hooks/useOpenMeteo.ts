@@ -1,3 +1,4 @@
+import celsiusToFahrenheit from '@/utils/celsiusToFahrenheit';
 import { useQuery } from '@tanstack/react-query';
 import ms from 'milliseconds';
 import { fetchWeatherApi } from 'openmeteo';
@@ -45,7 +46,7 @@ const fetchTheWeather = async (userPosition: UserPosition | null) => {
   const weatherData = {
     current: {
       time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-      temperature: current.variables(0)!.value(), // Current is only 1 value, therefore `.value()`
+      temperature: celsiusToFahrenheit(current.variables(0)!.value()), // Current is only 1 value, therefore `.value()`
       weatherCode: current.variables(1)!.value(),
       windSpeed: current.variables(2)!.value(),
       windDirection: current.variables(3)!.value(),

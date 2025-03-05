@@ -9,6 +9,7 @@ export default function PageContainer({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Todo: Move client code somewhere else???
   const { position, error: geolocationError } = useUserGeolocation();
   console.log('position', position);
   console.log('geolocationError', geolocationError);
