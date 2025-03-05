@@ -1,6 +1,7 @@
 'use client';
 
 import useOpenMeteo from '@/services/hooks/useOpenMeteo';
+import useReverseGeocoding from '@/services/hooks/useReverseGeocoding';
 import useUserGeolocation from '@/utils/useUserGeolocation';
 import { styled } from '@linaria/react';
 
@@ -18,6 +19,9 @@ export default function PageContainer({
   console.log(`weather data`, data);
   console.log(`weather error`, error);
   console.log(`weather isLoading`, isLoading);
+
+  const { data: geolocationData } = useReverseGeocoding(position?.coords.latitude ?? 0, position?.coords.longitude ?? 0);
+  console.log(`geolocation data`, geolocationData);
 
   return <StyledPageContainer>{children}</StyledPageContainer>;
 }
