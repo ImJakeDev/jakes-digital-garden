@@ -31,7 +31,7 @@ export async function generateStaticParams() {
   }
 
   return data.reading_log_entries.map((book) => ({
-    book: createUrlTitle(book.work.title),
+    book: !!book.work ? createUrlTitle(book.work.title) : '',
   }));
 }
 
@@ -45,9 +45,9 @@ export default async function BookPage({ params }: PageProps) {
   const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
 
   // Find the book by matching the URL-safe title
-  const book = data.reading_log_entries?.find((entry) => matchesUrlTitle(entry.work.title, awaitedParams.book));
+  const book = data.reading_log_entries?.find((entry) => (!!entry.work ? matchesUrlTitle(entry.work.title, awaitedParams.book) : false));
 
-  if (!book) {
+  if (!book || !book.work) {
     return (
       <PageContainer>
         <h3>Book not found</h3>

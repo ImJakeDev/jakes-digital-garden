@@ -10,6 +10,7 @@ import Link from 'next/link';
 import BookList from '@/components/BookList';
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import PostItNote from '@/components/Post-itNote';
+import WeatherStation from '@/components/WeatherStation';
 
 export default async function Home() {
   const queryClient = getQueryClient();
@@ -24,8 +25,11 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PageContainer>
-        <div>
-          <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore technology, creativity, and ideas.</p>
+        <div className={fluidRow}>
+          <div>
+            <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore technology, creativity, and ideas.</p>
+          </div>
+          <WeatherStation />
         </div>
         {/* // Todo: Build The Digital Garden Section */}
         <div className={GardenFenceStyles}>
@@ -104,5 +108,13 @@ const GardenFenceStyles = css`
   align-items: flex-start;
   justify-content: space-between;
   flex-flow: column wrap;
+  gap: var(--space-m-l);
+`;
+
+const fluidRow = css`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-flow: row wrap;
   gap: var(--space-m-l);
 `;
