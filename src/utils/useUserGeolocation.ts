@@ -5,15 +5,7 @@ const useUserGeolocation = () => {
   const [error, setError] = useState<GeolocationPositionError | null>(null);
 
   useEffect(() => {
-    const success = (position: GeolocationPosition) => {
-      setPosition(position);
-    };
-
-    const failure = (error: GeolocationPositionError) => {
-      setError(error);
-    };
-
-    navigator.geolocation.getCurrentPosition(success, failure);
+    navigator.geolocation.getCurrentPosition(setPosition, setError);
   }, []);
 
   return { position, error };
