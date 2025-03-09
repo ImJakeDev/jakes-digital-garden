@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { env } from '../../env';
 import ms from 'milliseconds';
+import FeatureCollection from '@/types/GeoapifyResponse';
 
 const fetchGeolocation = async (lat: number, lng: number) => {
-  // const response = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${env.NEXT_PUBLIC_GOOGLE_API_KEY}`);
   const response = axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=${env.NEXT_PUBLIC_GEOAPIFY_API_KEY}`);
-  const data = (await response).data;
+  const data = (await response).data as FeatureCollection;
 
   return data;
 };

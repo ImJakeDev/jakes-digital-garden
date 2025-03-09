@@ -4,28 +4,20 @@ import { css } from '@linaria/core';
 import Image from 'next/image';
 
 type BookProps = {
-  work: {
-    title: string;
-    author_keys: string[];
-    author_names: string[];
-    cover_edition_key: string;
-    cover_id: number;
-    edition_key: string[];
-    first_publish_year: number;
-    key: string;
-    lending_edition_s: string | null;
-  };
+  title: string;
+  author: string;
+  coverId: number;
 };
 
-export default function Book(book: BookProps) {
+export default function Book({ title, author, coverId }: BookProps) {
   const key = 'ID';
   const size = 'L';
 
   return (
     <div className={BookWorkStyles}>
-      <h3>{toTitleCase(book.work.title)}</h3>
-      <p>Author: {book.work.author_names[0]}</p>
-      <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
+      <h3>{toTitleCase(title)}</h3>
+      <p>Author: {author}</p>
+      <Image src={`https://covers.openlibrary.org/b/${key}/${coverId}-${size}.jpg`} alt={title} width={200} height={300} />
     </div>
   );
 }
