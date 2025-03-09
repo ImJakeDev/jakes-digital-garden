@@ -30,13 +30,10 @@ const fetchTheWeather = async (userPosition: UserPosition | null) => {
 
   // Attributes for timezone and location
   const utcOffsetSeconds = response.utcOffsetSeconds();
-  const timezone = response.timezone();
-  const timezoneAbbreviation = response.timezoneAbbreviation();
-  const locationLatitude = response.latitude();
-  const locationLongitude = response.longitude();
-
-  console.log('Location:', locationLatitude, locationLongitude);
-  console.log('Timezone:', timezone, timezoneAbbreviation);
+  // const timezone = response.timezone();
+  // const timezoneAbbreviation = response.timezoneAbbreviation();
+  // const locationLatitude = response.latitude();
+  // const locationLongitude = response.longitude();
 
   const current = response.current()!;
   const hourly = response.hourly()!;
@@ -65,9 +62,9 @@ const fetchTheWeather = async (userPosition: UserPosition | null) => {
   };
 
   // `weatherData` now contains a simple structure with arrays for datetime and weather data
-  for (let i = 0; i < weatherData.daily.time.length; i++) {
-    console.log(weatherData.daily.time[i].toISOString(), weatherData.daily.weatherCode[i], weatherData.daily.temperatureMax[i], weatherData.daily.temperatureMin[i]);
-  }
+  // for (let i = 0; i < weatherData.daily.time.length; i++) {
+  //   console.log(weatherData.daily.time[i].toISOString(), weatherData.daily.weatherCode[i], weatherData.daily.temperatureMax[i], weatherData.daily.temperatureMin[i]);
+  // }
 
   return weatherData;
 };
