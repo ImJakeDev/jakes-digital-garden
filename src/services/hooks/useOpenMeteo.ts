@@ -10,7 +10,7 @@ type UserPosition = {
 
 const fetchTheWeather = async (userPosition: UserPosition | null) => {
   // https://open-meteo.com/en/docs
-
+  // Todo: clean up
   const params = {
     latitude: userPosition?.latitude,
     longitude: userPosition?.longitude,
