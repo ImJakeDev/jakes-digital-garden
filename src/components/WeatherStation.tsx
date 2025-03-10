@@ -39,6 +39,7 @@ const WeatherCodeMap: { [key: number]: string } = {
 };
 
 export default function WeatherStation() {
+  // Todo: Work on UX/UI
   const { position, error: userGeolocationError } = useUserGeolocation();
   const { data: openMeteoData, error: openMeteoError, isLoading: openMeteoIsLoading } = useOpenMeteo({ latitude: position?.coords.latitude, longitude: position?.coords.longitude });
   const { data: geolocationData, error: geolocationError, isLoading: geolocationIsLoading } = useReverseGeocoding(position?.coords.latitude ?? 0, position?.coords.longitude ?? 0);
