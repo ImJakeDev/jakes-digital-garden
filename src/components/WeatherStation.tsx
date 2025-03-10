@@ -6,6 +6,7 @@ import useUserGeolocation from '@/utils/useUserGeolocation';
 import { format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
+// https://open-meteo.com/en/docs#daily=weather_code
 const WeatherCodeMap: { [key: number]: string } = {
   0: 'Clear sky',
   1: 'Mainly clear',
