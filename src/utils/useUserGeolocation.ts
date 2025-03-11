@@ -10,10 +10,6 @@ const useUserGeolocation = () => {
     navigator.geolocation.getCurrentPosition(setPosition, setError);
   }, []);
 
-  if (!position || !error) {
-    return { position: null, error: { message: 'Browser Navigator Geolocation Position Error' } };
-  }
-
   return { position, error };
 };
 
