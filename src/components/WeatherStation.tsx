@@ -40,10 +40,14 @@ const WeatherCodeMap: { [key: number]: string } = {
 
 export default function WeatherStation() {
   // Todo: Work on UX/UI
+  // Todo: Fix bugs (Windows Brave browser wont fetch API???)
   const { position, error: userGeolocationError } = useUserGeolocation();
-  const { data: openMeteoData, error: openMeteoError, isLoading: openMeteoIsLoading } = useOpenMeteo({ latitude: position?.coords.latitude, longitude: position?.coords.longitude });
+  // Todo: Needs a state when there is no user position. Which is caused by the user not allowing geolocation via the browser.
+  const { data: openMeteoData, error: openMeteoError, isLoading: openMeteoIsLoading } = useOpenMeteo({ latitude: position?.coords.latitude ?? 0, longitude: position?.coords.longitude ?? 0 });
   const { data: geolocationData, error: geolocationError, isLoading: geolocationIsLoading } = useReverseGeocoding(position?.coords.latitude ?? 0, position?.coords.longitude ?? 0);
-
+  if (!position) {
+    return <div>No position available.</div>;
+  }
   if (geolocationIsLoading || openMeteoIsLoading) {
     return <div>Loading...</div>;
   }
