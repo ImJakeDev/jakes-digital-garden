@@ -1,4 +1,4 @@
-import { FaBluesky, FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { FaBluesky, FaGithub } from 'react-icons/fa6';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 
@@ -13,11 +13,6 @@ export default function SocialList() {
       <li>
         <Link href="https://github.com/ImJakeDev" target="_blank">
           <FaGithub />
-        </Link>
-      </li>
-      <li>
-        <Link href="https://www.linkedin.com/in/imjakeschaffer/" target="_blank">
-          <FaLinkedin />
         </Link>
       </li>
     </ul>
