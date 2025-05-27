@@ -4,11 +4,11 @@ import ms from 'milliseconds';
 import { fetchWeatherApi } from 'openmeteo';
 
 type UserPosition = {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
 };
 
-const fetchTheWeather = async (userPosition: UserPosition | null) => {
+const fetchTheWeather = async (userPosition: UserPosition) => {
   // https://open-meteo.com/en/docs
   // Todo: clean up
   const params = {
@@ -69,7 +69,7 @@ const fetchTheWeather = async (userPosition: UserPosition | null) => {
   return weatherData;
 };
 
-const useOpenMeteo = (userPosition: UserPosition | null) => {
+const useOpenMeteo = (userPosition: UserPosition) => {
   return useQuery({
     queryKey: ['open-meteo', userPosition],
     queryFn: () => fetchTheWeather(userPosition),
