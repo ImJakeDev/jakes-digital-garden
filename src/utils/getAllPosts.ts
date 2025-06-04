@@ -1,3 +1,5 @@
+'use server';
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -10,7 +12,7 @@ export type PostMeta = {
   img: string;
 };
 
-export function getAllPosts(): PostMeta[] {
+export async function getAllPosts(): Promise<PostMeta[]> {
   const postsDirectory = path.join(process.cwd(), 'content/blog');
   const filenames = fs.readdirSync(postsDirectory);
 

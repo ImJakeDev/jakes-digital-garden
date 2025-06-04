@@ -1,3 +1,5 @@
+'use server';
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -20,7 +22,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ArticlePage({ params }: PageProps): Promise<JSX.Element> {
+export default async function ArticlePage({ params }: PageProps): Promise<JSX.IntrinsicElements> {
   const { slug } = await params;
   const articleFilePath = path.join(process.cwd(), 'content/articles', `${slug}.mdx`);
 

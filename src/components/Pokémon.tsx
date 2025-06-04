@@ -2,12 +2,13 @@ import usePokémon from '@/services/hooks/usePokémon';
 import Image from 'next/image';
 import { css } from '@linaria/core';
 import toTitleCase from '@/utils/toTitleCase';
+import LoadingIndicator from './LoadingIndicator';
 
 export default function Pokémon() {
   const { data: pokémon, isLoading: isLoadingPokémon } = usePokémon();
 
   if (isLoadingPokémon) {
-    return <span>Loading...</span>;
+    return <LoadingIndicator />;
   }
 
   if (!pokémon) {

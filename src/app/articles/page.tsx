@@ -4,8 +4,8 @@ import PageContainer from '@/components/layouts/PageContainer';
 import { css } from '@linaria/core';
 import Card from '@/components/Card';
 
-export default function ArticlesPage() {
-  const articles = getAllArticles();
+export default async function ArticlesPage() {
+  const articles = await getAllArticles();
 
   return (
     <PageContainer>

@@ -5,6 +5,7 @@ import useReverseGeocoding from '@/services/hooks/useReverseGeocoding';
 import useUserGeolocation from '@/utils/useUserGeolocation';
 import { format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
+import LoadingIndicator from './LoadingIndicator';
 
 // https://open-meteo.com/en/docs#daily=weather_code
 const WeatherCodeMap: { [key: number]: string } = {
@@ -49,7 +50,7 @@ export default function WeatherStation() {
     return <div>No position available.</div>;
   }
   if (geolocationIsLoading || openMeteoIsLoading) {
-    return <div>Loading...</div>;
+    return <LoadingIndicator />;
   }
 
   if (userGeolocationError || openMeteoError || geolocationError) {

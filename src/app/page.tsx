@@ -19,15 +19,15 @@ export default async function Home() {
   // Todo: Should I be prefetching the openLibraryOptions here? 🤔
   void queryClient.prefetchQuery(openLibraryOptions);
 
-  const posts = getAllPosts();
-  const articles = getAllArticles();
+  const posts = await getAllPosts();
+  const articles = await getAllArticles();
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PageContainer>
         <div className={fluidRow}>
           <div>
-            <p>Welcome to my Digital Garden 🌱.</p>
+            <p>Welcome to my Digital Garden. 🌱</p>
             <br />
             <p>A place where I plant and nurture digital seeds that will grow into ideas that create, connect and inspire projects, creativity, and anarchy. 😈 🤭 😜</p>
           </div>
