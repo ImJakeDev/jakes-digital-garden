@@ -27,7 +27,9 @@ export default async function Home() {
       <PageContainer>
         <div className={fluidRow}>
           <div>
-            <p>Welcome to Jake&apos;s Digital Garden—a place where digital seeds are planted and nurtured to grow into creations that connect, inspire, and explore technology, creativity, and ideas.</p>
+            <p>Welcome to my Digital Garden 🌱.</p>
+            <br />
+            <p>A place where I plant and nurture digital seeds that will grow into ideas that create, connect and inspire projects, creativity, and anarchy. 😈 🤭 😜</p>
           </div>
           <WeatherStation />
         </div>
