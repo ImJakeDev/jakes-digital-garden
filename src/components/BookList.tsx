@@ -5,6 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 import { createUrlTitle } from '@/utils/createUrlTitle';
+import LoadingIndicator from './LoadingIndicator';
 
 export default function BookList() {
   const { data, isLoading, isError } = useSuspenseQuery(openLibraryOptions);
@@ -12,7 +13,7 @@ export default function BookList() {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <LoadingIndicator />
       ) : isError ? (
         <p>Error</p>
       ) : (

@@ -24,7 +24,7 @@ const firaCode = Fira_Code({
 
 export const metadata: Metadata = {
   title: "Jake's Digital Garden",
-  description: 'A place where digital seeds are planted of thoughts, notes, and ideas.',
+  description: 'A place where digital seeds are planted...',
 };
 
 export default function RootLayout({

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import TCGdex from '@tcgdex/sdk';
 import { useQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 const tcgdex = new TCGdex('en');
 
@@ -31,7 +32,12 @@ function SearchForPokémon() {
     queryFn: () => tcgdex.card.get(dynamicName ?? 'pikachu'),
   });
 
-  if (isLoadingPokémon) return <PageContainer>Loading...</PageContainer>;
+  if (isLoadingPokémon)
+    return (
+      <PageContainer>
+        <LoadingIndicator />
+      </PageContainer>
+    );
   if (errorPokémon) return <PageContainer>Error: {errorPokémon.message}</PageContainer>;
   if (!pokémon) return <PageContainer>No name provided</PageContainer>;
 

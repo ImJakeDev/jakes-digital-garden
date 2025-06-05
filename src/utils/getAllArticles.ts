@@ -1,8 +1,10 @@
+'use server';
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export function getAllArticles() {
+export async function getAllArticles() {
   const articlesDirectory = path.join(process.cwd(), 'content/articles');
   const filenames = fs.readdirSync(articlesDirectory);
 

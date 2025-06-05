@@ -4,6 +4,7 @@ import { css } from '@linaria/core';
 import { format } from 'date-fns';
 import Pokémon from '@/components/Pokémon';
 import SocialList from '@/components/SocialList';
+import LoadingIndicator from '../LoadingIndicator';
 
 export default function Footer() {
   const { data: randomEmoji, isLoading: isLoadingRandomEmoji } = useRandomEmoji({});
@@ -20,7 +21,7 @@ export default function Footer() {
   return (
     <StyledFooter>
       <StyledFooterContainer>
-        {isLoadingRandomEmoji && <span>Loading...</span>}
+        {isLoadingRandomEmoji && <LoadingIndicator />}
         {!!randomEmoji && (
           <div className={emojiContainer}>
             <span className="emoji-wrapper">
