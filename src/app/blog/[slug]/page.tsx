@@ -5,7 +5,6 @@ import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
-import { css } from '@linaria/core';
 
 interface PageProps {
   params: {
@@ -41,7 +40,7 @@ export default async function BlogPost({ params }: PageProps): Promise<JSX.Intri
 
   return (
     <PageContainer>
-      <article className={articleStyles}>
+      <article className="flow">
         <h1>{data.title}</h1>
         <span>Planted on: {data.plantedOn}</span>
         <MDXRemote source={content} />
@@ -49,10 +48,3 @@ export default async function BlogPost({ params }: PageProps): Promise<JSX.Intri
     </PageContainer>
   );
 }
-
-const articleStyles = css`
-  display: flex;
-  align-self: center;
-  flex-direction: column;
-  gap: var(--space-s);
-`;
