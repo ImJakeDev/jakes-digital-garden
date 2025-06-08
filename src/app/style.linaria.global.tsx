@@ -339,6 +339,10 @@ export const globals = css`
 
     /* Add More Here: */
 
+    .flow > * + * {
+      margin-block-start: var(--flow-space, 1em);
+    }
+
     /* ---------- ---------- ---------- ---------- ---------- */
   }
 `;
