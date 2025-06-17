@@ -339,8 +339,27 @@ export const globals = css`
 
     /* Add More Here: */
 
+    .container {
+      width: 100%;
+    }
+
     .flow > * + * {
       margin-block-start: var(--flow-space, 1em);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-placement, auto-fill), minmax(var(--grid-min-item-size, 14rem), 1fr));
+      gap: var(--grid-gap, 0);
+    }
+
+    .grid[data-fit='auto-fit'] {
+      --grid-placement: auto-fit;
+    }
+
+    .grid[data-rows='masonry'] {
+      align-items: start;
+      grid-template-rows: masonry;
     }
 
     /* ---------- ---------- ---------- ---------- ---------- */
