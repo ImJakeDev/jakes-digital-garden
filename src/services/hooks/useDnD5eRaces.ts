@@ -28,12 +28,12 @@ const DnD5eObjectSchema = z.object({
   updated_at: z.string().optional(),
 });
 
-const DnD5eRacesResponseSchema = z.object({
+const DefaultResponseSchema = z.object({
   count: z.number(),
-  results: z.array(DnD5eObjectSchema),
+  results: z.array(DnD5eObjectSchema).optional(),
 });
 
-const DnD5eRacesByIndexResponseSchema = z.object({
+const DnD5eRaceResponseSchema = z.object({
   index: z.string().optional(),
   name: z.string().optional(),
   url: z.string().optional(),
@@ -66,23 +66,56 @@ const DnD5eRacesByIndexResponseSchema = z.object({
   subraces: z.array(DnD5eObjectSchema).optional(),
 });
 
-export function useDnD5eRaces() {
+export function useDnD5eAllRaces() {
   return useQuery({
     queryKey: ['dnd-5e-races'],
     queryFn: async () => {
       const { data } = await dnd5eapi.get('races/');
-      return DnD5eRacesResponseSchema.parse(data);
+      return DefaultResponseSchema.parse(data);
     },
     staleTime: Infinity,
   });
 }
 
-export function useDnD5eRacesByIndex(index: Races) {
+export function useDnD5eRace(index: Races) {
   return useQuery({
-    queryKey: ['dnd-5e-races-by-index', index],
+    queryKey: ['dnd-5e-race', index],
     queryFn: async () => {
       const { data } = await dnd5eapi.get(`races/${index}`);
-      return DnD5eRacesByIndexResponseSchema.parse(data);
+      return DnD5eRaceResponseSchema.parse(data);
+    },
+    staleTime: Infinity,
+  });
+}
+
+export function useDnD5eSubrace(index: Races) {
+  return useQuery({
+    queryKey: ['dnd-5e-subraces', index],
+    queryFn: async () => {
+      const { data } = await dnd5eapi.get(`races/${index}/subraces`);
+      return DefaultResponseSchema.parse(data);
+    },
+    staleTime: Infinity,
+  });
+}
+
+export function useDnD5eRacesProficiencies(index: Races) {
+  return useQuery({
+    queryKey: ['dnd-5e-races-proficiencies', index],
+    queryFn: async () => {
+      const { data } = await dnd5eapi.get(`races/${index}/proficiencies`);
+      return DefaultResponseSchema.parse(data);
+    },
+    staleTime: Infinity,
+  });
+}
+
+export function useDnD5eRacesTraits(index: Races) {
+  return useQuery({
+    queryKey: ['dnd-5e-races-traits', index],
+    queryFn: async () => {
+      const { data } = await dnd5eapi.get(`races/${index}/traits`);
+      return DefaultResponseSchema.parse(data);
     },
     staleTime: Infinity,
   });

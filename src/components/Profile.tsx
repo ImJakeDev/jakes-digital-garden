@@ -3,19 +3,21 @@
 import useRandom5eSpecies from '@/services/hooks/useRandom5eSpecies';
 import LoadingIndicator from './LoadingIndicator';
 import { css } from '@linaria/core';
-import { useDnD5eRaces, useDnD5eRacesByIndex } from '@/services/hooks/useDnD5eRaces';
+import { useDnD5eAllRaces, useDnD5eRace, useDnD5eSubrace, useDnD5eRacesProficiencies, useDnD5eRacesTraits } from '@/services/hooks/useDnD5eRaces';
 
 export default function Profile() {
   const { data, error, isLoading } = useRandom5eSpecies();
-  const { data: DnD5eRacesData, error: DnD5eRacesError, isLoading: isLoadingDnD5eRacesData } = useDnD5eRaces();
-  const { data: DnD5eRacesByIndexData, error: DnD5eRacesByIndexError, isLoading: isLoadingDnD5eRacesByIndexData } = useDnD5eRacesByIndex('dragonborn');
+  const { data: DnD5eRacesData } = useDnD5eAllRaces();
+  const { data: DnD5eRaceData } = useDnD5eRace('dragonborn');
+  const { data: DnD5eSubraceData } = useDnD5eSubrace('elf');
+  const { data: DnD5eRacesProficienciesData } = useDnD5eRacesProficiencies('dwarf');
+  const { data: DnD5eRacesTraitsData } = useDnD5eRacesTraits('gnome');
 
   console.log('DnD5eRacesData:', DnD5eRacesData);
-  console.log('DnD5eRacesError:', DnD5eRacesError);
-  console.log('isLoadingDnD5eRacesData:', isLoadingDnD5eRacesData);
-  console.log('DnD5eRacesByIndexData:', DnD5eRacesByIndexData);
-  console.log('DnD5eRacesByIndexError:', DnD5eRacesByIndexError);
-  console.log('isLoadingDnD5eRacesByIndexData:', isLoadingDnD5eRacesByIndexData);
+  console.log('DnD5eRaceData:', DnD5eRaceData);
+  console.log('DnD5eSubraceData:', DnD5eSubraceData);
+  console.log('DnD5eRacesProficienciesData:', DnD5eRacesProficienciesData);
+  console.log('DnD5eRacesTraitsData:', DnD5eRacesTraitsData);
 
   if (isLoading) {
     return <LoadingIndicator />;
