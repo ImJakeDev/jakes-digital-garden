@@ -7,7 +7,7 @@ import axios from 'axios';
 import ms from 'milliseconds';
 
 const api = axios.create({
-  baseURL: 'https://api.open5e.com/v2/',
+  baseURL: 'https://api.open5e.com/v1/',
   timeout: ms.seconds(10),
   headers: {
     'Content-Type': 'application/json',
