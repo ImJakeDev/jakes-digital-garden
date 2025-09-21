@@ -1,4 +1,3 @@
-// useRandom5eSpecies
 import type Open5eRacesResponse from '@/types/Open5eRacesResponse';
 import { Open5eRacesResponseSchema } from '@/types/Open5eRacesResponse';
 import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
@@ -28,8 +27,6 @@ const fetchRaces = async (): Promise<Open5eRacesResponse> => {
 
     const combinedData = { ...data, results: updatedResults, next: null, previous: null };
     const parsedData = Open5eRacesResponseSchema.parse(combinedData);
-
-    console.log('DnD Races fetched:', parsedData);
 
     return parsedData;
   };

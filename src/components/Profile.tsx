@@ -6,7 +6,7 @@ import { css } from '@linaria/core';
 import { useDnD5eAllRaces, useDnD5eRace, useDnD5eSubrace, useDnD5eRacesProficiencies, useDnD5eRacesTraits } from '@/services/hooks/useDnD5eRaces';
 
 export default function Profile() {
-  const { data, error, isLoading } = useRandom5eSpecies();
+  const { data: Random5eSpeciesData, error: Random5eSpeciesError, isLoading: isLoadingRandom5eSpecies } = useRandom5eSpecies();
   const { data: DnD5eRacesData } = useDnD5eAllRaces();
   const { data: DnD5eRaceData } = useDnD5eRace('dragonborn');
   const { data: DnD5eSubraceData } = useDnD5eSubrace('elf');
@@ -19,14 +19,14 @@ export default function Profile() {
   console.log('DnD5eRacesProficienciesData:', DnD5eRacesProficienciesData);
   console.log('DnD5eRacesTraitsData:', DnD5eRacesTraitsData);
 
-  if (isLoading) {
+  if (isLoadingRandom5eSpecies) {
     return <LoadingIndicator />;
   }
 
-  if (error || !data) {
+  if (Random5eSpeciesError || !Random5eSpeciesData) {
     return (
       <div className="">
-        <p>Error loading species data: {error?.message ?? 'No data.'}</p>
+        <p>Error loading species data: {Random5eSpeciesError?.message ?? 'No data.'}</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ export default function Profile() {
 
   return (
     <div className={`grid | container | ${GridStyles}`} data-rows="masonry">
-      <div className={`${GridItemOutlineStyles} | ${GridItemSpanColStyles}`}>asdf</div>
+      <div className={`${GridItemOutlineStyles} | ${GridItemSpanColStyles}`}>{Random5eSpeciesData?.name}</div>
       <div className={GridItemOutlineStyles}>asdf</div>
       <div className={GridItemOutlineStyles} style={{ height: '200px' }}>
         asdf
