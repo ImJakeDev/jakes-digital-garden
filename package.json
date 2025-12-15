@@ -56,6 +56,9 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@eslint/compat": "2.0.0",
+    "@eslint/eslintrc": "3.3.3",
+    "@eslint/js": "9.39.2",
     "@linaria/babel-preset": "^5.0.4",
     "@linaria/postcss-linaria": "^6.3.0",
     "@linaria/stylelint": "^6.3.0",
