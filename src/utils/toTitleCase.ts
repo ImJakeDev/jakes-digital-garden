@@ -41,9 +41,9 @@ interface TitleCaseOptions {
 }
 
 const toTitleCase = (string: string, options?: Partial<TitleCaseOptions>) => {
-  const { useStandardRules = true, capitalizeWords = [] } = options || {};
+  const { useStandardRules = true, capitalizeWords = [] } = options ?? {};
 
-  const processWord = (word: string, isFirst: boolean = false, isLast: boolean = false): string => {
+  const processWord = (word: string, isFirst = false, isLast = false): string => {
     if (!word) return word;
 
     const lowercaseWord = word.toLowerCase();

@@ -8,23 +8,23 @@ const COLORS = ['gray', 'stone', 'red', 'pink', 'purple', 'violet', 'indigo', 'b
 
 const COLORS_COUNT = 13 as const; // 0 - 12
 
-type ColorSwatchProps = {
+interface ColorSwatchProps {
   color: string;
   number: number;
-};
+}
 
 export default function Colors() {
   const colorValueRanges = [...Array(COLORS_COUNT).keys()];
 
   const handleCopyColorVar = (color: string, number: number) => {
-    const colorVariable = `var(--${color}-${number})`;
+    const colorVariable = `var(--${color}-${number.toFixed()})`;
     navigator.clipboard
       .writeText(colorVariable)
       .then(() => {
         // Todo: Add some feedback like a toast notification
         console.log(`Copied ${colorVariable} to clipboard`);
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error('Failed to copy:', err);
       });
   };
@@ -39,7 +39,14 @@ export default function Colors() {
             {colorValueRanges.map((number, index) => {
               return (
                 <li key={index}>
-                  <ColorSwatch number={number} color={color} aria-label={`${color} ${number}`} onClick={() => handleCopyColorVar(color, number)}>
+                  <ColorSwatch
+                    number={number}
+                    color={color}
+                    aria-label={`${color} ${number.toFixed()}`}
+                    onClick={() => {
+                      handleCopyColorVar(color, number);
+                    }}
+                  >
                     {number}
                   </ColorSwatch>
                 </li>
@@ -72,20 +79,20 @@ const colorSwatchList = css`
 `;
 
 const ColorSwatch = styled.button<ColorSwatchProps>`
-  background-color: ${(props) => `var(--${props.color}-${props.number})`};
+  background-color: ${(props) => `var(--${props.color}-${props.number.toFixed()})`};
   display: flex;
   flex: auto;
   color: ${(props) => {
     const invertedNumber = COLORS_COUNT - 1 - props.number;
-    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber.toFixed()})`;
   }};
   text-shadow: ${(props) => {
     const invertedNumber = COLORS_COUNT - 1 - props.number;
-    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber.toFixed()})`;
   }};
   border-color: ${(props) => {
     const invertedNumber = COLORS_COUNT - 1 - props.number;
-    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber})`;
+    return `var(--${props.color === 'gray' ? 'stone' : 'gray'}-${invertedNumber.toFixed()})`;
   }};
   transform: scale(1);
   transition: transform 2000ms var(--ease-elastic-4);

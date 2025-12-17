@@ -1,9 +1,9 @@
 import { css } from '@linaria/core';
 
-type PostItNoteProps = {
+interface PostItNoteProps {
   title: string;
   description: string;
-};
+}
 
 export default function PostItNote({ title, description }: PostItNoteProps) {
   // Todo: Work on styles.

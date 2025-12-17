@@ -21,9 +21,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// Change BlogPost to return a Promise
 export default async function BlogPost({ params }: PageProps): Promise<JSX.IntrinsicElements> {
-  const { slug } = await params;
+  const { slug } = params;
   const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
 
   // Check if the file exists

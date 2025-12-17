@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ArticlePage({ params }: PageProps): Promise<JSX.IntrinsicElements> {
-  const { slug } = await params;
+  const { slug } = params;
   const articleFilePath = path.join(process.cwd(), 'content/articles', `${slug}.mdx`);
 
   if (!fs.existsSync(articleFilePath)) {

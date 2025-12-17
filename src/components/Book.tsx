@@ -3,11 +3,11 @@ import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import Image from 'next/image';
 
-type BookProps = {
+interface BookProps {
   title: string;
   author: string;
   coverId: number;
-};
+}
 
 export default function Book({ title, author, coverId }: BookProps) {
   const key = 'ID';
@@ -17,7 +17,7 @@ export default function Book({ title, author, coverId }: BookProps) {
     <div className={BookWorkStyles}>
       <h3>{toTitleCase(title)}</h3>
       <p>Author: {author}</p>
-      <Image src={`https://covers.openlibrary.org/b/${key}/${coverId}-${size}.jpg`} alt={title} width={200} height={300} />
+      <Image src={`https://covers.openlibrary.org/b/${key}/${coverId.toFixed()}-${size}.jpg`} alt={title} width={200} height={300} />
     </div>
   );
 }

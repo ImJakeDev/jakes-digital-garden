@@ -1,7 +1,7 @@
 import { getQueryClient } from '@/app/get-query-client';
 import PageContainer from '@/components/layouts/PageContainer';
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
-import OpenLibraryAlreadyReadResponse from '@/types/OpenLibraryAlreadyReadResponse';
+import type OpenLibraryAlreadyReadResponse from '@/types/OpenLibraryAlreadyReadResponse';
 import { createUrlTitle } from '@/utils/createUrlTitle';
 import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
@@ -31,7 +31,7 @@ export async function generateStaticParams() {
   }
 
   return data.reading_log_entries.map((book) => ({
-    book: !!book.work ? createUrlTitle(book.work.title) : '',
+    book: book.work ? createUrlTitle(book.work.title) : '',
   }));
 }
 
@@ -40,14 +40,14 @@ export default async function BookPage({ params }: PageProps) {
 
   await queryClient.prefetchQuery(openLibraryOptions);
 
-  const awaitedParams = await params;
+  const awaitedParams = params;
 
   const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
 
   // Find the book by matching the URL-safe title
-  const book = data.reading_log_entries?.find((entry) => (!!entry.work ? matchesUrlTitle(entry.work.title, awaitedParams.book) : false));
+  const book = data.reading_log_entries?.find((entry) => (entry.work ? matchesUrlTitle(entry.work.title, awaitedParams.book) : false));
 
-  if (!book || !book.work) {
+  if (!book?.work) {
     return (
       <PageContainer>
         <h3>Book not found</h3>
@@ -71,7 +71,7 @@ export default async function BookPage({ params }: PageProps) {
         <b>Cover ID:</b> {book.work.cover_id}
       </span>
       <div className={CoverImageStyles}>
-        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
+        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id.toFixed()}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
       </div>
     </PageContainer>
   );

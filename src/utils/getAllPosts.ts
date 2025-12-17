@@ -4,13 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export type PostMeta = {
+export interface PostMeta {
   slug: string;
   title: string;
   description: string;
   tags: string[];
   img: string;
-};
+}
 
 export async function getAllPosts(): Promise<PostMeta[]> {
   const postsDirectory = path.join(process.cwd(), 'content/blog');
@@ -25,13 +25,13 @@ export async function getAllPosts(): Promise<PostMeta[]> {
 
       // Todo: Update image feature
       // Correct fallback image path (omit "public/")
-      const imageUrl = data.img || 'https://picsum.photos/200/300';
+      const imageUrl = data.img ?? 'https://picsum.photos/200/300';
 
       return {
         slug: filename.replace('.mdx', ''),
         title: data.title,
         description: data.description,
-        tags: data.tags || [],
+        tags: data.tags ?? [],
         img: imageUrl,
       };
     } catch (error) {

@@ -11,7 +11,7 @@ export default async function BlogPage() {
     <PageContainer>
       <h2>Explore blog posts:</h2>
       <ul className={BlogPostsStyles}>
-        {!!posts.length ? (
+        {posts.length ? (
           posts.map((post, index) => {
             return (
               <Link key={index} href={`/blog/${post.slug}`}>
