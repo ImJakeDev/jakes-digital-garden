@@ -7,13 +7,13 @@
     "build": "next build",
     "start": "next start",
     "check:format": "prettier --check src",
-    "check:lint": "next lint",
+    "check:lint": "eslint .",
     "check:types": "tsc --pretty --noEmit",
     "check:styles": "stylelint 'src/**/*.tsx'",
     "clean:modules": "rm -rf node_modules",
     "clean": "rm -rf .next && rm -rf node_modules && pnpm i",
     "format": "prettier --write .",
-    "lint:fix": "next lint --fix",
+    "lint:fix": "eslint --fix .",
     "styles:fix": "stylelint 'src/**/*.tsx' --fix",
     "test:all": "pnpm run check:format && pnpm run check:styles && pnpm run check:lint && pnpm run check:types && pnpm run build",
     "prepare": "husky || true"
@@ -57,7 +57,6 @@
   },
   "devDependencies": {
     "@eslint/compat": "2.0.0",
-    "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.2",
     "@linaria/babel-preset": "^5.0.4",
     "@linaria/postcss-linaria": "^6.3.0",

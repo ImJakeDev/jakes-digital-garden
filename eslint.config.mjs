@@ -1,27 +1,4 @@
-// import { defineConfig } from "eslint/config";
-// import path from "node:path";
-// import { fileURLToPath } from "node:url";
-// import js from "@eslint/js";
-// import { FlatCompat } from "@eslint/eslintrc";
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// const compat = new FlatCompat({
-//     baseDirectory: __dirname,
-//     recommendedConfig: js.configs.recommended,
-//     allConfig: js.configs.all
-// });
-
-// export default defineConfig([{
-//     extends: compat.extends(
-//         "next/core-web-vitals",
-//         "next/typescript",
-//         "plugin:@tanstack/query/recommended",
-//         "prettier",
-//     ),
-// }]);
-
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintPlugin from '@eslint/js';
 import { configs as tseslintConfigs } from 'typescript-eslint';
 import reactPlugin from 'eslint-plugin-react';
@@ -30,16 +7,8 @@ import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import nextPlugin from '@next/eslint-plugin-next';
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import reactCompilerPlugin from 'eslint-plugin-react-compiler';
+import prettier from 'eslint-config-prettier/flat';
 import * as mdxPlugin from 'eslint-plugin-mdx';
-
-// Global ignores configuration
-// Must be in its own config object to act as global ignores
-const ignoresConfig = defineConfig([
-  {
-    name: 'project/ignores',
-    ignores: ['.next/', 'node_modules/', 'public/', '.vscode/', 'next-env.d.ts'],
-  },
-]);
 
 // ESLint recommended rules for JavaScript/TypeScript
 const eslintConfig = defineConfig([
@@ -167,74 +136,6 @@ const stylisticConfig = defineConfig([
       ...stylisticPlugin.configs['disable-legacy'].rules,
       // Add recommended stylistic rules as base
       ...stylisticPlugin.configs.recommended.rules,
-
-      // Custom style preferences (adjust to your team's preferences)
-      '@stylistic/indent': ['warn', 2],
-      '@stylistic/indent-binary-ops': ['warn', 2],
-      '@stylistic/quotes': [
-        'warn',
-        'single',
-        {
-          avoidEscape: true,
-          allowTemplateLiterals: 'always',
-        },
-      ],
-      '@stylistic/jsx-quotes': ['warn', 'prefer-double'],
-      '@stylistic/semi': 'off',
-      '@stylistic/comma-dangle': ['warn', 'only-multiline'],
-      '@stylistic/arrow-parens': 'off',
-      '@stylistic/brace-style': [
-        'warn',
-        '1tbs',
-        {
-          allowSingleLine: true,
-        },
-      ],
-      '@stylistic/operator-linebreak': 'off',
-
-      // JSX-specific style rules
-      '@stylistic/jsx-indent-props': ['warn', 2],
-      '@stylistic/jsx-one-expression-per-line': 'off', // Too strict
-      '@stylistic/jsx-wrap-multilines': [
-        'warn',
-        {
-          declaration: 'parens-new-line',
-          assignment: 'parens-new-line',
-          return: 'parens-new-line',
-          arrow: 'parens-new-line',
-          condition: 'parens-new-line',
-          logical: 'parens-new-line',
-          prop: 'parens-new-line',
-        },
-      ],
-      '@stylistic/jsx-curly-newline': [
-        'warn',
-        {
-          multiline: 'consistent',
-          singleline: 'forbid',
-        },
-      ],
-
-      // Additional formatting preferences
-      '@stylistic/eol-last': 'off',
-      '@stylistic/padded-blocks': 'off',
-      '@stylistic/spaced-comment': 'off',
-      '@stylistic/multiline-ternary': 'off', // Conflicts with JSX
-      '@stylistic/no-multiple-empty-lines': ['warn'],
-      '@stylistic/no-trailing-spaces': ['warn'],
-      '@stylistic/member-delimiter-style': [
-        'warn',
-        {
-          multiline: {
-            delimiter: 'semi',
-            requireLast: true,
-          },
-          singleline: {
-            delimiter: 'semi',
-            requireLast: false,
-          },
-        },
-      ],
     },
   },
 ]);
@@ -286,5 +187,20 @@ const reactCompilerConfig = defineConfig([
 ]);
 
 // Export the complete configuration
-// Order matters: ignores first, then general configs, then specific overrides
-export default defineConfig([...ignoresConfig, ...eslintConfig, ...typescriptConfig, ...reactConfig, ...stylisticConfig, ...mdxConfig, ...reactCompilerConfig]);
+export default defineConfig([
+  ...eslintConfig,
+  ...typescriptConfig,
+  ...reactConfig,
+  ...stylisticConfig,
+  ...mdxConfig,
+  ...reactCompilerConfig,
+  prettier,
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    'next.config.ts',
+  ]),
+]);
