@@ -17,9 +17,6 @@ const bundleAnalyzerConfig = withBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-  linaria: {
-    fastCheck: false,
-  },
   images: {
     remotePatterns: [
       {
