@@ -1,5 +1,5 @@
 declare module 'gray-matter' {
-  type metaData = {
+  interface metaData {
     title: string;
     description: string;
     tags: string[];
@@ -7,7 +7,7 @@ declare module 'gray-matter' {
     img: string;
     plantedOn: string;
     tendedTo: string;
-  };
+  }
   interface GrayMatterFile<metaData> {
     data: metaData;
     content: string;
@@ -17,10 +17,7 @@ declare module 'gray-matter' {
 
   interface GrayMatterOptions {
     excerpt?: (file: string, options: GrayMatterOptions) => string;
-    engines?: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [engine: string]: (input: string) => any;
-    };
+    engines?: Record<string, (input: string) => any>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

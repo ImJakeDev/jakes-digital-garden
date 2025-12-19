@@ -3,17 +3,17 @@ import { useQuery } from '@tanstack/react-query';
 import ms from 'milliseconds';
 import { fetchWeatherApi } from 'openmeteo';
 
-type UserPosition = {
+interface UserPosition {
   latitude: number;
   longitude: number;
-};
+}
 
 const fetchTheWeather = async (userPosition: UserPosition) => {
   // https://open-meteo.com/en/docs
   // Todo: clean up
   const params = {
-    latitude: userPosition?.latitude,
-    longitude: userPosition?.longitude,
+    latitude: userPosition.latitude,
+    longitude: userPosition.longitude,
     current: 'temperature_2m,weather_code,wind_speed_10m,wind_direction_10m',
     hourly: 'temperature_2m,precipitation',
     daily: 'weather_code,temperature_2m_max,temperature_2m_min',
@@ -35,29 +35,29 @@ const fetchTheWeather = async (userPosition: UserPosition) => {
   // const locationLatitude = response.latitude();
   // const locationLongitude = response.longitude();
 
-  const current = response.current()!;
-  const hourly = response.hourly()!;
-  const daily = response.daily()!;
+  const current = response.current();
+  const hourly = response.hourly();
+  const daily = response.daily();
 
   // Note: The order of weather variables in the URL query and the indices below need to match!
   const weatherData = {
     current: {
-      time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-      temperature: celsiusToFahrenheit(current.variables(0)!.value()), // Current is only 1 value, therefore `.value()`
-      weatherCode: current.variables(1)!.value(),
-      windSpeed: current.variables(2)!.value(),
-      windDirection: current.variables(3)!.value(),
+      time: new Date((Number(current?.time()) + utcOffsetSeconds) * 1000),
+      temperature: celsiusToFahrenheit(current?.variables(0)?.value() ?? 0), // Current is only 1 value, therefore `.value()`
+      weatherCode: current?.variables(1)?.value() ?? null,
+      windSpeed: current?.variables(2)?.value() ?? 0,
+      windDirection: current?.variables(3)?.value() ?? 0,
     },
     hourly: {
-      time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
-      temperature: hourly.variables(0)!.valuesArray()!, // `.valuesArray()` get an array of floats
-      precipitation: hourly.variables(1)!.valuesArray()!,
+      time: range(Number(hourly?.time() ?? 0), Number(hourly?.timeEnd() ?? 0), hourly?.interval() ?? 1).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+      temperature: hourly?.variables(0)?.valuesArray() ?? [], // `.valuesArray()` get an array of floats
+      precipitation: hourly?.variables(1)?.valuesArray() ?? [],
     },
     daily: {
-      time: range(Number(daily.time()), Number(daily.timeEnd()), daily.interval()).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
-      weatherCode: daily.variables(0)!.valuesArray()!,
-      temperatureMax: daily.variables(1)!.valuesArray()!,
-      temperatureMin: daily.variables(2)!.valuesArray()!,
+      time: range(Number(daily?.time() ?? 0), Number(daily?.timeEnd() ?? 0), daily?.interval() ?? 1).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+      weatherCode: daily?.variables(0)?.valuesArray() ?? [],
+      temperatureMax: daily?.variables(1)?.valuesArray() ?? [],
+      temperatureMin: daily?.variables(2)?.valuesArray() ?? [],
     },
   };
 

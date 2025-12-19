@@ -35,7 +35,7 @@ function SearchForPokémon() {
   if (isLoadingPokémon)
     return (
       <PageContainer>
-        <LoadingIndicator />
+        <LoadingIndicator text="Loading Pokèmon..." />
       </PageContainer>
     );
   if (errorPokémon) return <PageContainer>Error: {errorPokémon.message}</PageContainer>;
@@ -48,7 +48,6 @@ function SearchForPokémon() {
   return (
     <>
       <h1>{toTitleCase(pokémon.name)}</h1>
-      {isLoadingPokémon && <em>Loading Pokèmon...</em>}
       <div className={rowStyles}>
         {!!pokémonFrontImage.length && <Image src={pokémonFrontImage} alt={pokémon.name} width={96} height={96} priority={true} />}
         {!!pokémonBackImage.length && <Image src={pokémonBackImage} alt={pokémon.name} width={96} height={96} priority={true} />}

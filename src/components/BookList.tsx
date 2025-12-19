@@ -5,37 +5,30 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 import { createUrlTitle } from '@/utils/createUrlTitle';
-import LoadingIndicator from './LoadingIndicator';
 
 export default function BookList() {
-  const { data, isLoading, isError } = useSuspenseQuery(openLibraryOptions);
+  const { data, isError } = useSuspenseQuery(openLibraryOptions);
+
+  if (isError) {
+    return <div>Error loading books.</div>;
+  }
 
   return (
-    <>
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : isError ? (
-        <p>Error</p>
-      ) : (
-        !!data && (
-          <ul className={BooksStyles}>
-            {data.reading_log_entries?.map((book, index) => {
-              if (!book.work) {
-                return null;
-              }
-              const urlTitle = !!book.work ? createUrlTitle(book.work.title) : '';
-              return (
-                <li key={index}>
-                  <Link href={`/books/${urlTitle}`}>
-                    <Book title={book.work.title} author={book.work.author_names[0]} coverId={book.work.cover_id} />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        )
-      )}
-    </>
+    <ul className={BooksStyles}>
+      {data.reading_log_entries?.map((book, index) => {
+        if (!book.work) {
+          return null;
+        }
+        const urlTitle = createUrlTitle(book.work.title);
+        return (
+          <li key={index}>
+            <Link href={`/books/${urlTitle}`}>
+              <Book title={book.work.title} author={book.work.author_names[0]} coverId={book.work.cover_id} />
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

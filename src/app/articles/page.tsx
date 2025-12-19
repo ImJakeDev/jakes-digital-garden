@@ -11,7 +11,7 @@ export default async function ArticlesPage() {
     <PageContainer>
       <h2>Explore articles:</h2>
       <ul className={ArticlesStyles}>
-        {!!articles.length ? (
+        {articles.length ? (
           articles.map((article, index) => {
             return (
               <Link key={index} href={`/articles/${article.slug}`}>

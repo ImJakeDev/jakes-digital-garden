@@ -8,7 +8,7 @@ import { enUS } from 'date-fns/locale';
 import LoadingIndicator from './LoadingIndicator';
 
 // https://open-meteo.com/en/docs#daily=weather_code
-const WeatherCodeMap: { [key: number]: string } = {
+const WeatherCodeMap: Record<number, string> = {
   0: 'Clear sky',
   1: 'Mainly clear',
   2: 'Partly cloudy',
@@ -81,7 +81,7 @@ export default function WeatherStation() {
           <span>{`Time: ${formattedDate}`}</span>
         </li>
         <li>
-          <span>{`Weather Code: ${WeatherCodeMap[openMeteoData.current.weatherCode]}`}</span>
+          <span>{`Weather Code: ${WeatherCodeMap[openMeteoData.current.weatherCode ?? 0]}`}</span>
         </li>
       </ul>
     </div>

@@ -4,7 +4,7 @@ const DatasourceSchema = z.object({
   sourcename: z.string(),
   attribution: z.string(),
   license: z.string(),
-  url: z.string().url(),
+  url: z.url(),
 });
 
 const TimezoneSchema = z.object({

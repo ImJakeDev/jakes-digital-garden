@@ -16,7 +16,7 @@ const usePokémon = (pokémon?: string) => {
 
   return useQuery({
     queryKey: ['pokémon', pokémon, randomPokémon],
-    queryFn: () => fetchPokémon(!!pokémon ? pokémon : randomPokémon),
+    queryFn: () => fetchPokémon(pokémon ?? randomPokémon),
     staleTime: Infinity,
   });
 };

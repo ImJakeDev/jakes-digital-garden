@@ -38,7 +38,7 @@ export default async function Home() {
           <div className={SectionStyles}>
             <h2>Articles:</h2>
             <ul className={BlogPostsStyles}>
-              {!!articles.length ? (
+              {articles.length ? (
                 articles.map((article, index) => (
                   <li key={index}>
                     <Link href={`/articles/${article.slug}`}>
@@ -56,7 +56,7 @@ export default async function Home() {
           <div className={SectionStyles}>
             <h2>Blog Post-its:</h2>
             <ul className={BlogPostsStyles}>
-              {!!posts.length ? (
+              {posts.length ? (
                 posts.map((post, index) => (
                   <li key={index}>
                     <Link href={`/blog/${post.slug}`}>

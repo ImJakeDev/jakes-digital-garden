@@ -2,12 +2,12 @@
 
 import { css } from '@linaria/core';
 
-type LoadingIndicatorProps = {
+interface LoadingIndicatorProps {
   text?: string;
-};
+}
 
 export default function LoadingIndicator({ text }: LoadingIndicatorProps = {}) {
-  return <strong className={LoadingIndicatorStyles}>Loading{text! ? ' ' + text : ''}</strong>;
+  return <strong className={LoadingIndicatorStyles}>Loading{text ? ' ' + text : ''}</strong>;
 }
 
 const LoadingIndicatorStyles = css`

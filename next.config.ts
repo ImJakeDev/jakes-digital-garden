@@ -1,9 +1,8 @@
-import { NextConfig } from 'next';
-
-const mdx = require('@next/mdx');
-const withBundleAnalyzer = require('@next/bundle-analyzer');
-const withPlugins = require('next-compose-plugins');
-const withLinaria = require('next-with-linaria');
+import type { NextConfig } from 'next';
+import mdx from '@next/mdx';
+import withBundleAnalyzer from '@next/bundle-analyzer';
+import withPlugins from 'next-compose-plugins';
+import withLinaria from 'next-with-linaria';
 
 const mdxConfig = mdx({
   extension: /\.mdx?$/,
@@ -18,9 +17,6 @@ const bundleAnalyzerConfig = withBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-  linaria: {
-    fastCheck: false,
-  },
   images: {
     remotePatterns: [
       {
@@ -38,7 +34,7 @@ const nextConfig: NextConfig = {
     ],
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  webpack: (config: any, {}) => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -51,12 +47,10 @@ const nextConfig: NextConfig = {
         },
       ],
     });
-
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
-
     return config;
   },
 };

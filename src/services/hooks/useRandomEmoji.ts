@@ -108,10 +108,10 @@ type SubGroup =
 
 type Group = 'activities' | 'animals-nature' | 'component' | 'flags' | 'food-drink' | 'objects' | 'people-body' | 'smileys-emotion' | 'symbols' | 'travel-places';
 
-type Exclude = {
+interface Exclude {
   groups?: Group[];
   subGroups?: SubGroup[];
-};
+}
 
 const fetchRandomEmoji = () => {
   // https://github.com/milesj/emojibase
@@ -133,30 +133,27 @@ const useRandomEmoji = ({ groups = ['people-body', 'smileys-emotion', 'symbols',
       const subgroupExclusions = subGroups;
 
       const switchKeysAndValues = <T extends Record<string, string>>(obj: T): Record<string, keyof T> => {
-        return Object.entries(obj).reduce(
-          (acc, [key, value]) => {
-            acc[value] = key;
-            return acc;
-          },
-          {} as Record<string, keyof T>
-        );
+        return Object.entries(obj).reduce<Record<string, keyof T>>((acc, [key, value]) => {
+          acc[value] = key;
+          return acc;
+        }, {});
       };
 
       const emojiMetaGroups = switchKeysAndValues(EmojiMeta.groups);
       const emojiMetaSubGroups = switchKeysAndValues(EmojiMeta.subgroups);
 
-      const excludedGroups = groupExclusions?.map((group) => emojiMetaGroups[group]);
-      const excludedSubGroups = subgroupExclusions?.map((subgroup) => emojiMetaSubGroups[subgroup]);
+      const excludedGroups = groupExclusions.map((group) => emojiMetaGroups[group]);
+      const excludedSubGroups = subgroupExclusions.map((subgroup) => emojiMetaSubGroups[subgroup]);
 
       const filteredEmojiDataForGroups = filter(emojiData, (emoji) => {
         return !excludedGroups.some((excludedGroup) => {
-          return !!emoji.group ? String(emoji.group) === excludedGroup : true;
+          return emoji.group ? String(emoji.group) === excludedGroup : true;
         });
       });
 
       const filteredEmojiDataForSubGroups = filter(filteredEmojiDataForGroups, (emoji) => {
         return !excludedSubGroups.some((excludedSubGroup) => {
-          return !!emoji.subgroup ? String(emoji.subgroup) === excludedSubGroup : true;
+          return emoji.subgroup ? String(emoji.subgroup) === excludedSubGroup : true;
         });
       });
 
