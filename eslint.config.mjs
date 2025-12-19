@@ -46,6 +46,7 @@ const typescriptConfig = defineConfig([
       '@typescript-eslint/require-await': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+      '@typescript-eslint/await-thenable': 'warn',
       // disabled next rule due to bug:
       // https://github.com/typescript-eslint/typescript-eslint/issues/11732
       // https://github.com/eslint/eslint/issues/20272
@@ -114,6 +115,7 @@ const reactConfig = defineConfig([
       'jsx-a11y/aria-unsupported-elements': 'warn',
       'jsx-a11y/role-has-required-aria-props': 'warn',
       'jsx-a11y/role-supports-aria-props': 'warn',
+      'jsx-a11y/label-has-associated-control': 'warn',
     },
     settings: {
       react: {

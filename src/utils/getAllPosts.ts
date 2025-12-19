@@ -8,8 +8,8 @@ export interface PostMeta {
   slug: string;
   title: string;
   description: string;
-  tags: string[];
-  img: string;
+  tags?: string[];
+  img?: string;
 }
 
 export async function getAllPosts(): Promise<PostMeta[]> {
@@ -23,8 +23,6 @@ export async function getAllPosts(): Promise<PostMeta[]> {
     try {
       const { data } = matter(fileContent);
 
-      // Todo: Update image feature
-      // Correct fallback image path (omit "public/")
       const imageUrl = data.img ?? 'https://picsum.photos/200/300';
 
       return {

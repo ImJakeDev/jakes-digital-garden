@@ -30,9 +30,11 @@ export async function generateStaticParams() {
     return [];
   }
 
-  return data.reading_log_entries.map((book) => ({
-    book: book.work ? createUrlTitle(book.work.title) : '',
-  }));
+  return Array.isArray(data.reading_log_entries)
+    ? data.reading_log_entries.map((book) => ({
+        book: book.work ? createUrlTitle(book.work.title) : '',
+      }))
+    : [];
 }
 
 export default async function BookPage({ params }: PageProps) {

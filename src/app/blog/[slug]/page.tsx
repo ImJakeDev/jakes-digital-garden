@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: PageProps): Promise<JSX.IntrinsicElements> {
-  const { slug } = params;
+  const { slug } = await params;
   const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
 
   // Check if the file exists
