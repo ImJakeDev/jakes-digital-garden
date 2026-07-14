@@ -43,21 +43,27 @@ export default function WeatherStation() {
   // Todo: Work on UX/UI
   // Todo: Fix bugs (Windows Brave browser wont fetch API???)
   const { position, error: userGeolocationError } = useUserGeolocation();
-  // Todo: Needs a state when there is no user position. Which is caused by the user not allowing geolocation via the browser.
-  const { data: openMeteoData, error: openMeteoError, isLoading: openMeteoIsLoading } = useOpenMeteo({ latitude: position?.coords.latitude ?? 0, longitude: position?.coords.longitude ?? 0 });
-  const { data: geolocationData, error: geolocationError, isLoading: geolocationIsLoading } = useReverseGeocoding(position?.coords.latitude ?? 0, position?.coords.longitude ?? 0);
+  const userPosition = position ? { latitude: position.coords.latitude, longitude: position.coords.longitude } : undefined;
+  const { data: openMeteoData, error: openMeteoError, isLoading: openMeteoIsLoading } = useOpenMeteo(userPosition);
+  const { data: geolocationData, error: geolocationError, isLoading: geolocationIsLoading } = useReverseGeocoding(userPosition);
+
+  if (userGeolocationError) {
+    return <div>Unable to access your location: {userGeolocationError.message}</div>;
+  }
+
   if (!position) {
-    return <div>No position available.</div>;
+    return <div>Requesting your location…</div>;
   }
   if (geolocationIsLoading || openMeteoIsLoading) {
     return <LoadingIndicator />;
   }
 
-  if (userGeolocationError || openMeteoError || geolocationError) {
-    return <div>Error: {userGeolocationError?.message ?? openMeteoError?.message ?? geolocationError?.message}</div>;
+  if (openMeteoError || geolocationError) {
+    return <div>Error: {openMeteoError?.message ?? geolocationError?.message}</div>;
   }
 
-  if (!openMeteoData || !geolocationData) {
+  const location = geolocationData?.features[0]?.properties;
+  if (!openMeteoData || !location) {
     return <div>No data available.</div>;
   }
 
@@ -65,7 +71,7 @@ export default function WeatherStation() {
   const formattedDate = format(date, 'MMMM dd, yyyy hh:mm:ss a', {
     locale: enUS,
   });
-  const formattedLocation = `${geolocationData.features[0].properties.city}, ${geolocationData.features[0].properties.state}`;
+  const formattedLocation = `${location.city}, ${location.state}`;
 
   return (
     <div>

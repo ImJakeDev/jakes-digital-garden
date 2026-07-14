@@ -1,5 +1,5 @@
 'use client';
-import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
+import { openLibraryOptions } from '@/services/openLibrary';
 import Book from './Book';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';

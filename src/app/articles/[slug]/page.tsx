@@ -1,42 +1,32 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
 import { notFound } from 'next/navigation';
+import { getAllContentEntries, getContentEntry } from '@/utils/content';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
-  const articlesDirectory = path.join(process.cwd(), 'content/articles');
-  const filenames = fs.readdirSync(articlesDirectory);
-
-  return filenames.map((filename) => ({
-    params: { slug: filename.replace('.mdx', '') },
-  }));
+  return getAllContentEntries('articles').map(({ slug }) => ({ slug }));
 }
 
-export default async function ArticlePage({ params }: PageProps): Promise<JSX.IntrinsicElements> {
+export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
-  const articleFilePath = path.join(process.cwd(), 'content/articles', `${slug}.mdx`);
+  const article = getContentEntry('articles', slug);
 
-  if (!fs.existsSync(articleFilePath)) {
+  if (!article) {
     notFound();
   }
-
-  const articleContent = fs.readFileSync(articleFilePath, 'utf-8');
-  const { data, content } = matter(articleContent);
 
   return (
     <PageContainer>
       <article className="flow">
-        <h1>{data.title}</h1>
-        <span>Planted on: {data.plantedOn}</span>
-        <MDXRemote source={content} />
+        <h1>{article.data.title}</h1>
+        <span>Planted on: {article.data.plantedOn}</span>
+        <MDXRemote source={article.content} />
       </article>
     </PageContainer>
   );

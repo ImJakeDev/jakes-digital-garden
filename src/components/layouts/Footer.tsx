@@ -28,12 +28,19 @@ export default function Footer() {
           <div className={emojiContainer}>
             <span className="emoji-wrapper">
               Made with{' '}
-              <button popoverTarget="emoji-tooltip" className="emoji" popoverTargetAction="toggle">
+              <button
+                type="button"
+                popoverTarget="emoji-tooltip"
+                popoverTargetAction="toggle"
+                aria-label={`Learn what this emoji represents: ${randomEmoji.label}`}
+                aria-describedby="emoji-tooltip"
+                className="emoji"
+              >
                 {randomEmoji.emoji}
               </button>{' '}
               by Jake
             </span>
-            <div id="emoji-tooltip" popover="manual">
+            <div id="emoji-tooltip" popover="auto" role="tooltip">
               <span>
                 {startsWithVowel(randomEmoji.label) ? 'an' : 'a'} {randomEmoji.label}
               </span>
@@ -146,5 +153,13 @@ const emojiContainer = css`
   @position-try --right {
     position-area: right;
     margin: 0 0 0 0.5rem;
+  }
+
+  @supports not selector(:popover-open) {
+    [popover] {
+      position: static;
+      clip-path: none;
+      margin-block-start: var(--space-2xs);
+    }
   }
 `;

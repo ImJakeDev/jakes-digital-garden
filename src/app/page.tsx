@@ -8,7 +8,7 @@ import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 import BookList from '@/components/BookList';
-import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
+import { openLibraryOptions } from '@/services/openLibrary';
 import PostItNote from '@/components/Post-itNote';
 import WeatherStation from '@/components/WeatherStation';
 import { Suspense } from 'react';

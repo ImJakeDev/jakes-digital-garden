@@ -1,40 +1,21 @@
 'use server';
 
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { getAllContentEntries } from '@/utils/content';
 
 export interface PostMeta {
   slug: string;
   title: string;
   description: string;
-  tags?: string[];
-  img?: string;
+  tags: string[];
+  img: string;
 }
 
 export async function getAllPosts(): Promise<PostMeta[]> {
-  const postsDirectory = path.join(process.cwd(), 'content/blog');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  return filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-
-    try {
-      const { data } = matter(fileContent);
-
-      const imageUrl = data.img ?? 'https://picsum.photos/200/300';
-
-      return {
-        slug: filename.replace('.mdx', ''),
-        title: data.title,
-        description: data.description,
-        tags: data.tags ?? [],
-        img: imageUrl,
-      };
-    } catch (error) {
-      console.error(`Error processing file: ${filename}`, error);
-      throw error;
-    }
-  });
+  return getAllContentEntries('blog').map(({ slug, data }) => ({
+    slug,
+    title: data.title,
+    description: data.description,
+    tags: data.tags,
+    img: data.img || 'https://picsum.photos/200/300',
+  }));
 }

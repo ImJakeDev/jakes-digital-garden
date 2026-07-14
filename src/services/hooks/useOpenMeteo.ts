@@ -69,10 +69,17 @@ const fetchTheWeather = async (userPosition: UserPosition) => {
   return weatherData;
 };
 
-const useOpenMeteo = (userPosition: UserPosition) => {
+const useOpenMeteo = (userPosition?: UserPosition) => {
   return useQuery({
-    queryKey: ['open-meteo', userPosition],
-    queryFn: () => fetchTheWeather(userPosition),
+    queryKey: ['open-meteo', userPosition?.latitude, userPosition?.longitude],
+    queryFn: () => {
+      if (!userPosition) {
+        throw new Error('A location is required to fetch weather data.');
+      }
+
+      return fetchTheWeather(userPosition);
+    },
+    enabled: Boolean(userPosition),
     staleTime: ms.hours(1),
   });
 };

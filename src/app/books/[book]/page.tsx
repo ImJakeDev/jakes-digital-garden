@@ -1,16 +1,14 @@
-import { getQueryClient } from '@/app/get-query-client';
 import PageContainer from '@/components/layouts/PageContainer';
-import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
-import type OpenLibraryAlreadyReadResponse from '@/types/OpenLibraryAlreadyReadResponse';
+import { fetchOpenLibrary } from '@/services/openLibrary';
 import { createUrlTitle } from '@/utils/createUrlTitle';
 import toTitleCase from '@/utils/toTitleCase';
 import { css } from '@linaria/core';
 import Image from 'next/image';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     book: string;
-  };
+  }>;
 }
 
 // Reverse the URL formatting to match against the original title
@@ -18,33 +16,20 @@ function matchesUrlTitle(originalTitle: string, urlTitle: string) {
   return createUrlTitle(originalTitle) === urlTitle;
 }
 
-// Generate static pages at build time
-export async function generateStaticParams() {
-  const queryClient = getQueryClient();
-
-  await queryClient.prefetchQuery(openLibraryOptions);
-
-  const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse | undefined;
-
-  if (!data?.reading_log_entries) {
-    return [];
-  }
-
-  return Array.isArray(data.reading_log_entries)
-    ? data.reading_log_entries.map((book) => ({
-        book: book.work ? createUrlTitle(book.work.title) : '',
-      }))
-    : [];
-}
-
 export default async function BookPage({ params }: PageProps) {
-  const queryClient = getQueryClient();
+  const awaitedParams = await params;
+  let data;
 
-  await queryClient.prefetchQuery(openLibraryOptions);
-
-  const awaitedParams = params;
-
-  const data = (await queryClient.getQueryData(openLibraryOptions.queryKey)) as OpenLibraryAlreadyReadResponse;
+  try {
+    data = await fetchOpenLibrary();
+  } catch {
+    return (
+      <PageContainer>
+        <h1>Library unavailable</h1>
+        <p>Please try again shortly.</p>
+      </PageContainer>
+    );
+  }
 
   // Find the book by matching the URL-safe title
   const book = data.reading_log_entries?.find((entry) => (entry.work ? matchesUrlTitle(entry.work.title, awaitedParams.book) : false));
@@ -73,7 +58,7 @@ export default async function BookPage({ params }: PageProps) {
         <b>Cover ID:</b> {book.work.cover_id}
       </span>
       <div className={CoverImageStyles}>
-        <Image src={`https://covers.openlibrary.org/b/${key}/${book.work.cover_id.toFixed()}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
+        <Image src={`https://covers.openlibrary.org/b/${key}/${String(book.work.cover_id)}-${size}.jpg`} alt={book.work.title} width={200} height={300} />
       </div>
     </PageContainer>
   );

@@ -6,6 +6,9 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start --webpack",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
     "check:format": "prettier --check src",
     "check:lint": "eslint .",
     "check:types": "tsc --pretty --noEmit",
@@ -26,7 +29,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/bundle-analyzer": "16.0.10",
     "@next/mdx": "16.0.10",
-    "@t3-oss/env-nextjs": "^0.12.0",
+    "@t3-oss/env-nextjs": "^0.13.11",
     "@tanstack/react-query": "^5.89.0",
     "@tanstack/react-query-devtools": "^5.89.0",
     "@tcgdex/sdk": "^2.7.1",
@@ -58,10 +61,8 @@
   "devDependencies": {
     "@eslint/compat": "2.0.0",
     "@eslint/js": "9.39.2",
-    "@linaria/babel-preset": "^5.0.4",
     "@linaria/postcss-linaria": "^6.3.0",
     "@linaria/stylelint": "^6.3.0",
-    "@linaria/webpack-loader": "^5.0.4",
     "@next/eslint-plugin-next": "16.0.10",
     "@stylistic/eslint-plugin": "5.6.1",
     "@tanstack/eslint-plugin-query": "^5.89.0",
@@ -89,7 +90,8 @@
     "stylelint": "^16.24.0",
     "stylelint-config-recommended": "^16.0.0",
     "typescript": "^5.9.2",
-    "typescript-eslint": "8.50.0"
+    "typescript-eslint": "8.50.0",
+    "vitest": "4.1.10"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
