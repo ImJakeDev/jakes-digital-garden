@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import type { Pokemon } from 'pokenode-ts';
@@ -12,12 +12,24 @@ const fetchPokémon = async (pokémon: string) => {
 };
 
 const usePokémon = (pokémon?: string) => {
-  const { data: randomPokémon } = useSuspenseQuery(randomPokémonOptions);
+  const isClient = typeof window !== 'undefined';
+  const { data: randomPokémon } = useQuery({
+    ...randomPokémonOptions,
+    enabled: isClient,
+  });
+  const name = pokémon ?? randomPokémon;
 
   return useQuery({
-    queryKey: ['pokémon', pokémon, randomPokémon],
-    queryFn: () => fetchPokémon(pokémon ?? randomPokémon),
+    queryKey: ['pokémon', name],
+    queryFn: async () => {
+      if (!name) {
+        throw new Error('A Pokémon name is required.');
+      }
+
+      return fetchPokémon(name);
+    },
     staleTime: Infinity,
+    enabled: isClient && Boolean(name),
   });
 };
 

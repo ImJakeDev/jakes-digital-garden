@@ -7,7 +7,7 @@ pnpm install
 pnpm dev
 ```
 
-Copy `.env.example` to `.env.local` and provide the required values.
+Copy `.env.example` to `.env.local` to customize local settings. No environment variables are required to build the site; reverse geocoding is simply unavailable until a Geoapify key is configured.
 
 ## Checks
 

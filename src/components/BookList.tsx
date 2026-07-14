@@ -1,16 +1,23 @@
 'use client';
 import { openLibraryOptions } from '@/services/openLibrary';
 import Book from './Book';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 import { createUrlTitle } from '@/utils/createUrlTitle';
 
 export default function BookList() {
-  const { data, isError } = useSuspenseQuery(openLibraryOptions);
+  const { data, isError, isLoading } = useQuery({
+    ...openLibraryOptions,
+    enabled: typeof window !== 'undefined',
+  });
 
   if (isError) {
     return <div>Error loading books.</div>;
+  }
+
+  if (isLoading || !data) {
+    return <div>Loading books…</div>;
   }
 
   return (

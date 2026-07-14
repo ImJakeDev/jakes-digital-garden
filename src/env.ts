@@ -6,7 +6,7 @@ export const env = createEnv({
     GEOAPIFY_API_KEY: z.string().min(1).optional(),
   },
   client: {
-    NEXT_PUBLIC_BASE_URL: z.string().min(1),
+    NEXT_PUBLIC_BASE_URL: z.string().min(1).optional(),
   },
   runtimeEnv: {
     GEOAPIFY_API_KEY: process.env.GEOAPIFY_API_KEY,
