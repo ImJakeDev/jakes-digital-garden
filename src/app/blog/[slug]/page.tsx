@@ -1,48 +1,32 @@
-'use server';
-
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
+import { notFound } from 'next/navigation';
+import { getAllContentEntries, getContentEntry } from '@/utils/content';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'content');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  return filenames.map((filename) => ({
-    params: { slug: filename.replace('.mdx', '') },
-  }));
+  return getAllContentEntries('blog').map(({ slug }) => ({ slug }));
 }
 
-export default async function BlogPost({ params }: PageProps): Promise<JSX.IntrinsicElements> {
+export default async function BlogPost({ params }: PageProps) {
   const { slug } = await params;
-  const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
+  const post = getContentEntry('blog', slug);
 
-  // Check if the file exists
-  if (!fs.existsSync(postFilePath)) {
-    return (
-      <PageContainer>
-        <h3>Post not found</h3>
-      </PageContainer>
-    );
+  if (!post) {
+    notFound();
   }
-
-  const postContent = fs.readFileSync(postFilePath, 'utf-8');
-  const { data, content } = matter(postContent);
 
   return (
     <PageContainer>
       <article className="flow">
-        <h1>{data.title}</h1>
-        <span>Planted on: {data.plantedOn}</span>
-        <MDXRemote source={content} />
+        <h1>{post.data.title}</h1>
+        <span>Planted on: {post.data.plantedOn}</span>
+        <MDXRemote source={post.content} />
       </article>
     </PageContainer>
   );

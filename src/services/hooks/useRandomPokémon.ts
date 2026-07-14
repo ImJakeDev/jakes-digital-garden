@@ -1,44 +1,32 @@
 import AllCaughtPokémon, { AllCaughtPokémonSchema } from '@/types/AllCaughtPokémon';
-import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import ms from 'milliseconds';
 
-const api = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/',
-  timeout: ms.seconds(10),
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const fetchPokémonPage = async (url: string): Promise<AllCaughtPokémon> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`PokéAPI request failed: ${String(response.status)}`);
+  }
 
-const fetchAllPokémon = async (): Promise<AllCaughtPokémon> => {
-  const fetchRecursive = async (url: string, aggregatedResults: AllCaughtPokémon['results'] = []): Promise<AllCaughtPokémon> => {
-    const { data } = await api.get<AllCaughtPokémon>(url);
+  return AllCaughtPokémonSchema.parse(await response.json());
+};
 
-    // Combine the current page results with aggregated results
-    const updatedResults = aggregatedResults.concat(data.results);
+export const fetchRandomPokémon = async (): Promise<string> => {
+  const { count } = await fetchPokémonPage('https://pokeapi.co/api/v2/pokemon?limit=1');
+  const offset = Math.floor(Math.random() * count);
+  const { results } = await fetchPokémonPage(`https://pokeapi.co/api/v2/pokemon?offset=${String(offset)}&limit=1`);
+  const pokémon = results.at(0);
 
-    if (data.next) {
-      // Continue fetching the next page recursively
-      return fetchRecursive(data.next, updatedResults);
-    }
+  if (!pokémon) {
+    throw new Error('PokéAPI returned no Pokémon for a valid offset.');
+  }
 
-    const combinedData = { ...data, results: updatedResults, next: null, previous: null };
-    const parsedData = AllCaughtPokémonSchema.parse(combinedData);
-
-    return parsedData;
-  };
-
-  const initialUrl = 'pokemon?offset=0&limit=200'; // Base endpoint, relative to the Axios instance's baseURL
-  return fetchRecursive(initialUrl);
+  return pokémon.name;
 };
 
 const randomPokémonOptions = queryOptions({
   queryKey: ['randomPokémon'],
-  queryFn: () => fetchAllPokémon(),
+  queryFn: fetchRandomPokémon,
   staleTime: Infinity,
-  select: (randomPokémon) => getRandomArrayIndex(randomPokémon.results.map((pokémon) => pokémon.name)),
 });
 
 const useRandomPokémon = () => {

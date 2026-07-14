@@ -1,21 +1,28 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { env } from '../../env';
 import ms from 'milliseconds';
-import FeatureCollection from '@/types/GeoapifyResponse';
+import { FeatureCollectionSchema } from '@/types/GeoapifyResponse';
 
 const fetchGeolocation = async (lat: number, lng: number) => {
-  // https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/
-  const response = axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat.toFixed()}&lon=${lng.toFixed()}&apiKey=${env.NEXT_PUBLIC_GEOAPIFY_API_KEY}`);
-  const data = (await response).data as FeatureCollection;
+  const searchParams = new URLSearchParams({ lat: String(lat), lng: String(lng) });
+  const response = await fetch(`/api/reverse-geocoding?${searchParams.toString()}`);
+  if (!response.ok) {
+    throw new Error(`Reverse geocoding request failed: ${String(response.status)}`);
+  }
 
-  return data;
+  return FeatureCollectionSchema.parse(await response.json());
 };
 
-const useReverseGeocoding = (lat: number, lng: number) => {
+const useReverseGeocoding = (position?: { latitude: number; longitude: number }) => {
   return useQuery({
-    queryKey: ['reverse-geocoding', lat, lng],
-    queryFn: () => fetchGeolocation(lat, lng),
+    queryKey: ['reverse-geocoding', position?.latitude, position?.longitude],
+    queryFn: () => {
+      if (!position) {
+        throw new Error('A location is required for reverse geocoding.');
+      }
+
+      return fetchGeolocation(position.latitude, position.longitude);
+    },
+    enabled: Boolean(position),
     staleTime: ms.hours(1),
   });
 };

@@ -2,29 +2,20 @@ import { getAllPosts } from '@/utils/getAllPosts';
 import { getAllArticles } from '@/utils/getAllArticles';
 import Card from '@/components/Card';
 import PageContainer from '@/components/layouts/PageContainer';
-import { getQueryClient } from './get-query-client';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import { css } from '@linaria/core';
 import Link from 'next/link';
 import BookList from '@/components/BookList';
-import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import PostItNote from '@/components/Post-itNote';
 import WeatherStation from '@/components/WeatherStation';
+import { Suspense } from 'react';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default async function Home() {
-  const queryClient = getQueryClient();
-
-  void queryClient.prefetchQuery(randomPokémonOptions);
-  // Todo: Should I be prefetching the openLibraryOptions here? 🤔
-  void queryClient.prefetchQuery(openLibraryOptions);
-
   const posts = await getAllPosts();
   const articles = await getAllArticles();
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <PageContainer>
+    <PageContainer>
         <div className={fluidRow}>
           <div>
             <p>Welcome to my Digital Garden. 🌱</p>
@@ -73,11 +64,12 @@ export default async function Home() {
           </div>
           <div className={SectionStyles}>
             <h2>The Library:</h2>
-            <BookList />
+            <Suspense fallback={<LoadingIndicator />}>
+              <BookList />
+            </Suspense>
           </div>
         </div>
-      </PageContainer>
-    </HydrationBoundary>
+    </PageContainer>
   );
 }
 

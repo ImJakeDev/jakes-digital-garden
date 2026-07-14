@@ -1,7 +1,9 @@
+'use client';
 import useRandomEmoji from '@/services/hooks/useRandomEmoji';
 import { styled } from '@linaria/react';
 import { css } from '@linaria/core';
 import { format } from 'date-fns';
+import { Suspense } from 'react';
 import Pokémon from '@/components/Pokémon';
 import SocialList from '@/components/SocialList';
 import LoadingIndicator from '../LoadingIndicator';
@@ -26,12 +28,19 @@ export default function Footer() {
           <div className={emojiContainer}>
             <span className="emoji-wrapper">
               Made with{' '}
-              <button popoverTarget="emoji-tooltip" className="emoji" popoverTargetAction="toggle">
+              <button
+                type="button"
+                popoverTarget="emoji-tooltip"
+                popoverTargetAction="toggle"
+                aria-label={`Learn what this emoji represents: ${randomEmoji.label}`}
+                aria-describedby="emoji-tooltip"
+                className="emoji"
+              >
                 {randomEmoji.emoji}
               </button>{' '}
               by Jake
             </span>
-            <div id="emoji-tooltip" popover="manual">
+            <div id="emoji-tooltip" popover="auto" role="tooltip">
               <span>
                 {startsWithVowel(randomEmoji.label) ? 'an' : 'a'} {randomEmoji.label}
               </span>
@@ -42,7 +51,9 @@ export default function Footer() {
         <em>© {format(now, 'yyyy')} Jake&apos;s Digital Garden</em>
       </StyledFooterContainer>
       <SocialList />
-      <Pokémon />
+      <Suspense fallback={<LoadingIndicator />}>
+        <Pokémon />
+      </Suspense>
     </StyledFooter>
   );
 }
@@ -142,5 +153,13 @@ const emojiContainer = css`
   @position-try --right {
     position-area: right;
     margin: 0 0 0 0.5rem;
+  }
+
+  @supports not selector(:popover-open) {
+    [popover] {
+      position: static;
+      clip-path: none;
+      margin-block-start: var(--space-2xs);
+    }
   }
 `;

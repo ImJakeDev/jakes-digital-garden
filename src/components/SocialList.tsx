@@ -24,8 +24,8 @@ const SocialListStyles = css`
   display: flex;
   gap: var(--space-s-m);
   list-style: none;
-  justify-content: 'center';
-  align-items: 'center';
+  justify-content: center;
+  align-items: center;
   padding: 0;
 
   li {

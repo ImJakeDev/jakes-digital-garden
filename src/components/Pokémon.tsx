@@ -1,3 +1,5 @@
+'use client';
+
 import usePokémon from '@/services/hooks/usePokémon';
 import Image from 'next/image';
 import { css } from '@linaria/core';
@@ -19,11 +21,18 @@ export default function Pokémon() {
     <>
       <div className={pokémonContainer}>
         <span className="pokémon-wrapper">
-          <button popoverTarget="pokémon-tooltip" className="pokémon" popoverTargetAction="toggle">
-            <Image src={pokémon.sprites.front_default ?? ''} alt={pokémon.name} width={96} height={96} priority={false} />
+          <button
+            type="button"
+            popoverTarget="pokémon-tooltip"
+            popoverTargetAction="toggle"
+            aria-label={`Learn more about ${toTitleCase(pokémon.name)}`}
+            aria-describedby="pokémon-tooltip"
+            className="pokémon"
+          >
+            {pokémon.sprites.front_default && <Image src={pokémon.sprites.front_default} alt={pokémon.name} width={96} height={96} priority={false} />}
           </button>
         </span>
-        <div id="pokémon-tooltip" popover="manual">
+        <div id="pokémon-tooltip" popover="auto" role="tooltip">
           <span>Hi from {toTitleCase(pokémon.name)}!</span>
         </div>
       </div>
@@ -100,5 +109,13 @@ const pokémonContainer = css`
   @position-try --right {
     position-area: right;
     margin: 0 0 0 0.5rem;
+  }
+
+  @supports not selector(:popover-open) {
+    [popover] {
+      position: static;
+      clip-path: none;
+      margin-block-start: var(--space-2xs);
+    }
   }
 `;
