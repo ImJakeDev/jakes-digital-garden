@@ -101,6 +101,8 @@ export const globals = css`
       --background: var(--gray-1);
       --foreground: var(--gray-12);
       --color-border: var(--gray-8);
+      --color-text: var(--foreground);
+      --color-primary: var(--lime-3);
       /* FontSizes */
       --fontSizes-xs: var(--step-neg-2);
       --fontSizes-sm: var(--step-neg-1);

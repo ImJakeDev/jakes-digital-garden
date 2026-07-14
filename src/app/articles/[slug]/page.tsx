@@ -1,10 +1,9 @@
-'use server';
-
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
+import { notFound } from 'next/navigation';
 
 interface PageProps {
   params: {
@@ -26,11 +25,7 @@ export default async function ArticlePage({ params }: PageProps): Promise<JSX.In
   const articleFilePath = path.join(process.cwd(), 'content/articles', `${slug}.mdx`);
 
   if (!fs.existsSync(articleFilePath)) {
-    return (
-      <PageContainer>
-        <h3>Article not found</h3>
-      </PageContainer>
-    );
+    notFound();
   }
 
   const articleContent = fs.readFileSync(articleFilePath, 'utf-8');

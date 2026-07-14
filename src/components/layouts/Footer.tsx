@@ -1,7 +1,9 @@
+'use client';
 import useRandomEmoji from '@/services/hooks/useRandomEmoji';
 import { styled } from '@linaria/react';
 import { css } from '@linaria/core';
 import { format } from 'date-fns';
+import { Suspense } from 'react';
 import Pokémon from '@/components/Pokémon';
 import SocialList from '@/components/SocialList';
 import LoadingIndicator from '../LoadingIndicator';
@@ -42,7 +44,9 @@ export default function Footer() {
         <em>© {format(now, 'yyyy')} Jake&apos;s Digital Garden</em>
       </StyledFooterContainer>
       <SocialList />
-      <Pokémon />
+      <Suspense fallback={<LoadingIndicator />}>
+        <Pokémon />
+      </Suspense>
     </StyledFooter>
   );
 }

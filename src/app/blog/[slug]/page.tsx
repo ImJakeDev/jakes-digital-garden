@@ -1,10 +1,9 @@
-'use server';
-
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import PageContainer from '@/components/layouts/PageContainer';
+import { notFound } from 'next/navigation';
 
 interface PageProps {
   params: {
@@ -25,13 +24,8 @@ export default async function BlogPost({ params }: PageProps): Promise<JSX.Intri
   const { slug } = await params;
   const postFilePath = path.join(process.cwd(), 'content/blog', `${slug}.mdx`);
 
-  // Check if the file exists
   if (!fs.existsSync(postFilePath)) {
-    return (
-      <PageContainer>
-        <h3>Post not found</h3>
-      </PageContainer>
-    );
+    notFound();
   }
 
   const postContent = fs.readFileSync(postFilePath, 'utf-8');

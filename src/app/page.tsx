@@ -11,6 +11,8 @@ import BookList from '@/components/BookList';
 import { openLibraryOptions } from '@/services/hooks/useOpenLibrary';
 import PostItNote from '@/components/Post-itNote';
 import WeatherStation from '@/components/WeatherStation';
+import { Suspense } from 'react';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default async function Home() {
   const queryClient = getQueryClient();
@@ -73,7 +75,9 @@ export default async function Home() {
           </div>
           <div className={SectionStyles}>
             <h2>The Library:</h2>
-            <BookList />
+            <Suspense fallback={<LoadingIndicator />}>
+              <BookList />
+            </Suspense>
           </div>
         </div>
       </PageContainer>
