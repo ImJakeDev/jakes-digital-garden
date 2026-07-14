@@ -22,15 +22,15 @@ export default function BookList() {
 
   return (
     <ul className={BooksStyles}>
-      {data.reading_log_entries?.map((book, index) => {
+      {data.reading_log_entries?.map((book) => {
         if (!book.work) {
           return null;
         }
         const urlTitle = createUrlTitle(book.work.title);
         return (
-          <li key={index}>
+          <li key={book.work.key}>
             <Link href={`/books/${urlTitle}`}>
-              <Book title={book.work.title} author={book.work.author_names[0]} coverId={book.work.cover_id} />
+              <Book title={book.work.title} author={book.work.author_names[0] ?? 'Unknown'} coverId={book.work.cover_id} />
             </Link>
           </li>
         );

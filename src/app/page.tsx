@@ -11,64 +11,63 @@ import { Suspense } from 'react';
 import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default async function Home() {
-  const posts = await getAllPosts();
-  const articles = await getAllArticles();
+  const [posts, articles] = await Promise.all([getAllPosts(), getAllArticles()]);
 
   return (
     <PageContainer>
-        <div className={fluidRow}>
-          <div>
-            <p>Welcome to my Digital Garden. 🌱</p>
-            <br />
-            <p>A place where I plant and nurture digital seeds that will grow into ideas that create, connect and inspire projects, creativity, and anarchy. 😈 🤭 😜</p>
-          </div>
-          <WeatherStation />
+      <div className={fluidRow}>
+        <div>
+          <p>Welcome to my Digital Garden. 🌱</p>
+          <br />
+          <p>A place where I plant and nurture digital seeds that will grow into ideas that create, connect and inspire projects, creativity, and anarchy. 😈 🤭 😜</p>
         </div>
-        {/* // Todo: Build The Digital Garden Section */}
-        <div className={GardenFenceStyles}>
-          <div className={SectionStyles}>
-            <h2>Articles:</h2>
-            <ul className={BlogPostsStyles}>
-              {articles.length ? (
-                articles.map((article, index) => (
-                  <li key={index}>
-                    <Link href={`/articles/${article.slug}`}>
-                      <Card title={article.title} description={article.description} />
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <li>
-                  <p>No articles found.</p>
+        <WeatherStation />
+      </div>
+      {/* // Todo: Build The Digital Garden Section */}
+      <div className={GardenFenceStyles}>
+        <div className={SectionStyles}>
+          <h2>Articles:</h2>
+          <ul className={BlogPostsStyles}>
+            {articles.length ? (
+              articles.map((article) => (
+                <li key={article.slug}>
+                  <Link href={`/articles/${article.slug}`}>
+                    <Card title={article.title} description={article.description} />
+                  </Link>
                 </li>
-              )}
-            </ul>
-          </div>
-          <div className={SectionStyles}>
-            <h2>Blog Post-its:</h2>
-            <ul className={BlogPostsStyles}>
-              {posts.length ? (
-                posts.map((post, index) => (
-                  <li key={index}>
-                    <Link href={`/blog/${post.slug}`}>
-                      <PostItNote title={post.title} description={post.description} />
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <li>
-                  <p>No blog posts found.</p>
-                </li>
-              )}
-            </ul>
-          </div>
-          <div className={SectionStyles}>
-            <h2>The Library:</h2>
-            <Suspense fallback={<LoadingIndicator />}>
-              <BookList />
-            </Suspense>
-          </div>
+              ))
+            ) : (
+              <li>
+                <p>No articles found.</p>
+              </li>
+            )}
+          </ul>
         </div>
+        <div className={SectionStyles}>
+          <h2>Blog Post-its:</h2>
+          <ul className={BlogPostsStyles}>
+            {posts.length ? (
+              posts.map((post) => (
+                <li key={post.slug}>
+                  <Link href={`/blog/${post.slug}`}>
+                    <PostItNote title={post.title} description={post.description} />
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li>
+                <p>No blog posts found.</p>
+              </li>
+            )}
+          </ul>
+        </div>
+        <div className={SectionStyles}>
+          <h2>The Library:</h2>
+          <Suspense fallback={<LoadingIndicator />}>
+            <BookList />
+          </Suspense>
+        </div>
+      </div>
     </PageContainer>
   );
 }

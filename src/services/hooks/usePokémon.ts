@@ -1,14 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import ms from 'milliseconds';
 import { randomPokémonOptions } from '@/services/hooks/useRandomPokémon';
 import type { Pokemon } from 'pokenode-ts';
 
+const api = axios.create({
+  baseURL: 'https://pokeapi.co/api/v2/',
+  timeout: ms.seconds(10),
+});
+
 const fetchPokémon = async (pokémon: string) => {
   // https://pokeapi.co/
-  const response = axios.get(`https://pokeapi.co/api/v2/pokemon/${pokémon}/`);
-  const data = (await response).data as Pokemon;
+  const response = await api.get(`pokemon/${pokémon}/`);
 
-  return data;
+  return response.data as Pokemon;
 };
 
 const usePokémon = (pokémon?: string) => {

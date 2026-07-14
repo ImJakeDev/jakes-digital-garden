@@ -21,14 +21,7 @@ export default function Pokémon() {
     <>
       <div className={pokémonContainer}>
         <span className="pokémon-wrapper">
-          <button
-            type="button"
-            popoverTarget="pokémon-tooltip"
-            popoverTargetAction="toggle"
-            aria-label={`Learn more about ${toTitleCase(pokémon.name)}`}
-            aria-describedby="pokémon-tooltip"
-            className="pokémon"
-          >
+          <button type="button" popoverTarget="pokémon-tooltip" popoverTargetAction="toggle" aria-label={`Learn more about ${toTitleCase(pokémon.name)}`} aria-describedby="pokémon-tooltip" className="pokémon">
             {pokémon.sprites.front_default && <Image src={pokémon.sprites.front_default} alt={pokémon.name} width={96} height={96} priority={false} />}
           </button>
         </span>
