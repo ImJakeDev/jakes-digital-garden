@@ -19,8 +19,9 @@ function SearchForPokémon() {
   // Todo: maybe it needs to be a general search rather than a url search param?
   const searchParams = useSearchParams();
   const dynamicName = searchParams.get('name');
+  const name = dynamicName === null || dynamicName === '' ? 'pikachu' : dynamicName;
 
-  const { data: pokémon, isLoading: isLoadingPokémon, error: errorPokémon } = usePokémon(dynamicName ?? 'pikachu');
+  const { data: pokémon, isLoading: isLoadingPokémon, error: errorPokémon } = usePokémon(name);
 
   // Todo: Make into custom hook
   const {
@@ -28,8 +29,8 @@ function SearchForPokémon() {
     isLoading: isLoadingTCGdex,
     error: errorTCGdex,
   } = useQuery({
-    queryKey: ['TCGdex', dynamicName],
-    queryFn: () => tcgdex.card.get(dynamicName ?? 'pikachu'),
+    queryKey: ['TCGdex', name],
+    queryFn: () => tcgdex.card.get(name),
   });
 
   if (isLoadingPokémon)
@@ -53,6 +54,7 @@ function SearchForPokémon() {
         {!!pokémonBackImage.length && <Image src={pokémonBackImage} alt={pokémon.name} width={96} height={96} priority={true} />}
       </div>
       {isLoadingTCGdex && <em>Loading TCGdex...</em>}
+      {errorTCGdex && <em>Error loading card image: {errorTCGdex.message}</em>}
       {!!tcgdexImage.length && !errorTCGdex && !isLoadingTCGdex && <Image src={tcgdexImage} alt={pokémon.name} width={200} height={300} priority={true} />}
       {/* // Todo: Render data here */}
     </>

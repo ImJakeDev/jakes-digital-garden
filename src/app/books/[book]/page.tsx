@@ -49,7 +49,7 @@ export default async function BookPage({ params }: PageProps) {
     <PageContainer>
       <h1>{toTitleCase(book.work.title)}</h1>
       <span>
-        <b>Author:</b> {book.work.author_names[0]}
+        <b>Author:</b> {book.work.author_names[0] ?? 'Unknown'}
       </span>
       <span>
         <b>Published:</b> {book.work.first_publish_year}

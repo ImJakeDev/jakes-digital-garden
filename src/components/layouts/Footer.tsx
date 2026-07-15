@@ -28,14 +28,7 @@ export default function Footer() {
           <div className={emojiContainer}>
             <span className="emoji-wrapper">
               Made with{' '}
-              <button
-                type="button"
-                popoverTarget="emoji-tooltip"
-                popoverTargetAction="toggle"
-                aria-label={`Learn what this emoji represents: ${randomEmoji.label}`}
-                aria-describedby="emoji-tooltip"
-                className="emoji"
-              >
+              <button type="button" popoverTarget="emoji-tooltip" popoverTargetAction="toggle" aria-label={`Learn what this emoji represents: ${randomEmoji.label}`} aria-describedby="emoji-tooltip" className="emoji">
                 {randomEmoji.emoji}
               </button>{' '}
               by Jake
