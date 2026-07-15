@@ -1,23 +1,210 @@
 'use client';
 
-import useRandom5eSpecies from '@/services/hooks/useRandom5eSpecies';
 import LoadingIndicator from './LoadingIndicator';
 import { css } from '@linaria/core';
+import { useMemo } from 'react';
+import { RACES, useDnD5eAllRaces, useDnD5eRace, useDnD5eSubrace, useDnD5eRacesProficiencies, useDnD5eRacesTraits } from '@/services/hooks/useDnD5eRaces';
+import { CLASSES, useDnD5eClasses, useDnD5eClass } from '@/services/hooks/useDnD5eClasses';
+import { useOpen5eBackgrounds, getSuggestedCharacteristics } from '@/services/hooks/useOpen5eBackgrounds';
+import getRandomArrayIndex from '@/utils/getRandomArrayIndex';
+
+const ABILITIES = [
+  { key: 'Strength', abbreviation: 'STR' },
+  { key: 'Dexterity', abbreviation: 'DEX' },
+  { key: 'Constitution', abbreviation: 'CON' },
+  { key: 'Intelligence', abbreviation: 'INT' },
+  { key: 'Wisdom', abbreviation: 'WIS' },
+  { key: 'Charisma', abbreviation: 'CHA' },
+] as const;
+
+type AbilityKey = (typeof ABILITIES)[number]['key'];
+
+const SAVE_ORDER = [
+  { key: 'Strength', abbreviation: 'STR' },
+  { key: 'Dexterity', abbreviation: 'DEX' },
+  { key: 'Constitution', abbreviation: 'CON' },
+  { key: 'Wisdom', abbreviation: 'WIS' },
+  { key: 'Intelligence', abbreviation: 'INT' },
+  { key: 'Charisma', abbreviation: 'CHA' },
+] as const satisfies { key: AbilityKey; abbreviation: string }[];
+
+const SKILLS = [
+  { name: 'Acrobatics', ability: 'Dexterity', abbreviation: 'Dex' },
+  { name: 'Animal Handling', ability: 'Wisdom', abbreviation: 'Wis' },
+  { name: 'Arcana', ability: 'Intelligence', abbreviation: 'Int' },
+  { name: 'Athletics', ability: 'Strength', abbreviation: 'Str' },
+  { name: 'Deception', ability: 'Charisma', abbreviation: 'Cha' },
+  { name: 'History', ability: 'Intelligence', abbreviation: 'Int' },
+  { name: 'Insight', ability: 'Wisdom', abbreviation: 'Wis' },
+  { name: 'Intimidation', ability: 'Charisma', abbreviation: 'Cha' },
+  { name: 'Investigation', ability: 'Intelligence', abbreviation: 'Int' },
+  { name: 'Medicine', ability: 'Wisdom', abbreviation: 'Wis' },
+  { name: 'Nature', ability: 'Intelligence', abbreviation: 'Int' },
+  { name: 'Perception', ability: 'Wisdom', abbreviation: 'Wis' },
+  { name: 'Performance', ability: 'Charisma', abbreviation: 'Cha' },
+  { name: 'Persuasion', ability: 'Charisma', abbreviation: 'Cha' },
+  { name: 'Religion', ability: 'Intelligence', abbreviation: 'Int' },
+  { name: 'Sleight of Hand', ability: 'Dexterity', abbreviation: 'Dex' },
+  { name: 'Stealth', ability: 'Dexterity', abbreviation: 'Dex' },
+  { name: 'Survival', ability: 'Wisdom', abbreviation: 'Wis' },
+] as const satisfies { name: string; ability: AbilityKey; abbreviation: string }[];
+
+const PROFICIENCY_BONUS = 2;
+
+function rollAbilityScore(): number {
+  const rolls = Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 6)).sort((a, b) => b - a);
+  return rolls[0] + rolls[1] + rolls[2];
+}
+
+function formatSigned(value: number): string {
+  return value >= 0 ? `+${String(value)}` : String(value);
+}
+
+function pickRandomSubset<T>(items: readonly T[], count: number): T[] {
+  const pool = [...items];
+  const picked: T[] = [];
+  while (pool.length > 0 && picked.length < count) {
+    const index = Math.floor(Math.random() * pool.length);
+    picked.push(pool.splice(index, 1)[0]);
+  }
+  return picked;
+}
 
 export default function Profile() {
-  const { data: Random5eSpeciesData, error: Random5eSpeciesError, isLoading: isLoadingRandom5eSpecies } = useRandom5eSpecies();
+  // Picked once per mount so the generated character stays stable across
+  // re-renders; reloading the page rolls a new one, same as the old random-species hook.
+  const raceIndex = useMemo(() => getRandomArrayIndex(RACES), []);
+  const classIndex = useMemo(() => getRandomArrayIndex(CLASSES), []);
 
-  if (isLoadingRandom5eSpecies) {
+  const { data: DnD5eRacesData } = useDnD5eAllRaces();
+  const { data: DnD5eRaceData, error: raceError, isLoading: isLoadingRace } = useDnD5eRace(raceIndex);
+  const { data: DnD5eSubraceData } = useDnD5eSubrace(raceIndex);
+  const { data: DnD5eRacesProficienciesData } = useDnD5eRacesProficiencies(raceIndex);
+  const { data: DnD5eRacesTraitsData } = useDnD5eRacesTraits(raceIndex);
+
+  const { data: DnD5eClassesData } = useDnD5eClasses();
+  const { data: DnD5eClassData, error: classError, isLoading: isLoadingClass } = useDnD5eClass(classIndex);
+
+  const { data: Open5eBackgroundsData, error: backgroundsError, isLoading: isLoadingBackgrounds } = useOpen5eBackgrounds();
+
+  const subrace = useMemo(() => {
+    if (!DnD5eSubraceData?.results?.length) {
+      return undefined;
+    }
+    return getRandomArrayIndex(DnD5eSubraceData.results);
+  }, [DnD5eSubraceData]);
+
+  // Only ~20 of Open5e's 58 backgrounds carry parseable Personality/Ideal/Bond/Flaw
+  // tables (the rest just point back at the PHB in prose), so the random pick is
+  // scoped to that usable subset rather than the full pool.
+  const background = useMemo(() => {
+    const usable = Open5eBackgroundsData?.results.filter((candidate) => !!getSuggestedCharacteristics(candidate));
+    return usable?.length ? getRandomArrayIndex(usable) : undefined;
+  }, [Open5eBackgroundsData]);
+
+  const characteristics = useMemo(() => (background ? getSuggestedCharacteristics(background) : undefined), [background]);
+
+  const personalityPick = useMemo(() => (characteristics ? getRandomArrayIndex(characteristics.personalityTraits) : undefined), [characteristics]);
+  const idealPick = useMemo(() => (characteristics ? getRandomArrayIndex(characteristics.ideals) : undefined), [characteristics]);
+  const bondPick = useMemo(() => (characteristics ? getRandomArrayIndex(characteristics.bonds) : undefined), [characteristics]);
+  const flawPick = useMemo(() => (characteristics ? getRandomArrayIndex(characteristics.flaws) : undefined), [characteristics]);
+
+  const abilityScores = useMemo(() => {
+    const bonusByAbbreviation = new Map<string, number>();
+    DnD5eRaceData?.ability_bonuses.forEach((bonus) => {
+      const abbreviation = bonus?.ability_score?.name;
+      if (abbreviation && bonus.bonus != null) {
+        bonusByAbbreviation.set(abbreviation, (bonusByAbbreviation.get(abbreviation) ?? 0) + bonus.bonus);
+      }
+    });
+
+    return ABILITIES.reduce(
+      (scores, { key, abbreviation }) => {
+        const score = rollAbilityScore() + (bonusByAbbreviation.get(abbreviation) ?? 0);
+        const modifier = Math.floor((score - 10) / 2);
+        scores[key] = { score, modifier };
+        return scores;
+      },
+      {} as Record<AbilityKey, { score: number; modifier: number }>
+    );
+  }, [DnD5eRaceData]);
+
+  const proficientSaves = useMemo(() => new Set(DnD5eClassData?.saving_throws?.map((save) => save.name).filter((name): name is string => !!name)), [DnD5eClassData]);
+
+  const proficientSkills = useMemo(() => {
+    const proficient = new Set<string>();
+    DnD5eClassData?.proficiency_choices
+      ?.filter((choice) => choice.type === 'proficiencies')
+      .forEach((choice) => {
+        const skillOptions = (choice.from?.options ?? [])
+          .map((option) => option.item?.name)
+          .filter((name): name is string => !!name && name.startsWith('Skill: '))
+          .map((name) => name.replace('Skill: ', ''));
+        pickRandomSubset(skillOptions, choice.choose ?? 0).forEach((name) => proficient.add(name));
+      });
+    return proficient;
+  }, [DnD5eClassData]);
+
+  if (isLoadingRace || isLoadingClass || isLoadingBackgrounds) {
     return <LoadingIndicator />;
   }
 
-  if (Random5eSpeciesError || !Random5eSpeciesData) {
+  const loadError = raceError ?? classError ?? backgroundsError;
+  if (loadError || !DnD5eRaceData || !DnD5eClassData) {
     return (
       <div className="">
-        <p>Error loading species data: {Random5eSpeciesError?.message ?? 'No data.'}</p>
+        <p>Error loading character data: {loadError?.message ?? 'No data.'}</p>
       </div>
     );
   }
+
+  const raceLabel = subrace?.name ? `${DnD5eRaceData.name ?? ''} (${subrace.name})` : (DnD5eRaceData.name ?? '');
+  const classLevelLabel = DnD5eClassData.name ? `${DnD5eClassData.name} 1` : '';
+
+  const backgroundBenefit = (type: string) => background?.benefits.find((benefit) => benefit.type === type)?.desc ?? undefined;
+  const backgroundSkillProficiency = backgroundBenefit('skill_proficiency');
+  const backgroundToolProficiency = backgroundBenefit('tool_proficiency');
+  const backgroundEquipment = backgroundBenefit('equipment');
+
+  const otherProfsText = [
+    DnD5eRacesProficienciesData?.results?.length ? `Race: ${DnD5eRacesProficienciesData.results.map((prof) => prof.name).join(', ')}` : undefined,
+    DnD5eRaceData.language_desc,
+    DnD5eClassData.proficiencies?.length
+      ? `Class: ${DnD5eClassData.proficiencies
+          .map((prof) => prof.name)
+          .filter((name): name is string => !!name && !name.toLowerCase().startsWith('saving throw'))
+          .join(', ')}`
+      : undefined,
+    backgroundSkillProficiency ? `Background skills: ${backgroundSkillProficiency}` : undefined,
+    backgroundToolProficiency ? `Background tools: ${backgroundToolProficiency}` : undefined,
+  ]
+    .filter((section): section is string => !!section)
+    .join('\n\n');
+
+  const equipmentText = [
+    DnD5eClassData.starting_equipment?.length ? DnD5eClassData.starting_equipment.map((item) => `${item.quantity && item.quantity > 1 ? `${String(item.quantity)}x ` : ''}${item.equipment?.name ?? ''}`).join(', ') : undefined,
+    ...(DnD5eClassData.starting_equipment_options?.map((option) => option.desc).filter((desc): desc is string => !!desc) ?? []),
+    backgroundEquipment,
+  ]
+    .filter((line): line is string => !!line)
+    .join('\n');
+
+  const featuresText = [
+    ...(DnD5eRacesTraitsData?.results?.map((trait) => trait.name).filter((name): name is string => !!name) ?? []),
+    subrace?.name ? `Subrace: ${subrace.name}` : undefined,
+    ...(background?.benefits.filter((benefit) => benefit.type === 'feature' && benefit.name && benefit.desc).map((benefit) => `${benefit.name ?? ''}: ${benefit.desc ?? ''}`) ?? []),
+  ]
+    .filter((line): line is string => !!line)
+    .join('\n');
+
+  const spellcastingAbilityAbbreviation = DnD5eClassData.spellcasting?.spellcasting_ability?.name;
+  const spellcastingAbility = ABILITIES.find((ability) => ability.abbreviation === spellcastingAbilityAbbreviation);
+  const spellcastingText = spellcastingAbility
+    ? `Spellcasting Ability: ${spellcastingAbility.key} | Spell Save DC: ${String(8 + PROFICIENCY_BONUS + abilityScores[spellcastingAbility.key].modifier)} | Spell Attack: ${formatSigned(PROFICIENCY_BONUS + abilityScores[spellcastingAbility.key].modifier)}`
+    : undefined;
+
+  const hitDie = DnD5eClassData.hit_die ?? 8;
+  const maxHp = Math.max(1, hitDie + abilityScores.Constitution.modifier);
 
   return (
     <div className={CharSheet}>
@@ -31,11 +218,18 @@ export default function Profile() {
             <ul>
               <li>
                 <label htmlFor="classlevel">Class & Level</label>
-                <input name="classlevel" placeholder="Paladin 2" />
+                <input name="classlevel" placeholder="Paladin 2" defaultValue={classLevelLabel} list="class-options" />
+                {!!DnD5eClassesData?.results?.length && (
+                  <datalist id="class-options">
+                    {DnD5eClassesData.results.map((klass) => (
+                      <option key={klass.index ?? klass.name} value={klass.name ?? ''} />
+                    ))}
+                  </datalist>
+                )}
               </li>
               <li>
                 <label htmlFor="background">Background</label>
-                <input name="background" placeholder="Acolyte" />
+                <input name="background" placeholder="Acolyte" defaultValue={background?.name ?? ''} />
               </li>
               <li>
                 <label htmlFor="playername">Player Name</label>
@@ -43,11 +237,18 @@ export default function Profile() {
               </li>
               <li>
                 <label htmlFor="race">Race</label>
-                <input name="race" placeholder="Half-elf" />
+                <input name="race" placeholder="Half-elf" defaultValue={raceLabel} list="race-options" />
+                {!!DnD5eRacesData?.results?.length && (
+                  <datalist id="race-options">
+                    {DnD5eRacesData.results.map((race) => (
+                      <option key={race.index ?? race.name} value={race.name ?? ''} />
+                    ))}
+                  </datalist>
+                )}
               </li>
               <li>
                 <label htmlFor="alignment">Alignment</label>
-                <input name="alignment" placeholder="Lawful Good" />
+                <input name="alignment" placeholder="Lawful Good" defaultValue={DnD5eRaceData.alignment ?? ''} />
               </li>
               <li>
                 <label htmlFor="experiencepoints">Experience Points</label>
@@ -64,55 +265,55 @@ export default function Profile() {
                   <li>
                     <div className="score">
                       <label htmlFor="Strengthscore">Strength</label>
-                      <input name="Strengthscore" placeholder="10" />
+                      <input name="Strengthscore" placeholder="10" defaultValue={abilityScores.Strength.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Strengthmod" placeholder="+0" />
+                      <input name="Strengthmod" placeholder="+0" defaultValue={formatSigned(abilityScores.Strength.modifier)} />
                     </div>
                   </li>
                   <li>
                     <div className="score">
                       <label htmlFor="Dexterityscore">Dexterity</label>
-                      <input name="Dexterityscore" placeholder="10" />
+                      <input name="Dexterityscore" placeholder="10" defaultValue={abilityScores.Dexterity.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Dexteritymod" placeholder="+0" />
+                      <input name="Dexteritymod" placeholder="+0" defaultValue={formatSigned(abilityScores.Dexterity.modifier)} />
                     </div>
                   </li>
                   <li>
                     <div className="score">
                       <label htmlFor="Constitutionscore">Constitution</label>
-                      <input name="Constitutionscore" placeholder="10" />
+                      <input name="Constitutionscore" placeholder="10" defaultValue={abilityScores.Constitution.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Constitutionmod" placeholder="+0" />
+                      <input name="Constitutionmod" placeholder="+0" defaultValue={formatSigned(abilityScores.Constitution.modifier)} />
                     </div>
                   </li>
                   <li>
                     <div className="score">
                       <label htmlFor="Wisdomscore">Wisdom</label>
-                      <input name="Wisdomscore" placeholder="10" />
+                      <input name="Wisdomscore" placeholder="10" defaultValue={abilityScores.Wisdom.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Wisdommod" placeholder="+0" />
+                      <input name="Wisdommod" placeholder="+0" defaultValue={formatSigned(abilityScores.Wisdom.modifier)} />
                     </div>
                   </li>
                   <li>
                     <div className="score">
                       <label htmlFor="Intelligencescore">Intelligence</label>
-                      <input name="Intelligencescore" placeholder="10" />
+                      <input name="Intelligencescore" placeholder="10" defaultValue={abilityScores.Intelligence.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Intelligencemod" placeholder="+0" />
+                      <input name="Intelligencemod" placeholder="+0" defaultValue={formatSigned(abilityScores.Intelligence.modifier)} />
                     </div>
                   </li>
                   <li>
                     <div className="score">
                       <label htmlFor="Charismascore">Charisma</label>
-                      <input name="Charismascore" placeholder="10" />
+                      <input name="Charismascore" placeholder="10" defaultValue={abilityScores.Charisma.score} />
                     </div>
                     <div className="modifier">
-                      <input name="Charismamod" placeholder="+0" />
+                      <input name="Charismamod" placeholder="+0" defaultValue={formatSigned(abilityScores.Charisma.modifier)} />
                     </div>
                   </li>
                 </ul>
@@ -128,171 +329,39 @@ export default function Profile() {
                   <div className="label-container">
                     <label htmlFor="proficiencybonus">Proficiency Bonus</label>
                   </div>
-                  <input name="proficiencybonus" placeholder="+2" />
+                  <input name="proficiencybonus" placeholder="+2" defaultValue="+2" />
                 </div>
                 <div className="saves list-section box">
                   <ul>
-                    <li>
-                      <label htmlFor="Strength-save">Strength</label>
-                      <input name="Strength-save" placeholder="+0" type="text" />
-                      <input name="Strength-save-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Dexterity-save">Dexterity</label>
-                      <input name="Dexterity-save" placeholder="+0" type="text" />
-                      <input name="Dexterity-save-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Constitution-save">Constitution</label>
-                      <input name="Constitution-save" placeholder="+0" type="text" />
-                      <input name="Constitution-save-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Wisdom-save">Wisdom</label>
-                      <input name="Wisdom-save" placeholder="+0" type="text" />
-                      <input name="Wisdom-save-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Intelligence-save">Intelligence</label>
-                      <input name="Intelligence-save" placeholder="+0" type="text" />
-                      <input name="Intelligence-save-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Charisma-save">Charisma</label>
-                      <input name="Charisma-save" placeholder="+0" type="text" />
-                      <input name="Charisma-save-prof" type="checkbox" />
-                    </li>
+                    {SAVE_ORDER.map(({ key, abbreviation }) => {
+                      const proficient = proficientSaves.has(abbreviation);
+                      const value = abilityScores[key].modifier + (proficient ? PROFICIENCY_BONUS : 0);
+                      return (
+                        <li key={key}>
+                          <label htmlFor={`${key}-save`}>{key}</label>
+                          <input name={`${key}-save`} placeholder="+0" type="text" defaultValue={formatSigned(value)} />
+                          <input name={`${key}-save-prof`} type="checkbox" defaultChecked={proficient} />
+                        </li>
+                      );
+                    })}
                   </ul>
                   <div className="label">Saving Throws</div>
                 </div>
                 <div className="skills list-section box">
                   <ul>
-                    <li>
-                      <label htmlFor="Acrobatics">
-                        Acrobatics <span className="skill">(Dex)</span>
-                      </label>
-                      <input name="Acrobatics" placeholder="+0" type="text" />
-                      <input name="Acrobatics-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Animal Handling">
-                        Animal Handling <span className="skill">(Wis)</span>
-                      </label>
-                      <input name="Animal Handling" placeholder="+0" type="text" />
-                      <input name="Animal Handling-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Arcana">
-                        Arcana <span className="skill">(Int)</span>
-                      </label>
-                      <input name="Arcana" placeholder="+0" type="text" />
-                      <input name="Arcana-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Athletics">
-                        Athletics <span className="skill">(Str)</span>
-                      </label>
-                      <input name="Athletics" placeholder="+0" type="text" />
-                      <input name="Athletics-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Deception">
-                        Deception <span className="skill">(Cha)</span>
-                      </label>
-                      <input name="Deception" placeholder="+0" type="text" />
-                      <input name="Deception-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="History">
-                        History <span className="skill">(Int)</span>
-                      </label>
-                      <input name="History" placeholder="+0" type="text" />
-                      <input name="History-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Insight">
-                        Insight <span className="skill">(Wis)</span>
-                      </label>
-                      <input name="Insight" placeholder="+0" type="text" />
-                      <input name="Insight-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Intimidation">
-                        Intimidation <span className="skill">(Cha)</span>
-                      </label>
-                      <input name="Intimidation" placeholder="+0" type="text" />
-                      <input name="Intimidation-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Investigation">
-                        Investigation <span className="skill">(Int)</span>
-                      </label>
-                      <input name="Investigation" placeholder="+0" type="text" />
-                      <input name="Investigation-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Medicine">
-                        Medicine <span className="skill">(Wis)</span>
-                      </label>
-                      <input name="Medicine" placeholder="+0" type="text" />
-                      <input name="Medicine-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Nature">
-                        Nature <span className="skill">(Int)</span>
-                      </label>
-                      <input name="Nature" placeholder="+0" type="text" />
-                      <input name="Nature-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Perception">
-                        Perception <span className="skill">(Wis)</span>
-                      </label>
-                      <input name="Perception" placeholder="+0" type="text" />
-                      <input name="Perception-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Performance">
-                        Performance <span className="skill">(Cha)</span>
-                      </label>
-                      <input name="Performance" placeholder="+0" type="text" />
-                      <input name="Performance-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Persuasion">
-                        Persuasion <span className="skill">(Cha)</span>
-                      </label>
-                      <input name="Persuasion" placeholder="+0" type="text" />
-                      <input name="Persuasion-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Religion">
-                        Religion <span className="skill">(Int)</span>
-                      </label>
-                      <input name="Religion" placeholder="+0" type="text" />
-                      <input name="Religion-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Sleight of Hand">
-                        Sleight of Hand <span className="skill">(Dex)</span>
-                      </label>
-                      <input name="Sleight of Hand" placeholder="+0" type="text" />
-                      <input name="Sleight of Hand-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Stealth">
-                        Stealth <span className="skill">(Dex)</span>
-                      </label>
-                      <input name="Stealth" placeholder="+0" type="text" />
-                      <input name="Stealth-prof" type="checkbox" />
-                    </li>
-                    <li>
-                      <label htmlFor="Survival">
-                        Survival <span className="skill">(Wis)</span>
-                      </label>
-                      <input name="Survival" placeholder="+0" type="text" />
-                      <input name="Survival-prof" type="checkbox" />
-                    </li>
+                    {SKILLS.map((skill) => {
+                      const proficient = proficientSkills.has(skill.name);
+                      const value = abilityScores[skill.ability].modifier + (proficient ? PROFICIENCY_BONUS : 0);
+                      return (
+                        <li key={skill.name}>
+                          <label htmlFor={skill.name}>
+                            {skill.name} <span className="skill">({skill.abbreviation})</span>
+                          </label>
+                          <input name={skill.name} placeholder="+0" type="text" defaultValue={formatSigned(value)} />
+                          <input name={`${skill.name}-prof`} type="checkbox" defaultChecked={proficient} />
+                        </li>
+                      );
+                    })}
                   </ul>
                   <div className="label">Skills</div>
                 </div>
@@ -302,11 +371,11 @@ export default function Profile() {
               <div className="label-container">
                 <label htmlFor="passiveperception">Passive Wisdom (Perception)</label>
               </div>
-              <input name="passiveperception" placeholder="10" />
+              <input name="passiveperception" placeholder="10" defaultValue={10 + abilityScores.Wisdom.modifier} />
             </div>
             <div className="otherprofs box textblock">
               <label htmlFor="otherprofs">Other Proficiencies and Languages</label>
-              <textarea name="otherprofs"></textarea>
+              <textarea name="otherprofs" defaultValue={otherProfsText}></textarea>
             </div>
           </section>
           <section>
@@ -314,30 +383,30 @@ export default function Profile() {
               <div className="armorclass">
                 <div>
                   <label htmlFor="ac">Armor Class</label>
-                  <input name="ac" placeholder="10" type="text" />
+                  <input name="ac" placeholder="10" type="text" defaultValue={10 + abilityScores.Dexterity.modifier} />
                 </div>
               </div>
               <div className="initiative">
                 <div>
                   <label htmlFor="initiative">Initiative</label>
-                  <input name="initiative" placeholder="+0" type="text" />
+                  <input name="initiative" placeholder="+0" type="text" defaultValue={formatSigned(abilityScores.Dexterity.modifier)} />
                 </div>
               </div>
               <div className="speed">
                 <div>
                   <label htmlFor="speed">Speed</label>
-                  <input name="speed" placeholder="30" type="text" />
+                  <input name="speed" placeholder="30" type="text" defaultValue={DnD5eRaceData.speed} />
                 </div>
               </div>
               <div className="hp">
                 <div className="regular">
                   <div className="max">
                     <label htmlFor="maxhp">Hit Point Maximum</label>
-                    <input name="maxhp" placeholder="10" type="text" />
+                    <input name="maxhp" placeholder="10" type="text" defaultValue={maxHp} />
                   </div>
                   <div className="current">
                     <label htmlFor="currenthp">Current Hit Points</label>
-                    <input name="currenthp" type="text" />
+                    <input name="currenthp" type="text" defaultValue={maxHp} />
                   </div>
                 </div>
                 <div className="temporary">
@@ -349,11 +418,11 @@ export default function Profile() {
                 <div>
                   <div className="total">
                     <label htmlFor="totalhd">Total</label>
-                    <input name="totalhd" placeholder="2d10" type="text" />
+                    <input name="totalhd" placeholder="2d10" type="text" defaultValue={`1d${String(hitDie)}`} />
                   </div>
                   <div className="remaining">
                     <label htmlFor="remaininghd">Hit Dice</label>
-                    <input name="remaininghd" type="text" />
+                    <input name="remaininghd" type="text" defaultValue="1" />
                   </div>
                 </div>
               </div>
@@ -430,7 +499,7 @@ export default function Profile() {
                     </tr>
                   </tbody>
                 </table>
-                <textarea></textarea>
+                <textarea defaultValue={spellcastingText}></textarea>
               </div>
             </section>
             <section className="equipment">
@@ -460,7 +529,7 @@ export default function Profile() {
                     </li>
                   </ul>
                 </div>
-                <textarea placeholder="Equipment list here"></textarea>
+                <textarea placeholder="Equipment list here" defaultValue={equipmentText}></textarea>
               </div>
             </section>
           </section>
@@ -468,25 +537,25 @@ export default function Profile() {
             <section className="flavor">
               <div className="personality">
                 <label htmlFor="personality">Personality</label>
-                <textarea name="personality"></textarea>
+                <textarea name="personality" defaultValue={personalityPick}></textarea>
               </div>
               <div className="ideals">
                 <label htmlFor="ideals">Ideals</label>
-                <textarea name="ideals"></textarea>
+                <textarea name="ideals" defaultValue={idealPick}></textarea>
               </div>
               <div className="bonds">
                 <label htmlFor="bonds">Bonds</label>
-                <textarea name="bonds"></textarea>
+                <textarea name="bonds" defaultValue={bondPick}></textarea>
               </div>
               <div className="flaws">
                 <label htmlFor="flaws">Flaws</label>
-                <textarea name="flaws"></textarea>
+                <textarea name="flaws" defaultValue={flawPick}></textarea>
               </div>
             </section>
             <section className="features">
               <div>
                 <label htmlFor="features">Features & Traits</label>
-                <textarea name="features"></textarea>
+                <textarea name="features" defaultValue={featuresText}></textarea>
               </div>
             </section>
           </section>
