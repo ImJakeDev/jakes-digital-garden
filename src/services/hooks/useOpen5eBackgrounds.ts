@@ -47,13 +47,18 @@ function stripEmphasis(text: string): string {
   return text.replace(/\*/g, '').trim();
 }
 
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // "suggested_characteristics" benefits from richer source documents (Tome of
 // Heroes, SRD) embed d6/d8 Markdown tables for Personality Trait/Ideal/Bond/Flaw.
 // Other documents only reference the PHB tables in prose, so this returns null
 // rather than surfacing an empty or bogus table for those.
 function extractTableRows(text: string, header: string): string[] {
   const lines = text.split('\n');
-  const headerIndex = lines.findIndex((line) => new RegExp(`\\|\\s*${header}\\s*\\|`, 'i').test(line));
+  const escapedHeader = escapeRegExp(header);
+  const headerIndex = lines.findIndex((line) => new RegExp(`\\|\\s*${escapedHeader}\\s*\\|`, 'i').test(line));
   if (headerIndex === -1) {
     return [];
   }

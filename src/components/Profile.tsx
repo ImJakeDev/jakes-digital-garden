@@ -371,7 +371,7 @@ export default function Profile() {
               <div className="label-container">
                 <label htmlFor="passiveperception">Passive Wisdom (Perception)</label>
               </div>
-              <input name="passiveperception" placeholder="10" defaultValue={10 + abilityScores.Wisdom.modifier} />
+              <input name="passiveperception" placeholder="10" defaultValue={10 + abilityScores.Wisdom.modifier + (proficientSkills.has('Perception') ? PROFICIENCY_BONUS : 0)} />
             </div>
             <div className="otherprofs box textblock">
               <label htmlFor="otherprofs">Other Proficiencies and Languages</label>
